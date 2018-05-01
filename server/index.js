@@ -6,9 +6,10 @@ const express       = require('express'),
       massive       = require('massive'),
       passport      = require('passport'),
       path          = require('path'),
-      port          = 3001,
+      port          = process.env.PORT || 3001,
       session       = require('express-session'),
       strategy      = require('./strategy');
+      controller    = require('./controller');
 
 require('dotenv').config();
 
@@ -66,13 +67,24 @@ passport.deserializeUser((obj, done) => {
 
 
 
+
 //Ticket Endpoints
+// ---- Single Ticket ----
+app.get('/api/ticket/:id', controller.getTicket);
+app.post('/api/ticket', controller.createTicket)
+app.patch('/api/ticket/:id', controller.updateTicket);
+app.delete('/api/ticket/:id', controller.deleteTicket);
 
+// ---- Multiple Tickets ----
+app.get('/api/tickets/owner/:id', controller.getOwnerTickets);
+app.get('/api/tickets/maintenance/:id', controller.getMaintenanceTickets);
+app.get('/api/ticket/tenant/:id', controller.getTenantTickets);
 
-
-//Notes Enpoints
-
-
+// -- Ticket Notes ----
+app.get('/api/ticket/:id/notes', controller.getNotes);
+app.post('/api/ticket/:id/notes', controller.createNote);
+app.patch('/api/ticket/:id/notes/:note_id', controller.updateNote);
+app.delete('/api/ticket/:id/notes/:note_id', controller.deleteNote)
 
 //For hosting and running the app
 app.use(express.static( `${__dirname}/../client/build`));
