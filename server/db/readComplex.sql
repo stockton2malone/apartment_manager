@@ -1,0 +1,1 @@
+SELECT * FROM Complex WHERE complex_id = $1;
