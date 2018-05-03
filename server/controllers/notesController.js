@@ -35,8 +35,7 @@ module.exports = {
         // read from DB
     },
     createNote: (req, res, next) => {
-        console.log(Object.keys(req.body))
-
+        
         let dbInstance = req.app.get('db');
         let { description, createdBy, file } = req.body;
         // where does createdBy id come from ????
