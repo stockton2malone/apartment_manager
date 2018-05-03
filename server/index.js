@@ -84,7 +84,9 @@ app.get('/me', ( req, res, next) => {
 //User Endpoints
 
 
-
+// Image Endpoints
+app.get('/api/image', controller.getImage);
+app.get('/api/video', controller.getVideo);
 
 //Ticket Endpoints
 // ---- Single Ticket ----
