@@ -9,7 +9,8 @@ const express       = require('express'),
       port          = process.env.PORT || 3001,
       session       = require('express-session'),
       strategy      = require('./strategy');
-      controller    = require('./controller');
+      nc            = require('./controllers/notesController'),
+      tc            = require('./controllers/ticketsController');
 
 require('dotenv').config();
 
@@ -85,26 +86,26 @@ app.get('/me', ( req, res, next) => {
 
 
 // Image Endpoints
-app.get('/api/image', controller.getImage);
-app.get('/api/video', controller.getVideo);
+app.get('/api/image', nc.getImage);
+app.get('/api/video', nc.getVideo);
 
 //Ticket Endpoints
 // ---- Single Ticket ----
-app.get('/api/ticket/:id', controller.getTicket);
-app.post('/api/ticket', controller.createTicket)
-app.patch('/api/ticket/:id', controller.updateTicket);
-app.delete('/api/ticket/:id', controller.deleteTicket);
+app.get('/api/ticket/:id', tc.getTicket);
+app.post('/api/ticket', tc.createTicket)
+app.patch('/api/ticket/:id', tc.updateTicket);
+app.delete('/api/ticket/:id', tc.deleteTicket);
 
 // ---- Multiple Tickets ----
-app.get('/api/tickets/owner/:id', controller.getOwnerTickets);
-app.get('/api/tickets/maintenance/:id', controller.getMaintenanceTickets);
-app.get('/api/ticket/tenant/:id', controller.getTenantTickets);
+app.get('/api/tickets/owner/:id', tc.getOwnerTickets);
+app.get('/api/tickets/maintenance/:id', tc.getMaintenanceTickets);
+app.get('/api/ticket/tenant/:id', tc.getTenantTickets);
 
 // -- Ticket Notes ----
-app.get('/api/ticket/:id/notes', controller.getNotes);
-app.post('/api/ticket/:id/notes', controller.createNote);
-app.patch('/api/ticket/:id/notes/:note_id', controller.updateNote);
-app.delete('/api/ticket/:id/notes/:note_id', controller.deleteNote)
+app.get('/api/ticket/:id/notes', nc.getNotes);
+app.post('/api/ticket/:id/notes', nc.createNote);
+app.patch('/api/ticket/:id/notes/:note_id', nc.updateNote);
+app.delete('/api/ticket/:id/notes/:note_id', nc.deleteNote)
 
 //For hosting and running the app
 app.use(express.static( `${__dirname}/../client/build`));
