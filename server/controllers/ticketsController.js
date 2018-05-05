@@ -14,9 +14,9 @@ module.exports = {
         const creation_date = Date.now();
         const ticket_status = 'New';
         const assigned_status = false;
-        const assigned_date;
-        const worker_id;
-        const completion_date;
+        const assigned_date = null;
+        const worker_id = null;
+        const completion_date = null;
         const { 
                 complex_id, 
                 issue_type, 
