@@ -1,7 +1,17 @@
 import React, { Component } from "react";
+import axios from "axios;";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
 import TicketRow from "../TicketRow/TicketRow";
 import "./HomeView.css";
-import { Link } from "react-router-dom";
+import {
+  setUserID,
+  setUserName,
+  setUserRole,
+  setTickets
+} from "../../ducks/reducer";
 
 class HomeView extends Component {
   render() {
@@ -41,4 +51,14 @@ class HomeView extends Component {
   }
 }
 
-export default HomeView;
+const mapStateToProps = state => {
+  return {
+    tickets: state.tickets
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, { setUserID, setUserName, setUserRole, setTickets })(
+    HomeView
+  )
+);
