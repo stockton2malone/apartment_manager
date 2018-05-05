@@ -1,0 +1,1 @@
+DELETE FROM Notes WHERE notes_id = $1 RETURNING *;

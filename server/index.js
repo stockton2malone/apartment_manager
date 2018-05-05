@@ -1,15 +1,16 @@
 //Setup for the Express app
-const express       = require('express'),
-      app           = express(),
-      bodyParser    = require('body-parser'),
-      cors          = require('cors'),
-      massive       = require('massive'),
-      passport      = require('passport'),
-      path          = require('path'),
-      port          = process.env.PORT || 3001,
-      session       = require('express-session'),
-      strategy      = require('./strategy');
-      controller    = require('./controller');
+const express = require('express'),
+    app = express(),
+    bodyParser = require('body-parser'),
+    cors = require('cors'),
+    massive = require('massive'),
+    passport = require('passport'),
+    path = require('path'),
+    port = process.env.PORT || 3001,
+    session = require('express-session'),
+    strategy = require('./strategy');
+nc = require('./controllers/notesController'),
+    tc = require('./controllers/ticketsController');
 
 require('dotenv').config();
 
@@ -19,6 +20,7 @@ const corsOptions = {
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //Connect to the DB
 massive(process.env.CONNECTION_STRING).then(dbInstance => {
@@ -43,10 +45,13 @@ passport.use(strategy);
 passport.serializeUser((user, done) => {
     done(null, {
         id: user.id,
-        firstname: '',
-        lastname: '',
+        fullname: '',
         address: '',
-        comlex: '',
+        unit: '',
+        city: '',
+        state: '',
+        zip: '',
+        complex: '',
         email: '',
         phone: '',
         permissionForTexts: '',
@@ -60,34 +65,52 @@ passport.deserializeUser((obj, done) => {
 });
 
 //Auth Endpoints
+app.get('/login',
+    passport.authenticate('auth0',
+        { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }
+    )
+);
+
+app.get('/me', (req, res, next) => {
+    if (!req.user) {
+        res.redirect('/login');
+    } else {
+        // req.user === req.session.passport.user
+        // console.log( req.user )
+        // console.log( req.session.passport.user );
+        res.status(200).send(JSON.stringify(req.user, null, 10));
+    }
+});
 
 
 
 //User Endpoints
 
 
-
+// Image Endpoints
+app.get('/api/image', nc.getImage);
+app.get('/api/video', nc.getVideo);
 
 //Ticket Endpoints
 // ---- Single Ticket ----
-app.get('/api/ticket/:id', controller.getTicket);
-app.post('/api/ticket', controller.createTicket)
-app.patch('/api/ticket/:id', controller.updateTicket);
-app.delete('/api/ticket/:id', controller.deleteTicket);
+app.get('/api/ticket/:id', tc.getTicket);
+app.post('/api/ticket', tc.createTicket)
+app.patch('/api/ticket/:id', tc.updateTicket);
+app.delete('/api/ticket/:id', tc.deleteTicket);
 
 // ---- Multiple Tickets ----
-app.get('/api/tickets/owner/:id', controller.getOwnerTickets);
-app.get('/api/tickets/maintenance/:id', controller.getMaintenanceTickets);
-app.get('/api/ticket/tenant/:id', controller.getTenantTickets);
+app.get('/api/tickets/owner/:id', tc.getOwnerTickets);
+app.get('/api/tickets/maintenance/:id', tc.getMaintenanceTickets);
+app.get('/api/ticket/tenant/:id', tc.getTenantTickets);
 
 // -- Ticket Notes ----
-app.get('/api/ticket/:id/notes', controller.getNotes);
-app.post('/api/ticket/:id/notes', controller.createNote);
-app.patch('/api/ticket/:id/notes/:note_id', controller.updateNote);
-app.delete('/api/ticket/:id/notes/:note_id', controller.deleteNote)
+app.get('/api/ticket/:id/notes', nc.getNotes);
+app.post('/api/ticket/:id/notes', nc.createNote);
+app.patch('/api/ticket/:id/notes/:note_id', nc.updateNote);
+app.delete('/api/ticket/:id/notes/:note_id', nc.deleteNote)
 
 //For hosting and running the app
-app.use(express.static( `${__dirname}/../client/build`));
+app.use(express.static(`${__dirname}/../client/build`));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 })

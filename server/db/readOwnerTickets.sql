@@ -1,0 +1,1 @@
+SELECT * FROM Tickets WHERE complex_id = $1;

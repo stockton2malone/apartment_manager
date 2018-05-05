@@ -1,0 +1,20 @@
+.onboardViewContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.onboardInputs {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.onboardInputs > * {
+  margin: 5px;
+}
+.optIn {
+  font-size: 12px;
+  text-align: left;
+}

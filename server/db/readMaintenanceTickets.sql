@@ -1,0 +1,1 @@
+SELECT * FROM Tickets WHERE worker_id = $1;

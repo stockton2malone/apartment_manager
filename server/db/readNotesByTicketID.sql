@@ -1,0 +1,1 @@
+SELECT * FROM Notes where ticket_id = $1;
