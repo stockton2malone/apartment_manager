@@ -2,12 +2,17 @@
   width: 300px;
   display: flex;
   justify-content: center;
-  border: 1px solid black;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.23);
 }
-.ticketRowContainer * {
-  border: 1px solid black;
+.ticketRowContainer > div {
+  border: 1px solid rgba(255, 255, 255, 0.81);
+  background-color: #efefef;
+  color: #474747;
   padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#ticketTime {
+  background-color: #caebf2;
 }

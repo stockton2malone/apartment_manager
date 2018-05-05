@@ -13,7 +13,7 @@ class TicketRow extends Component {
         <div className="ticketTitle">
           {this.props.ticketTitle ? this.props.ticketTitle : "Broken Washer"}
         </div>
-        <div className="ticketTime">
+        <div id="ticketTime">
           {this.props.ticketTime ? this.props.ticketTime : "MON: 3pm"}
         </div>
       </div>
