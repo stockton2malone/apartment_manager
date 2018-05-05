@@ -8,3 +8,16 @@
 .ticketContainer > div {
   margin: 5px;
 }
+.newTicketButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.newTicketButton:hover {
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.18);
+}
