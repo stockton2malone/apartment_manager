@@ -15,23 +15,24 @@ import {
 
 class HomeView extends Component {
   render() {
-    let tickets = this.props.tickets ? (
-      this.props.tickets.map((ticket, i) => (
-        <div key={i}>
-          <TicketRow
-            ticketID={ticket.ticket_id}
-            complexName={ticket.complex_id}
-            unitNumber={ticket.unitNumber}
-            ticketTitle={ticket.issue_description}
-            ticketTime={ticket.creation_date}
-          />
+    let tickets =
+      this.props.tickets.length > 0 ? (
+        this.props.tickets.map((ticket, i) => (
+          <div key={i}>
+            <TicketRow
+              ticketID={ticket.ticket_id}
+              complexName={ticket.complex_id}
+              unitNumber={ticket.unitNumber}
+              ticketTitle={ticket.issue_description}
+              ticketTime={ticket.creation_date}
+            />
+          </div>
+        ))
+      ) : (
+        <div>
+          <h2>NO ACTIVE TICKETS</h2>
         </div>
-      ))
-    ) : (
-      <div>
-        <h2>NO ACTIVE TICKETS</h2>
-      </div>
-    );
+      );
 
     return (
       <div className="HomeViewContainer">
