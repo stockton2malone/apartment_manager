@@ -36,6 +36,22 @@ class TicketView extends Component {
             <div>first note</div>
             <div onClick={() => alert("get the ducks going")}>+ Add Note</div>
           </div>
+          <h3>Ticket Status</h3>
+          {this.props.userRole === "tenant" ? (
+            <div className="ticketStatus">
+              {this.props.ticketStatus
+                ? this.props.ticketStatus
+                : "Placeholder"}
+            </div>
+          ) : (
+            <select name="ticketStatus" id="statusSelect">
+              <option value="New">New</option>
+              <option value="Assigned">Assigned</option>
+              <option value="In Process">In Process</option>
+              <option value="Canceled">Canceled</option>
+              <option value="Completed">Completed</option>
+            </select>
+          )}
         </div>
       </div>
     );

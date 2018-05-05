@@ -9,6 +9,7 @@
 }
 .ticketInfoContainer {
   width: 500px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   flex-direction: center;
@@ -17,11 +18,14 @@
 }
 
 .urgencyType {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  margin: 10px;
 }
 .noteContainer > div {
   border: 1px solid black;
+}
+#statusSelect {
+  font-size: 1em;
 }
