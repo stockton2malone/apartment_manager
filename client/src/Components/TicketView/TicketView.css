@@ -1,0 +1,31 @@
+.ticketViewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ticketViewContainer > div {
+  border: 1px solid black;
+}
+.ticketInfoContainer {
+  width: 500px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-direction: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.urgencyType {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.noteContainer > div {
+  border: 1px solid black;
+}
+#statusSelect {
+  font-size: 1em;
+}
