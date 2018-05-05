@@ -7,26 +7,18 @@ cloudinary.config({
     api_secret: config.image_manager_api_secret
 });
 
-const upload = (file, transformations, res) => {
+const upload = (note, file, transformations, res) => {
 
+    // note -- New note object from db
     // file -- local path || url || io stream || file data
     // transformation -- {
     //     public_id: 'sample_id', 
-    //     crop: 'limit',
-    //     width: 2000,
-    //     height: 2000,
-    //     eager: [
-    //       { width: 200, height: 200, crop: 'thumb', gravity: 'face',
-    //         radius: 20, effect: 'sepia' },
-    //       { width: 100, height: 150, crop: 'fit', format: 'png' }
-    //     ],                                     
-    //     tags: ['special', 'for_homepage']
-    //   } 
+    // }
 
     transformations = transformations || {};
 
     cloudinary.uploader.upload(file, function (result) {
-        if (res) res.send(result);
+        if (res) res.status(201).send({ note: note, attachment: result });
         else console.log(result)
     }, transformations);
 }
