@@ -1,4 +1,4 @@
-const imageManager = require('./image_manager/image_manager');
+const imageManager = require('../image_manager/image_manager');
 
 module.exports = {
     getImage: (req, res, next) => {
