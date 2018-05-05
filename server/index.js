@@ -45,18 +45,14 @@ passport.use(strategy);
 passport.serializeUser((user, done) => {
     done(null, {
         id: user.id,
-        fullname: '',
-        address: '',
-        unit: '',
-        city: '',
-        state: '',
-        zip: '',
-        complex: '',
-        email: '',
-        phone: '',
-        permissionForTexts: '',
-        activeStatus: '',
-        role: ''
+        name: user._json['https://example.com/name'] || '',
+        complex: user._json['https://example.com/complex'] || '',
+        unit: user._json['https://example.com/unit'] || '',
+        email: user._json.name || '',
+        phone: user._json['https://example.com/phone'] || '',
+        permissionForTexts: (user._json['https://example.com/notifications'] === 'true' ? true : false),
+        role: user._json['https://example.com/role'] || '',
+        activeStatus: (user._json['https://example.com/status'] === 'true' ? true : false)
     });
 });
 
@@ -65,27 +61,63 @@ passport.deserializeUser((obj, done) => {
 });
 
 //Auth Endpoints
-app.get('/login',
-    passport.authenticate('auth0',
-        { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }
-    )
-);
+app.get('/api/auth', passport.authenticate('auth0', {
+    successRedirect: '/api/auth/login', 
+    failureRedirect: '/#/',
+    failureFlash: true
+  }));
 
-app.get('/me', (req, res, next) => {
-    if (!req.user) {
-        res.redirect('/login');
-    } else {
-        // req.user === req.session.passport.user
-        // console.log( req.user )
-        // console.log( req.session.passport.user );
-        res.status(200).send(JSON.stringify(req.user, null, 10));
-    }
+//tweak this once the db file is in place and lock screen is set up
+app.get('/api/auth/login', passport.authenticate('auth0'), (req,res,done) => {
+    console.log('res.sessionID: ', req.sessionID)
+    //console.log('this is first: ', req.user._json['https://example.com/firstname']);
+    //console.log('this is last: ', req.user._json['https://example.com/lastname']);
+    //console.log('this is iscoach: ', req.user._json['https://example.com/iscoach']);
+    console.log("Passport.user: ",req.session.passport.user);//this gives me what was set for user and id
+    let passportUser = req.session.passport.user;
+    //console.log(passportUser.id)
+    const dbInstance = app.get('db');
+
+    //verify this on the create user db file
+    dbInstance.readUser([passportUser.id])
+        .then(user => {
+            //console.log('user: ', user)
+            if(user.length && user[0].user_id){
+                return done(null, user);
+            } else{
+                dbInstance.createUser([passportUser.id, passportUser.name, passportUser.unit, passportUser.complex, passportUser.email, passportUser.phone, passportUser.permissionForTexts, passportUser.activeStatus, passportUser.role])
+                .then(user => {
+                    console.log('User created in db: ',user[0]);
+                    //console.log('profile, ', profile)
+                    
+                    return done(null, user)
+                })
+                
+            }
+        })
+        console.log('this is req.user', req.user);
+        //console.log('this is passport.user', req.session.passport.user)
+    //check the url once routing is setup
+    res.redirect('http://localhost:3001/#/homeview')//this works
 });
 
+app.get('/api/auth/me', (req, res) => {
+    res.status(200).send(req.isAuthenticated())
+});
 
+app.get('/api/auth/logout', (req, res) => {
+    //console.log('this is passport.user', req.session.passport.user)
+    req.logOut();
+    console.log('Successful logout!',req.session.passport.user)
+    //check the url once the routing is setup
+    return res.redirect('http://localhost:3001/#/');
+    
+  })
 
 //User Endpoints
+// ---- Update User Information ----
 
+// ---- Delete User ----
 
 // Image Endpoints
 app.get('/api/image', nc.getImage);
