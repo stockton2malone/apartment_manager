@@ -1,0 +1,31 @@
+.vert-align {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+.vert-align > div {
+    margin: 5px;
+  }
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+.inputs > input, textarea, div {
+    margin: 5px;
+}
+
+.next-step {
+    margin: 10px;
+}
+
+/* .navigation {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
