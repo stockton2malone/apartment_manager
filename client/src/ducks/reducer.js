@@ -92,13 +92,13 @@ export function setWizDesc(desc) {
     payload: desc
   };
 }
-export function SET_WIZ_ATTACHMENT(att) {
+export function setWizAttachment(att) {
   return {
     type: SET_WIZ_ATTACHMENT,
     payload: att
   };
 }
-export function SET_WIZ_PERMISSION(permission) {
+export function setWizPermission(permission) {
   return {
     type: SET_WIZ_PERMISSION,
     payload: permission
