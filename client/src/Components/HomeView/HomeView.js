@@ -39,10 +39,17 @@ class HomeView extends Component {
         <div className="HomeViewTitle">
           <h1>Tickets</h1>
         </div>
-        <div className="ticketContainer">
-          {tickets}
-          dummy row v
-          <TicketRow />
+        <div className="infoContainer">
+          <div className="ticketContainer">
+            {tickets}
+            dummy row v
+            <TicketRow />
+            <TicketRow />
+            <TicketRow />
+            <TicketRow />
+          </div>
+        </div>
+        <div className="buttonDiv">
           <Link to="/wizard1">
             <div className="newTicketButton">New Ticket</div>
           </Link>
