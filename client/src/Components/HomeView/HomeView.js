@@ -41,12 +41,18 @@ class HomeView extends Component {
         </div>
         <div className="infoContainer">
           <div className="ticketContainer">
-            {tickets}
-            dummy row v
+            {/* {tickets}
+            dummy row v */}
             <TicketRow />
             <TicketRow />
             <TicketRow />
-            <TicketRow />
+            <TicketRow status="old" />
+            <TicketRow status="assigned" />
+            <TicketRow status="canceled" />
+            <TicketRow status="completed" />
+            <TicketRow status="old" />
+            <TicketRow status="assigned" />
+            <TicketRow status="canceled" />
           </div>
         </div>
         <div className="buttonDiv">
