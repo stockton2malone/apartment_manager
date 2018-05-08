@@ -37,8 +37,9 @@ module.exports = {
     createNote: (req, res, next) => {
         
         let dbInstance = req.app.get('db');
-        let { description, createdBy, file } = req.body;
+        let { description, file } = req.body;
         // where does createdBy id come from ????
+        let createdBy = req.session.passport.user.id;
         let ticketid = req.params.id;
         let createdTime = new Date();
         let notes_attachment_id = null;
