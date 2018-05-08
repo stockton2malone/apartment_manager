@@ -15,12 +15,12 @@ class Wizard2 extends Component {
                 <div className="vert-align">
                     <div className="header"><h2>Describe the Issue</h2>
                     </div>
-                    <div className="status">Step Indicator Here
-                    </div>
+                    {/* <div className="status">Step Indicator Here
+                    </div> */}
                     <div className="inputs">
-                        <input id="note-title" type="text" value = {this.props.noteTitle} placeholder="Note Subject" size="25" onChange={(e) => setNoteTitle(e.target.value)}/>
-                        <textarea name="note-description" id="note-description" value = {this.props.noteDescription} cols="40" rows="10" placeholder="Describe your issue here" onChange={(e) => setNoteDesc(e.target.value)}></textarea>
-                        <div>
+                        <input id="note-title" type="text" value = {this.props.noteTitle} placeholder="Note Subject" size="20" onChange={(e) => setNoteTitle(e.target.value)}/>
+                        <textarea name="note-description" id="note-description" value = {this.props.noteDescription} cols="20" rows="10" placeholder="Describe your issue here" onChange={(e) => setNoteDesc(e.target.value)}></textarea>
+                        <div classname="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
                             <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => setNoteAttachment(e.target.value)}/> 

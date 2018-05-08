@@ -1,3 +1,7 @@
+.parent-div {
+    font-family: 'Work Sans', sans-serif;
+}
+
 .vert-align {
     display: flex;
     flex-direction: column;
@@ -7,6 +11,7 @@
 
 .vert-align > div {
     margin: 5px;
+    font-family: 'Work Sans', sans-serif;
   }
 
 .inputs {
@@ -14,14 +19,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Work Sans', sans-serif;
   }
 
 .inputs > input, textarea, div {
     margin: 5px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.file-upload, #note-attachment {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Work Sans', sans-serif;
 }
 
 .next-step {
     margin: 10px;
+    font-family: 'Work Sans', sans-serif;
 }
 
 /* .navigation {
