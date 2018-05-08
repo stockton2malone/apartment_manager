@@ -1,13 +1,18 @@
 .ticketRowContainer {
-  width: 320px;
-  display: flex;
-  justify-content: center;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.23);
-}
-.ticketRowContainer > div {
-  border: 1px solid rgba(255, 255, 255, 0.81);
+  height: 60px;
+  width: 100%;
+  margin: 0px 0px 6px;
   background-color: #efefef;
   color: #474747;
+  display: flex;
+  justify-content: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.53);
+}
+.ticketRowContainer:nth-child(odd) {
+  background-color: #ffffff;
+}
+.ticketRowContainer > div {
+  width: 25%;
   padding: 5px;
   display: flex;
   justify-content: center;
@@ -15,4 +20,5 @@
 }
 #ticketTime {
   background-color: #caebf2;
+  color: #474747;
 }

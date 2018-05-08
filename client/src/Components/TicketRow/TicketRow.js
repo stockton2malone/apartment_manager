@@ -2,6 +2,30 @@ import React, { Component } from "react";
 import "./TicketRow.css";
 class TicketRow extends Component {
   render() {
+    let styles = status => {
+      let styled;
+      if (this.props.status === "old") {
+        styled = {
+          backgroundColor: "#F99AB5"
+        };
+      }
+      if (this.props.status === "assigned") {
+        styled = {
+          backgroundColor: "#F9C49A"
+        };
+      }
+      if (this.props.status === "canceled") {
+        styled = {
+          backgroundColor: "#F9F69A"
+        };
+      }
+      if (this.props.status === "completed") {
+        styled = {
+          backgroundColor: "#9AF9F1"
+        };
+      }
+      return styled;
+    };
     return (
       <div className="ticketRowContainer">
         <div className="complexName">
@@ -13,7 +37,7 @@ class TicketRow extends Component {
         <div className="ticketTitle">
           {this.props.ticketTitle ? this.props.ticketTitle : "Broken Washer"}
         </div>
-        <div id="ticketTime">
+        <div id="ticketTime" style={styles(this.props.status)}>
           {this.props.ticketTime ? this.props.ticketTime : "MON: 3pm"}
         </div>
       </div>
