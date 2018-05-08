@@ -1,5 +1,6 @@
 .HomeViewContainer {
   height: 100vh;
+  width: 100%;
   background-color: #efefef;
   display: flex;
   flex-direction: column;
@@ -10,10 +11,9 @@ h1 h2 {
   color: #474747;
 }
 .infoContainer {
-  margin: 10px;
   height: 80vh;
-  padding: 10px;
-  border: 2px solid #ffff;
+  width: 100%;
+  background-color: #a9a9a9;
 }
 .ticketContainer {
   height: 450px;
@@ -26,9 +26,6 @@ h1 h2 {
   overflow: scroll;
 }
 
-.ticketContainer > div {
-  margin: 5px;
-}
 .buttonDiv {
   position: absolute;
   bottom: 10px;
@@ -38,7 +35,7 @@ h1 h2 {
   height: 70px;
   border-radius: 50%;
   background-color: #caebf2;
-  box-shadow: 1px 1px 2px grey;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.23);
   margin: 10px;
   border: 3px solid white;
   display: flex;
@@ -47,7 +44,6 @@ h1 h2 {
 }
 .newTicketButton:hover {
   cursor: pointer;
-  background-color: rgba(128, 128, 128, 0.18);
 }
 a {
   color: #474747;
@@ -55,6 +51,6 @@ a {
 }
 @media only screen and (min-width: 376px) {
   .ticketContainer {
-    width: 400px;
+    width: 100%;
   }
 }
