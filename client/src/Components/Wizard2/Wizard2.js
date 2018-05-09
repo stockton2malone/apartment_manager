@@ -26,12 +26,13 @@ class Wizard2 extends Component {
                             <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => setNoteAttachment(e.target.value)}/> 
                         </div>  
                     </div>
-                    <div className="navigation">
-                        <Link to="/wizard1"><button className="next-step">Previous Step</button></Link>
-                        <Link to="/wizard3"><button className="next-step">Next Step</button></Link>
-                    </div>
+                </div>
+                <div className="navigation">
+                    <Link to="/wizard1"><div id="orange" className="previous-step">Previous Step</div></Link>
+                    <Link to="/wizard3"><div id="blue" className="next-step">Next Step</div></Link>
                 </div>
             </div>
+            
         )    
     }
 //parent div
