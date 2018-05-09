@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import "./TicketRow.css";
 class TicketRow extends Component {
   render() {
@@ -27,20 +29,25 @@ class TicketRow extends Component {
       return styled;
     };
     return (
-      <div className="ticketRowContainer">
-        <div className="complexName">
-          {this.props.complexName ? this.props.complexName : "Butler Brother's"}
+      <Link to={`/ticket/${this.props.ticketID}`}>
+        {" "}
+        <div className="ticketRowContainer">
+          <div className="complexName">
+            {this.props.complexName
+              ? this.props.complexName
+              : "Butler Brother's"}
+          </div>
+          <div className="unitNumber">
+            {this.props.unitNumber ? this.props.unitNumber : "222"}
+          </div>
+          <div className="ticketTitle">
+            {this.props.ticketTitle ? this.props.ticketTitle : "Broken Washer"}
+          </div>
+          <div id="ticketTime" style={styles(this.props.status)}>
+            {this.props.ticketTime ? this.props.ticketTime : "MON: 3pm"}
+          </div>
         </div>
-        <div className="unitNumber">
-          {this.props.unitNumber ? this.props.unitNumber : "222"}
-        </div>
-        <div className="ticketTitle">
-          {this.props.ticketTitle ? this.props.ticketTitle : "Broken Washer"}
-        </div>
-        <div id="ticketTime" style={styles(this.props.status)}>
-          {this.props.ticketTime ? this.props.ticketTime : "MON: 3pm"}
-        </div>
-      </div>
+      </Link>
     );
   }
 }
