@@ -19,7 +19,7 @@ class Wizard2 extends Component {
                     </div> */}
                     <div className="inputs">
                         <input id="note-title" type="text" value = {this.props.noteTitle} placeholder="Note Subject" size="20" onChange={(e) => setNoteTitle(e.target.value)}/>
-                        <textarea name="note-description" id="note-description" value = {this.props.noteDescription} cols="20" rows="10" placeholder="Describe your issue here" onChange={(e) => setNoteDesc(e.target.value)}></textarea>
+                        <textarea name="note-description" id="note-description" value = {this.props.noteDescription} cols="20" rows="12" placeholder="Describe your issue here" onChange={(e) => setNoteDesc(e.target.value)}></textarea>
                         <div classname="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
