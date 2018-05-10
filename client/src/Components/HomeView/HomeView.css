@@ -1,10 +1,62 @@
-.ticketContainer {
-  border: 1px solid black;
+.HomeViewContainer {
+  height: 100vh;
+  width: 100%;
+  background-color: #efefef;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.ticketContainer > div {
-  margin: 5px;
+.HomeViewTitle {
+  width: 100%;
+  margin-bottom: 10px;
+  box-shadow: 0px 10px 0px rgba(71, 71, 71, 0.16);
+}
+h1 h2 {
+  color: #474747;
+}
+.infoContainer {
+  height: 80vh;
+  width: 100%;
+  background-color: #a9a9a9;
+}
+.ticketContainer {
+  height: 450px;
+  width: 100%;
+  padding-top: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: scroll;
+}
+
+.buttonDiv {
+  position: absolute;
+  bottom: 10px;
+}
+.newTicketButton {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #caebf2;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.23);
+  margin: 10px;
+  border: 3px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.newTicketButton:hover {
+  cursor: pointer;
+}
+a {
+  color: #474747;
+  text-decoration: none;
+}
+@media only screen and (min-width: 376px) {
+  .ticketContainer {
+    width: 100%;
+  }
 }
