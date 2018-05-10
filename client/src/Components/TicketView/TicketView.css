@@ -124,9 +124,16 @@ textarea{
 
 }
 
+#addNote div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
 #newNoteSubmit, #newNoteCancel{
-  float: right;
-  margin: 0 5px 0 15px;
+  /* float: right; */
+  /* margin: 25px;*/
   width: 100px;
 }
 

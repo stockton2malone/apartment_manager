@@ -42,6 +42,7 @@ class TicketView extends Component {
         }
         else {
           console.warn("No Notes Found!!")
+          this.props.setNotes([])
         }
       })
   }
@@ -233,7 +234,7 @@ class TicketView extends Component {
           <div className="noteContainer inlay">
             {
 
-              this.props.notes.sort((a, b) => new Date(a.created_time) - new Date(b.created_time)).map((note, i) => {
+              this.props.notes.length ? this.props.notes.sort((a, b) => new Date(a.created_time) - new Date(b.created_time)).map((note, i) => {
                 return (<div key={i} className='existing-note'>
                   <div title="Delete Note" className={note.isEditing ? 'hidden' : 'delete btn'} data-note-id={note.notes_id} data-attachment-id={note.notes_attachement_id} onClick={(e) => this.deleteNote(e)}>
                     <i className="fas fa-trash-alt"></i>
@@ -253,7 +254,7 @@ class TicketView extends Component {
 
                   </div>
                 </div>)
-              })
+              }) : ''
 
             }
             <div id='addNote' className={this.addNote ? 'inlay' : 'hidden'}>
@@ -261,8 +262,10 @@ class TicketView extends Component {
               <h3>New Note <i id='loader' className='fas fa-spinner fa-spin hidden'></i></h3>
               <textarea id='newNoteDesc' placeholder="Description"></textarea>
               <input id="newNoteAttachment" type="file" />
-              <button id="newNoteCancel" onClick={(e) => this.closeNewNoteForm()}>Cancel</button>
-              <button id="newNoteSubmit" onClick={(e) => this.saveNewNote()}>Save</button>
+              <div>
+                <button id="newNoteCancel" onClick={(e) => this.closeNewNoteForm()}>Cancel</button>
+                <button id="newNoteSubmit" onClick={(e) => this.saveNewNote()}>Save</button>
+              </div>
               
 
             </div>
