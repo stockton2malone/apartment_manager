@@ -9,6 +9,7 @@ const initialState = {
   //new ticket/wizard
   wizLevel: "",
   wizType: "",
+  wizSubject: "",
   wizDescription: "",
   wizAttachment: "",
   wizPermission: false,
@@ -33,10 +34,12 @@ const SET_TICKETS = "SET_TICKETS";
 //new ticket/wizard
 const SET_WIZ_LEVEL = "SET_WIZ_LEVEL";
 const SET_WIZ_TYPE = "SET_WIZ_TYPE";
+const SET_WIZ_SUBJECT = "SET_WIZ_SUBJECT";
 const SET_WIZ_DESCRIPTION = "SET_WIZ_DESCRIPTION";
 const SET_WIZ_ATTACHMENT = "SET_WIZ_ATTACHMENT";
 const SET_WIZ_PERMISSION = "SET_WIZ_PERMISSION";
 const SET_WIZ_TEXT_OPT_IN = "SET_WIZ_TEXT_OPT_IN";
+const SET_WIZ_SUBMIT_TIME = "SET_WIZ_SUBMIT_TIME";
 //existing notes
 const SET_NOTES = "SET_NOTES";
 //new notes
@@ -86,6 +89,12 @@ export function setWizType(type) {
     payload: type
   };
 }
+export function setWizSubject(subject) {
+  return {
+    type: SET_WIZ_SUBJECT,
+    payload: subject
+  };
+}
 export function setWizDesc(desc) {
   return {
     type: SET_WIZ_DESCRIPTION,
@@ -108,6 +117,12 @@ export function setTextOptIn(optIn) {
   return {
     type: SET_WIZ_TEXT_OPT_IN,
     payload: optIn
+  };
+}
+export function setWizSubmitTime(time) {
+  return {
+    type: SET_WIZ_SUBMIT_TIME,
+    payload: time
   };
 }
 //note related
@@ -174,6 +189,10 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         wizType: payload
       });
+    case SET_WIZ_SUBJECT:
+      return Object.assign({}, state, {
+        wizType: payload
+     });
     case SET_WIZ_DESCRIPTION:
       return Object.assign({}, state, {
         wizDescription: payload
@@ -189,6 +208,10 @@ export default function reducer(state = initialState, action) {
     case SET_WIZ_TEXT_OPT_IN:
       return Object.assign({}, state, {
         wizTextOptIn: payload
+      });
+    case SET_WIZ_SUBMIT_TIME:
+      return Object.assign({}, state, {
+        wizSubmitTime: payload
       });
     //existing notes/////////
     case SET_NOTES:
