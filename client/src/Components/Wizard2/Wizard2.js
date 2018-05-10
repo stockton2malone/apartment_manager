@@ -24,15 +24,14 @@ class Wizard2 extends Component {
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
                             <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => setWizAttachment(e.target.value)}/> 
-                        </div>  
+                        </div> 
+                        <div className="navigation">
+                            <Link to="/wizard1"><div id="orange" className="previous-step">Previous Step</div></Link>
+                            <Link to="/wizard3"><div id="blue" className="next-step">Next Step</div></Link>
+                        </div> 
                     </div>
-                </div>
-                <div className="navigation">
-                    <Link to="/wizard1"><div id="orange" className="previous-step">Previous Step</div></Link>
-                    <Link to="/wizard3"><div id="blue" className="next-step">Next Step</div></Link>
-                </div>
-            </div>
-            
+                </div>  
+            </div>    
         )    
     }
 //parent div
