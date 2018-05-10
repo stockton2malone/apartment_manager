@@ -62,3 +62,17 @@ class HomeView extends Component {
         </div>
       </div>
     );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    tickets: state.tickets
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, { setUserID, setUserName, setUserRole, setTickets })(
+    HomeView
+  )
+);
