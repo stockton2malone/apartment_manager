@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import logo1 from "../../assets/Rent (2).png";
+import logo2 from "../../assets/Rent (3).png";
 
 import TicketRow from "../TicketRow/TicketRow";
 import "./HomeView.css";
@@ -37,7 +39,7 @@ class HomeView extends Component {
     return (
       <div className="HomeViewContainer">
         <div className="HomeViewTitle">
-          <h1>Tickets</h1>
+          <img src={logo1} alt="" srcset="" />
         </div>
         <div className="infoContainer">
           <div className="ticketContainer">
