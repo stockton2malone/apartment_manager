@@ -6,9 +6,6 @@ import { withRouter } from "react-router-dom";
 
 import TicketRow from "../TicketRow/TicketRow";
 import "./HomeView.css";
-import logo1 from "../../../assets/Rent (2).png";
-import logo2 from "../../../assets/Rent (3).png";
-
 import {
   setUserID,
   setUserName,
@@ -65,17 +62,3 @@ class HomeView extends Component {
         </div>
       </div>
     );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    tickets: state.tickets
-  };
-};
-
-export default withRouter(
-  connect(mapStateToProps, { setUserID, setUserName, setUserRole, setTickets })(
-    HomeView
-  )
-);
