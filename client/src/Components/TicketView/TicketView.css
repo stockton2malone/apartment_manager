@@ -3,18 +3,69 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #efefef;
+  color: #474747;
 }
 .ticketViewContainer > div {
-  border: 1px solid black;
+  border: 1px solid #474747;
 }
 .ticketInfoContainer {
-  width: 500px;
-  padding: 15px;
+  width: 100%;
+  background: #a9a9a9;
+  text-align: left;
+}
+h1, h2{
+  margin: 0;
+  padding: 5px 0;
+}
+
+.existing-note{
+  padding: 10px 0 10px 10px;
+  background: #efefef;
+  color: #474747;
+  /* max-height: 200px; */
+  overflow-y: auto;
+  margin: 0 0 5px;
+  display: -ms-flexbox;
+  /* display: flex; */
+  -ms-flex-align: top;
+  align-items: top;
+  -ms-flex-pack: justify;
+  /* justify-content: space-between; */
+  position: relative;
+}
+
+.attachment, .edit{
+  float: right;
+  width: 40px;
+  height: 20px;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  flex-direction: center;
-  justify-content: center;
+  -ms-flex-align: center;
   align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #caebf2;
+  margin: -2px 10px;
+  border-radius: 5px;
+  border: 1px solid #474747;
+}
+
+.attachment:hover{
+  cursor: pointer;
+  background: #a9a9a9;
+}
+
+.lrg{
+  font-size: large;
+  margin-right:5px;
+}
+
+.inlay{
+  background: #474747;
+  color: #efefef;
+  padding: 10px;
+  margin: 0 0 5px 0;
 }
 
 .urgencyType {
@@ -23,9 +74,20 @@
   justify-content: space-around;
   align-items: center;
 }
-.noteContainer > div {
-  border: 1px solid black;
-}
+
 #statusSelect {
   font-size: 1em;
+}
+
+.critical{
+  color: #ff3b3f
+}
+
+.hidden{
+  display: none;
+}
+
+.thumbnail{
+  margin-top: 10px;
+  border-radius: 5px;
 }

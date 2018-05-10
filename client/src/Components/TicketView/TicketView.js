@@ -1,6 +1,60 @@
 import React, { Component } from "react";
+import axios from 'axios';
+import {connect} from 'react-redux';
+
 import "./TicketView.css";
+
+import {setNotes, setTickets} from '../../ducks/reducer';
+
 class TicketView extends Component {
+
+  constructor(){
+    super();
+    this.isEditing = false;
+  }
+
+  componentDidMount(){
+    let id = window.location.hash.split("\/").pop()
+    console.log(id)
+
+    axios.get(`http://localhost:3001/api/ticket/${id}/notes`)
+    .then(notes => {
+      if (notes.data.length){
+        this.props.setNotes(notes.data)
+      }
+      else{
+        console.warn("No Notes Found!!")
+      }
+    })
+
+  }
+
+  getAttachment(e){
+    if (e.target.classList.contains("fas")) e.target = e.target.parentElement;
+    let {dataset} = e.target;
+    let attachmentID = dataset.attachmentId;
+    let noteID = dataset.noteId
+
+    let noteContainer = e.target.parentElement;
+    let height = noteContainer.offsetHeight * 2;
+    let width = noteContainer.offsetWidth - 20;
+
+    axios.get(`http://localhost:3001/api/image?id=${attachmentID}&height=${height}&width=${width}`)
+    .then(imageElem => {
+      let note = this.props.notes.filter( n => n.notes_id == noteID)[0];
+      note.attachment = imageElem.data;
+      let allNotes = this.props.notes.filter(n => n.notes_id != noteID).concat(note)
+      this.props.setNotes(allNotes)
+    })
+    .catch(e => console.error(e))
+  }
+
+  startEditing(){
+  }
+
+  stopEditing(){
+  }
+
   render() {
     return (
       <div className="ticketViewContainer">
@@ -40,17 +94,26 @@ class TicketView extends Component {
               {`${this.props.type ? this.props.type : "New"}`}</div>
             </div>
           <div className="noteContainer inlay">
-            <div className='existing-note'>
-              <div className="attachment"><i className="fas fa-paperclip"></i></div>
-              <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl neque. Nulla nec tortor eget dolor vulputate tincidunt. Vestibulum quis dignissim nulla. Integer ullamcorper porta lectus. Suspendisse fermentum at nisi id semper. Etiam dictum varius aliquet. Curabitur maximus porttitor maximus. Nulla vehicula vitae tortor ac pretium. Cras mi mi, malesuada eu urna eu, pharetra efficitur dolor.
+          {
+            
+            this.props.notes.sort((a,b) => new Date(a.created_time) - new Date(b.created_time)).map( (note, i) => {
+              return(<div key={i} className='existing-note'>
+              <div className={note.notes_attachement_id ? 'attachment' : 'attachment hidden'} data-note-id={note.notes_id} data-attachment-id={note.notes_attachement_id} onClick={(e)=>this.getAttachment(e)}>
+                <i className="fas fa-paperclip"></i>
               </div>
-            </div>
-            <div className='existing-note'>
-              <div className="attachment"><i className="fas fa-paperclip"></i></div>
-              <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sed nisl neque. Nulla nec tortor eget dolor vulputate tincidunt. Vestibulum quis dignissim nulla. Integer ullamcorper porta lectus. Suspendisse fermentum at nisi id semper. Etiam dictum varius aliquet. Curabitur maximus porttitor maximus. Nulla vehicula vitae tortor ac pretium. Cras mi mi, malesuada eu urna eu, pharetra efficitur dolor.
-              </div>
-            </div>
-            <div className="inlay" onClick={() => alert("get the ducks going")}>+ Add Note</div>
+              <div>
+                <span className='lrg'>{new Date(note.created_time).toDateString()}</span><hr />
+                {note.notes_description}
+                </div>
+                <div className={note.attachment ? 'thumbnail' : 'thumbnail hidden'} dangerouslySetInnerHTML={{ __html: note.attachment }}>
+                  
+                </div>
+            </div>)
+            })
+
+          }
+            <div className="inlay" onClick={() => this.startEditing()}>+ Add Note</div>
+            
           </div>
           <div className="inlay">
           <span className="lrg">Ticket Status</span>
@@ -76,4 +139,12 @@ class TicketView extends Component {
   }
 }
 
-export default TicketView;
+let mapStateToProps = state => {
+  const {notes, tickets} = state;
+  return {
+    notes,
+    tickets
+  }
+};
+
+export default connect(mapStateToProps, {setNotes, setTickets})(TicketView);

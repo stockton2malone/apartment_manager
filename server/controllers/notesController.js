@@ -37,9 +37,11 @@ module.exports = {
     createNote: (req, res, next) => {
         
         let dbInstance = req.app.get('db');
-        let { description, file } = req.body;
+        let { description, file, id } = req.body;
+        let createdBy;
         // where does createdBy id come from ????
-        let createdBy = req.session.passport.user.id;
+        if (id) createdBy = id;
+        else createdBy = req.session.passport.user.id;
         let ticketid = req.params.id;
         let createdTime = new Date();
         let notes_attachment_id = null;
@@ -51,7 +53,7 @@ module.exports = {
             .then(note => {
                 note = note[0];
                 if (file) {
-                    let aID = note.notes_attachment_id;
+                    let aID = notes_attachment_id ;
                     let transformations = { public_id: aID }
                     // image manager handles sending the response
                     imageManager.upload(note, file, transformations, res);
