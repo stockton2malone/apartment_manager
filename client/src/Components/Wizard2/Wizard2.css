@@ -18,6 +18,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
   }
 
 .vert-align > div {
@@ -33,6 +34,7 @@ body {
     background-color: #a9a9a9;
     border-radius: 5px;
     padding: 10px 5px; 
+    width: 80vw;
     /* font-family: 'Work Sans', sans-serif; */
   }
 
