@@ -23,16 +23,15 @@ h1, h2{
   padding: 10px 5px 10px 10px;
   background: #efefef;
   color: #474747;
-  /* max-height: 200px; */
   overflow-y: auto;
   margin: 0 0 5px;
   display: -ms-flexbox;
-  /* display: flex; */
   -ms-flex-align: top;
   align-items: top;
   -ms-flex-pack: justify;
-  /* justify-content: space-between; */
   position: relative;
+
+  
 }
 
 .btn{
@@ -42,17 +41,11 @@ h1, h2{
   animation-fill-mode: both;
   -webkit-animation-timing-function: ease-in-out;
   animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1;
 }
 
-.btn:hover{
-  cursor: pointer;
-  background: #474747;
-  color: #efefef;
-  animation-name: bounce;
-  -moz-animation-name: bounce;
-}
+
 
 .attachment, .edit, .delete{
   float: right;
@@ -87,12 +80,7 @@ h1, h2{
   margin-right:5px;
 }
 
-.inlay{
-  background: #474747;
-  color: #efefef;
-  padding: 10px;
-  margin: 0 0 5px 0;
-}
+
 
 .urgencyType {
   width: 100%;
@@ -137,20 +125,30 @@ textarea{
   width: 100px;
 }
 
-@keyframes bounce {
-	0%, 100%, 20%, 50%, 80% {
-		-webkit-transform: translateY(0);
-		-ms-transform:     translateY(0);
-		transform:         translateY(0)
-	}
-	40% {
-		-webkit-transform: translateY(-5px);
-		-ms-transform:     translateY(-5px);
-		transform:         translateY(-5px)
-	}
-	60% {
-		-webkit-transform: translateY(-2px);
-		-ms-transform:     translateY(-2px);
-		transform:         translateY(-2px)
-	}
+.btn:hover{
+  cursor: pointer;
 }
+
+.btn:active{
+  animation-name: bounce;
+  -moz-animation-name: bounce;
+}
+
+
+
+.inlay{
+  background: #474747;
+  color: #efefef;
+  padding: 10px;
+  margin: 0 0 5px 0;
+}
+
+.inlay > div:not(.existing-note){
+  animation: 0.5s ease-out 0s 1 slideLeft;
+}
+
+.existing-note, #addNote{
+  animation: 0.5s ease-out 0s 1 appear, 1s ease-out 0s 1 bounce !important;
+}
+
+

@@ -136,6 +136,7 @@ class TicketView extends Component {
     document.getElementById("newNoteDesc").disabled = spin;
     document.getElementById("newNoteAttachment").disabled = spin;
     document.getElementById("newNoteSubmit").disabled = spin;
+    document.getElementById("newNoteCancel").disabled = spin;
     if (spin) document.getElementById("loader").classList.remove("hidden")
     else document.getElementById("loader").classList.add("hidden")
   }
@@ -144,9 +145,6 @@ class TicketView extends Component {
     let ticketID = window.location.hash.split("/").pop();
     let description = document.getElementById("newNoteDesc").value;
     let file = document.getElementById("newNoteAttachment").files.length ? document.getElementById("newNoteAttachment").files[0] : null;
-    let fileData;
-
-
 
     // ONLY FOR DEV! THERES NO AUTH ON THE APP RIGHT NOW SO MANUALLY SUPPLYING A USER ID! //
     let id = 'auth0|5aede71d04eb0b243f1decb6';
@@ -204,21 +202,26 @@ class TicketView extends Component {
           : " Unassigned"}`}</h2>
         <div className="ticketInfoContainer">
           <div className="dateAssigned inlay">
+          <div>
             <span className='lrg'>Assigned On:</span>
             {`${this.props.assignedDate
               ? this.props.assignedDate
               : new Date().toLocaleString()}`}
-          </div>
+          </div></div>
           <div className="dateCompleted inlay">
+          <div>
             <span className='lrg'>Completed On:</span>
             {`${this.props.completedDate
               ? this.props.completedDate
               : "N/A"}`}
+              </div>
           </div>
 
           <div className="ticketDescription inlay">
+            <div>
             <span className='lrg'>Description:</span>
             {`${this.props.description ? this.props.description : "lorem ipsum yall"}`}
+            </div>
           </div>
           <div className="inlay">
             <div>
@@ -273,6 +276,7 @@ class TicketView extends Component {
 
           </div>
           <div className="inlay">
+          <div>
             <span className="lrg">Ticket Status</span>
             {this.props.userRole === "tenant" ? (
               <div className="ticketStatus inlay">
@@ -289,7 +293,7 @@ class TicketView extends Component {
                   <option value="Completed">Completed</option>
                 </select>
               )}
-          </div>
+          </div></div>
         </div>
       </div>
     );

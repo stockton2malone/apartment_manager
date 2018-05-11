@@ -35,7 +35,7 @@ module.exports = {
         // read from DB
     },
     createNote: (req, res, next) => {
-        
+        try{
         let dbInstance = req.app.get('db');
         let { description, file, id } = req.body;
         let createdBy;
@@ -63,7 +63,8 @@ module.exports = {
                 }
             })
             .catch(err => res.status(500).send(err))
-
+        }
+        catch(e){res.send(e)}
     },
     updateNote: (req, res, next) => {
         let dbInstance = req.app.get('db');
