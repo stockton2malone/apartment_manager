@@ -20,7 +20,7 @@ const initialState = {
   //new note
   noteTitle: "",
   noteDescription: "",
-  noteAttachment: "",
+  noteAttachment: {},
   noteSubmitTime: "",
   // current ticket view
   currentTicket: {}

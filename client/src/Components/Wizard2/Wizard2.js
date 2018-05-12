@@ -8,7 +8,8 @@ import './Wizard2.css';
 class Wizard2 extends Component {
     previewFile() {
         let preview = document.querySelector('img');
-        let file = document.querySelector('input[type=file').files[0];
+        let file = document.querySelector('input[type=file]').files[0];
+        this.props.setNoteAttachment(file);
         let reader = new FileReader();
 
         reader.addEventListener("load", () => {
@@ -37,7 +38,7 @@ class Wizard2 extends Component {
                         <div classname="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
-                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {setWizAttachment(e.target.value); this.previewFile(); setNoteAttachment(e.target.files[0]);}}/> 
+                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {setWizAttachment(e.target.value); this.previewFile(); console.log(e.target.files[0]);}}/> 
                             <br/>
                             <img src="" height="200" alt="Image preview..."/>
                         </div> 
