@@ -11,8 +11,8 @@ const initialState = {
   wizType: "",
   wizDescription: "",
   wizAttachment: "",
-  wizPermission: false,
-  wizTextOptIn: false,
+  wizPermission: null,
+  wizTextOptIn: null,
   wizSubmitTime: "",
   //existing notes
   notes: [],
