@@ -1,0 +1,39 @@
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2em;
+    background: #a9a9a9;
+    color: #474747;
+    width: 90vw;
+    height: 87vh;
+    margin: 5vh auto 5vh;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+    
+.loginContainer > div {
+    width: 80vw;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loginContainer img {
+    margin-top: 20vh;
+    width: 90%;
+    animation: 0.9s ease-out 0s 1 slideLeft, 1.0s ease-out 0.9s 1 bounce;
+}
+
+.loginContainer .AuthButton {
+    background: #caebf2;
+    width: 50%;
+    padding: 10px 5px;
+    margin-top: 5vh;
+}
+
+.AuthButton {
+    animation: 1.3s ease-out 0s 1 appear, 0.25s ease-out 1.3s 2 bounce;
+}
