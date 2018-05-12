@@ -80,3 +80,7 @@ create table Tickets (
     FOREIGN KEY (complex_id) REFERENCES Complex(complex_id),
     FOREIGN KEY (worker_id) REFERENCES Users(user_id)
 );
+
+.replace("C:\\fakepath\\", "")
+
+<div>Just testing: {this.props.wizType ? <h2>True</h2> : <h2>False</h2>}</div>

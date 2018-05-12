@@ -191,7 +191,7 @@ export default function reducer(state = initialState, action) {
       });
     case SET_WIZ_SUBJECT:
       return Object.assign({}, state, {
-        wizType: payload
+        wizSubject: payload
      });
     case SET_WIZ_DESCRIPTION:
       return Object.assign({}, state, {

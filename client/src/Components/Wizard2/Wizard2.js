@@ -5,7 +5,21 @@ import {setWizSubject, setWizDesc, setWizAttachment} from '../../ducks/reducer';
 
 import './Wizard2.css';
 
-class Wizard2 extends Component {   
+class Wizard2 extends Component {
+    previewFile() {
+        let preview = document.querySelector('img');
+        let file = document.querySelector('input[type=file').files[0];
+        let reader = new FileReader();
+
+        reader.addEventListener("load", () => {
+            preview.src = reader.result;
+        }, false);
+
+        if(file) {
+            reader.readAsDataURL(file);
+        };
+    };     
+   
     render() {
         //pull state off of props
         const {setWizSubject, setWizDesc, setWizAttachment} = this.props;
@@ -18,12 +32,14 @@ class Wizard2 extends Component {
                     {/* <div className="status">Step Indicator Here
                     </div> */}
                     <div className="inputs">
-                        <input id="note-title" type="text" value = {this.props.wizSubject} placeholder="Ticket Subject" size="20" onChange={(e) => setWizSubject(e.target.value)}/>
+                        <input id="note-title" value = {this.props.wizSubject} type="text" placeholder="Ticket Subject" size="20" onChange={(e) => setWizSubject(e.target.value)}/>
                         <textarea name="note-description" id="note-description" value = {this.props.wizDescription} cols="20" rows="12" placeholder="Describe your issue here" onChange={(e) => setWizDesc(e.target.value)}></textarea>
                         <div classname="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
-                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => setWizAttachment(e.target.value)}/> 
+                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {setWizAttachment(e.target.value); this.previewFile();}}/> 
+                            <br/>
+                            <img src="" height="200" alt="Image preview..."/>
                         </div> 
                         <div className="navigation">
                             <Link to="/wizard1"><div id="orange" className="previous-step">Previous Step</div></Link>
