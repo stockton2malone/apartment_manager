@@ -11,10 +11,34 @@ class TicketView extends Component {
   constructor() {
     super()
     this.addNote = false;
+
+
+    this.user = {};
   }
 
   componentDidMount() {
-    this.getAllNotes()
+    this.getTicketData()
+    
+  }
+
+  getTicketData(){
+    let id = window.location.hash.split("/").pop();
+    axios.get(`http://localhost:3001/api/ticket/${id}`)
+    .then( resp => {
+      if (resp.data.length){
+        this.props.setTickets(resp.data)
+        // console.log(resp.data)
+        axios.get(`http://localhost:3001/api/users/${resp.data[0].created_by_id}`)
+        .then(r => {
+          // console.log(r)
+          if (r.data){
+            // console.log("USER",r.data)
+            this.user = r.data;
+            this.getAllNotes()
+          } 
+        })
+      }
+    })
   }
 
   getAllNotes() {
@@ -133,12 +157,19 @@ class TicketView extends Component {
   }
 
   uploadNoteSpinner(spin) {
+
+    try{
     document.getElementById("newNoteDesc").disabled = spin;
     document.getElementById("newNoteAttachment").disabled = spin;
     document.getElementById("newNoteSubmit").disabled = spin;
     document.getElementById("newNoteCancel").disabled = spin;
     if (spin) document.getElementById("loader").classList.remove("hidden")
     else document.getElementById("loader").classList.add("hidden")
+
+    }
+    catch(e){
+      //do nothing for now
+    }
   }
 
   saveNewNote() {
@@ -158,7 +189,8 @@ class TicketView extends Component {
           this.uploadNoteSpinner(true);
           axios.post(`http://localhost:3001/api/ticket/${ticketID}/notes`, { description, file, id })
             .then(resp => {
-              console.log(resp)
+
+              // console.log(resp)
               this.addNote = false;
               this.getAllNotes()
             })
@@ -179,11 +211,12 @@ class TicketView extends Component {
         this.uploadNoteSpinner(true);
         axios.post(`http://localhost:3001/api/ticket/${ticketID}/notes`, { description, file, id })
           .then(resp => {
-            console.log(resp)
+
+            // console.log(resp)
             this.addNote = false;
             this.getAllNotes();
           })
-          .catch(e => console.log(e))
+          .catch(e => console.error(e))
       }
       else {
         alert("No Description Found!")
@@ -192,47 +225,63 @@ class TicketView extends Component {
   }
 
   render() {
+    // console.log(this.props.tickets)
+    let ticket = this.props.tickets[0];
+    // console.log(this.user);
+    if (ticket && this.user){
     return (
       <div className="ticketViewContainer">
         <h1>
           {this.props.ticketNumber ? this.props.ticketNumber : `Ticket #${window.location.hash.split("/").pop()}`}
         </h1>
-        <h2>{`Assigned:${this.props.assignee
-          ? this.props.assignee
-          : " Unassigned"}`}</h2>
+        <h2>{`Assigned To: ${ticket.assigned_status
+          ? ticket.worker_id
+          : " Not Assigned"}`}</h2>
         <div className="ticketInfoContainer">
+
+          <div className="dateCreated inlay">
+          <div>
+            <span className='lrg'>Created On:</span>
+            {`${ticket.creation_date ? 
+              new Date(ticket.creation_date).toLocaleString()
+              : "Not Assigned"}`}
+          </div></div>
           <div className="dateAssigned inlay">
           <div>
             <span className='lrg'>Assigned On:</span>
-            {`${this.props.assignedDate
-              ? this.props.assignedDate
-              : new Date().toLocaleString()}`}
+            {`${ticket.assigned_date ? 
+              new Date(ticket.assigned_date).toLocaleString()
+              : "Not Assigned"}`}
           </div></div>
           <div className="dateCompleted inlay">
           <div>
             <span className='lrg'>Completed On:</span>
-            {`${this.props.completedDate
-              ? this.props.completedDate
-              : "N/A"}`}
+
+            {`${ticket.completion_date
+              ? new Date(ticket.completion_date).toLocaleString()
+              : "Not Completed"}`}
               </div>
           </div>
 
           <div className="ticketDescription inlay">
             <div>
             <span className='lrg'>Description:</span>
-            {`${this.props.description ? this.props.description : "lorem ipsum yall"}`}
+
+            {`${ticket.issue_description ? ticket.issue_description : "No Description"}`}
             </div>
           </div>
           <div className="inlay">
             <div>
               <span className='lrg'>Urgency:</span>
-              <span className={this.props.urgency ? this.props.urgency : "critical"}>{`${this.props.urgency ? this.props.urgency : "Critical"}`}</span>
+
+              <span className={ticket.urgency_level ? ticket.urgency_level : "N/A"}>{`${ticket.urgency_level ? ticket.urgency_level : "N/A"}`}</span>
             </div>
 
           </div>
           <div className="inlay"><div>
             <span className='lrg'>Type:</span>
-            {`${this.props.type ? this.props.type : "New"}`}</div>
+
+            {`${ticket.issue_type ? ticket.issue_type : "N/A"}`}</div>
           </div>
           <div className="noteContainer inlay">
             {
@@ -278,10 +327,11 @@ class TicketView extends Component {
           <div className="inlay">
           <div>
             <span className="lrg">Ticket Status</span>
-            {this.props.userRole === "tenant" ? (
+
+            {this.user.user_id != ticket.worker_id ? (
               <div className="ticketStatus inlay">
-                {this.props.ticketStatus
-                  ? this.props.ticketStatus
+                {ticket.ticket_status
+                  ? ticket.ticket_status
                   : "Placeholder"}
               </div>
             ) : (
@@ -297,6 +347,14 @@ class TicketView extends Component {
         </div>
       </div>
     );
+  }
+  else{
+    return (
+      <div className='loader'>
+        <i className='fas fa-spinner fa-spin fa-3x'></i>  
+      </div>
+    )
+  }
   }
 }
 

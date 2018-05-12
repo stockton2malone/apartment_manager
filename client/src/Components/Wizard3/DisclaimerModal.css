@@ -1,0 +1,24 @@
+.popup {
+    width: 100vw;
+}
+
+.modalButton {
+    font-size: 1.1em;
+    height: 70px;
+    width: 50vw;
+    border-radius: 5px;
+    box-shadow: none;
+    border: none;
+    margin-top: 20px;
+}
+
+.popup .popup-content {
+    border-radius: 5px;
+    background-color: #efefef !important; 
+    width: 70vw !important;
+    color: #474747;
+}
+
+.popup-content p {
+    padding: 10px 5px;
+}
