@@ -1,0 +1,35 @@
+.ticketSummaryContainer {
+    font-family: 'Work Sans', sans-serif;
+    height: 100vh;
+    width: 100%;
+    background-color: #efefef;
+    color: #474747;
+}
+
+.summaryInfoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #a9a9a9;
+    border-radius: 5px;
+    padding: 10px 5px; 
+    width: 80vw;
+    
+}
+
+.summaryInfoContainer > div {
+    display: flex;
+    flex-direction: row;
+}
+
+.desc {
+    /* background-color: #efefef; */
+    max-width: 100px;
+    max-height: 300px;
+    border-radius: 5px;
+    padding: 0px 10px;
+    color: #efefef;
+    font-weight: bold;
+    text-align: left;
+}

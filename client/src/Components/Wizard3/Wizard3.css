@@ -1,0 +1,131 @@
+body {
+    background: #EFEFEF;
+}
+
+#nextStepLink {
+    text-decoration: none;
+}
+
+.Wizard3Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2em;
+    background: #a9a9a9;
+    color: #474747;
+    height: 62vh;
+    width: 90vw;
+    margin: 0 auto 10px;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+.Wizard3Container > div {
+    width: 80vw;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Wizard3 {
+    background: #efefef;
+}
+
+.title {
+    padding: 10px 5px 0px;
+}
+
+.title h2 {
+    color: #474747;
+}
+
+.next-step, .previous-step {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.23);
+    margin: 25px;
+    border: 3px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Work Sans', sans-serif;  
+    padding: 10px; 
+    font-weight: bold;
+}
+
+.next-step:hover {
+    cursor: pointer;
+  }
+
+.previous-step:hover {
+    cursor: pointer;
+  }
+
+#orange {
+    background-color: #F9C49A;
+}
+
+#blue {
+    background-color: #caebf2;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: space-around;
+}
+
+#permission, #textOptIn {
+    margin:4px;
+    height: 24vh;
+    float:left;
+}
+
+#permission label, #textOptIn label {
+    float:left;
+    width:70vw;
+    margin:4px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border:1px solid #D0D0D0;
+    overflow:auto; 
+}
+
+#permission label span, #textOptIn label span {
+    text-align:center;
+    font-size: 1.1em;
+    padding:0 5px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 7vh;
+}
+
+#permission label input, #textOptIn label input {
+    position:absolute;
+    top:-20px;
+}
+
+#permission input:checked + span, #textOptIn input:checked + span {
+    background-color:#404040;
+    color:#F7F7F7;
+}
+
+#permission .red, #textOptIn .red {
+    background-color:#F99AB5;
+    color:#474747;
+}
+
+#permission .green, #textOptIn .green {
+    background-color:#b4ecb4;
+    color:#474747;
+}
+
+.Wizard3Container h4 {
+    margin: 5px auto;
+    padding: 10px 5px;
+}

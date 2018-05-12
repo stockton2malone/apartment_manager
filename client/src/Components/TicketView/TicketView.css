@@ -3,19 +3,84 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #efefef;
+  color: #474747;
 }
 .ticketViewContainer > div {
-  border: 1px solid black;
+  border: 1px solid #474747;
 }
 .ticketInfoContainer {
-  width: 500px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  flex-direction: center;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  background: #a9a9a9;
+  text-align: left;
 }
+h1, h2{
+  margin: 0;
+  padding: 5px 0;
+}
+
+.existing-note{
+  padding: 10px 5px 10px 10px;
+  background: #efefef;
+  color: #474747;
+  overflow-y: auto;
+  margin: 0 0 5px;
+  display: -ms-flexbox;
+  -ms-flex-align: top;
+  align-items: top;
+  -ms-flex-pack: justify;
+  position: relative;
+
+  
+}
+
+.btn{
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1;
+}
+
+
+
+.attachment, .edit, .delete{
+  float: right;
+  padding: 5px;
+  width: 24px;
+  height: 24px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #caebf2;
+  margin: -5px 2px 2px;
+  border-radius: 5px;
+  border: 1px solid #474747;
+}
+
+.edit{
+  background: #fdfd96
+}
+
+.delete{
+  background: rgb(249, 154, 181);
+  filter: brightness(100%)
+}
+
+
+
+.lrg{
+  font-size: large;
+  margin-right:5px;
+}
+
+
 
 .urgencyType {
   width: 100%;
@@ -23,9 +88,67 @@
   justify-content: space-around;
   align-items: center;
 }
-.noteContainer > div {
-  border: 1px solid black;
-}
+
 #statusSelect {
   font-size: 1em;
 }
+
+.critical{
+  color: #ff3b3f
+}
+
+.hidden{
+  display: none;
+}
+
+.thumbnail{
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+textarea{
+  width: calc(100% - 10px);
+  min-height: 100px;
+
+}
+
+#addNote div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+#newNoteSubmit, #newNoteCancel{
+  /* float: right; */
+  /* margin: 25px;*/
+  width: 100px;
+}
+
+.btn:hover{
+  cursor: pointer;
+}
+
+.btn:active{
+  animation-name: bounce;
+  -moz-animation-name: bounce;
+}
+
+
+
+.inlay{
+  background: #474747;
+  color: #efefef;
+  padding: 10px;
+  margin: 0 0 5px 0;
+}
+
+.inlay > div:not(.existing-note){
+  animation: 0.5s ease-out 0s 1 slideLeft;
+}
+
+.existing-note, #addNote{
+  animation: 0.5s ease-out 0s 1 appear, 1s ease-out 0s 1 bounce !important;
+}
+
+

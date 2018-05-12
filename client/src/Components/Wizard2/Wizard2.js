@@ -1,14 +1,28 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {setNoteTitle, setNoteDesc, setNoteAttachment} from '../../ducks/reducer';
+import {setWizSubject, setWizDesc, setWizAttachment, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard2.css';
 
-class Wizard2 extends Component {   
+class Wizard2 extends Component {
+    previewFile() {
+        let preview = document.querySelector('img');
+        let file = document.querySelector('input[type=file').files[0];
+        let reader = new FileReader();
+
+        reader.addEventListener("load", () => {
+            preview.src = reader.result;
+        }, false);
+
+        if(file) {
+            reader.readAsDataURL(file);
+        };
+    };     
+   
     render() {
         //pull state off of props
-        const {setNoteTitle, setNoteDesc, setNoteAttachment} = this.props;
+        const {setWizSubject, setWizDesc, setWizAttachment, setNoteAttachment} = this.props;
         //what i want returned
         return(
             <div className="parent-div">
@@ -18,21 +32,22 @@ class Wizard2 extends Component {
                     {/* <div className="status">Step Indicator Here
                     </div> */}
                     <div className="inputs">
-                        <input id="note-title" type="text" value = {this.props.noteTitle} placeholder="Note Subject" size="20" onChange={(e) => setNoteTitle(e.target.value)}/>
-                        <textarea name="note-description" id="note-description" value = {this.props.noteDescription} cols="20" rows="12" placeholder="Describe your issue here" onChange={(e) => setNoteDesc(e.target.value)}></textarea>
+                        <input id="note-title" value = {this.props.wizSubject} type="text" placeholder="Ticket Subject" size="20" onChange={(e) => setWizSubject(e.target.value)}/>
+                        <textarea name="note-description" id="note-description" value = {this.props.wizDescription} cols="20" rows="12" placeholder="Describe your issue here" onChange={(e) => setWizDesc(e.target.value)}></textarea>
                         <div classname="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
-                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => setNoteAttachment(e.target.value)}/> 
-                        </div>  
+                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {setWizAttachment(e.target.value); this.previewFile(); setNoteAttachment(e.target.files[0]);}}/> 
+                            <br/>
+                            <img src="" height="200" alt="Image preview..."/>
+                        </div> 
+                        <div className="navigation">
+                            <Link to="/wizard1"><div id="orange" className="previous-step">Previous Step</div></Link>
+                            <Link to="/wizard3"><div id="blue" className="next-step">Next Step</div></Link>
+                        </div> 
                     </div>
-                </div>
-                <div className="navigation">
-                    <Link to="/wizard1"><div id="orange" className="previous-step">Previous Step</div></Link>
-                    <Link to="/wizard3"><div id="blue" className="next-step">Next Step</div></Link>
-                </div>
-            </div>
-            
+                </div>  
+            </div>    
         )    
     }
 //parent div
@@ -49,12 +64,13 @@ class Wizard2 extends Component {
 
 //redux stuff here
 let mapStateToProps = state => {
-    const {noteTitle, noteDescription, noteAttachment} = state;
+    const {noteAttachment, wizSubject, wizDescription, wizAttachment} = state;
     return{
-        noteTitle,
-        noteDescription,
+        wizSubject,
+        wizDescription,
+        wizAttachment,
         noteAttachment
     }
 };
 
-export default connect(mapStateToProps, {setNoteTitle, setNoteDesc, setNoteAttachment})(Wizard2)
+export default connect(mapStateToProps, {setNoteAttachment, setWizSubject, setWizDesc, setWizAttachment})(Wizard2)
