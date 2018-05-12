@@ -1,17 +1,18 @@
-body {
+/* body {
+    font-family: 'Work Sans', sans-serif;
+    height: 100vh;
+    width: 100%;
+    background-color: #efefef;
+    color: #474747;
+} */
+
+.parent-div {
     font-family: 'Work Sans', sans-serif;
     height: 100vh;
     width: 100%;
     background-color: #efefef;
     color: #474747;
 }
-
-/* .parent-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
 
 .vert-align {
     display: flex;
@@ -38,7 +39,17 @@ body {
     /* font-family: 'Work Sans', sans-serif; */
   }
 
-.inputs > input, textarea, div {
+.inputs > input {
+    margin: 10px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.inputs > textarea {
+    margin: 10px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.inputs > div {
     margin: 10px;
     font-family: 'Work Sans', sans-serif;
 }
