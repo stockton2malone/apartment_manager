@@ -48,13 +48,13 @@ class HomeView extends Component {
             <TicketRow />
             <TicketRow />
             <TicketRow />
-            <TicketRow status="old" />
+            <TicketRow status="urgent" />
             <TicketRow status="assigned" />
-            <TicketRow status="canceled" />
-            <TicketRow status="completed" />
-            <TicketRow status="old" />
+            <TicketRow status="cancelled" />
+            <TicketRow status="new" />
+            <TicketRow status="urgent" />
             <TicketRow status="assigned" />
-            <TicketRow status="canceled" />
+            <TicketRow status="cancelled" />
           </div>
         </div>
         <div className="buttonDiv">
