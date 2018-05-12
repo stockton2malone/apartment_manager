@@ -12,6 +12,7 @@ class TicketView extends Component {
     super()
     this.addNote = false;
 
+
     this.user = {};
   }
 
@@ -156,6 +157,7 @@ class TicketView extends Component {
   }
 
   uploadNoteSpinner(spin) {
+
     try{
     document.getElementById("newNoteDesc").disabled = spin;
     document.getElementById("newNoteAttachment").disabled = spin;
@@ -163,6 +165,7 @@ class TicketView extends Component {
     document.getElementById("newNoteCancel").disabled = spin;
     if (spin) document.getElementById("loader").classList.remove("hidden")
     else document.getElementById("loader").classList.add("hidden")
+
     }
     catch(e){
       //do nothing for now
@@ -186,6 +189,7 @@ class TicketView extends Component {
           this.uploadNoteSpinner(true);
           axios.post(`http://localhost:3001/api/ticket/${ticketID}/notes`, { description, file, id })
             .then(resp => {
+
               // console.log(resp)
               this.addNote = false;
               this.getAllNotes()
@@ -207,6 +211,7 @@ class TicketView extends Component {
         this.uploadNoteSpinner(true);
         axios.post(`http://localhost:3001/api/ticket/${ticketID}/notes`, { description, file, id })
           .then(resp => {
+
             // console.log(resp)
             this.addNote = false;
             this.getAllNotes();
@@ -233,6 +238,7 @@ class TicketView extends Component {
           ? ticket.worker_id
           : " Not Assigned"}`}</h2>
         <div className="ticketInfoContainer">
+
           <div className="dateCreated inlay">
           <div>
             <span className='lrg'>Created On:</span>
@@ -250,6 +256,7 @@ class TicketView extends Component {
           <div className="dateCompleted inlay">
           <div>
             <span className='lrg'>Completed On:</span>
+
             {`${ticket.completion_date
               ? new Date(ticket.completion_date).toLocaleString()
               : "Not Completed"}`}
@@ -259,18 +266,21 @@ class TicketView extends Component {
           <div className="ticketDescription inlay">
             <div>
             <span className='lrg'>Description:</span>
+
             {`${ticket.issue_description ? ticket.issue_description : "No Description"}`}
             </div>
           </div>
           <div className="inlay">
             <div>
               <span className='lrg'>Urgency:</span>
+
               <span className={ticket.urgency_level ? ticket.urgency_level : "N/A"}>{`${ticket.urgency_level ? ticket.urgency_level : "N/A"}`}</span>
             </div>
 
           </div>
           <div className="inlay"><div>
             <span className='lrg'>Type:</span>
+
             {`${ticket.issue_type ? ticket.issue_type : "N/A"}`}</div>
           </div>
           <div className="noteContainer inlay">
@@ -317,6 +327,7 @@ class TicketView extends Component {
           <div className="inlay">
           <div>
             <span className="lrg">Ticket Status</span>
+
             {this.user.user_id != ticket.worker_id ? (
               <div className="ticketStatus inlay">
                 {ticket.ticket_status
