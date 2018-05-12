@@ -8,14 +8,25 @@ import logo2 from "../../assets/Rent (3).png";
 
 import TicketRow from "../TicketRow/TicketRow";
 import "./HomeView.css";
-import {
-  setUserID,
-  setUserName,
-  setUserRole,
-  setTickets
-} from "../../ducks/reducer";
+import { setTickets } from "../../ducks/reducer";
 
 class HomeView extends Component {
+  componentDidMount() {
+    if (this.props.userRole === "Owner") {
+      axios.get(`/api/tickets/owner/${this.props.userID}`).then(res => {
+        this.setTickets(res.data);
+      });
+    } else if (this.props.userRole === "Worker") {
+      axios.get(`/api/tickets/maintenance/${this.props.userID}`).then(res => {
+        this.setTickets(res.data);
+      });
+    } else if (this.props.userRole === "Tenant") {
+      axios.get(`/api/tickets/tenant/${this.props.userID}`).then(res => {
+        this.setTickets(res.data);
+      });
+    }
+  }
+
   render() {
     let tickets =
       this.props.tickets.length > 0 ? (
@@ -68,13 +79,12 @@ class HomeView extends Component {
 }
 
 const mapStateToProps = state => {
+  const { tickets, userID, userRole } = state;
   return {
-    tickets: state.tickets
+    tickets,
+    userID,
+    userRole
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, { setUserID, setUserName, setUserRole, setTickets })(
-    HomeView
-  )
-);
+export default withRouter(connect(mapStateToProps, { setTickets })(HomeView));
