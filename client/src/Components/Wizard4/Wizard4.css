@@ -21,6 +21,12 @@
 .summaryInfoContainer > div {
     display: flex;
     flex-direction: row;
+    padding: 10px 5px; 
+}
+
+.summaryInfoContainer > div > img {
+    margin: 0px 10px;
+    color: #efefef;
 }
 
 .desc {

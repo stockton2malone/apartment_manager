@@ -9,7 +9,23 @@ import './Wizard4.css';
 
 class Wizard4 extends Component {
     //POST request here - what do i need off of state
+    componentWillMount() {
+        console.log(this.props.noteAttachment)
+    }
+    handleSave() {
+        const body = {
+            created_by_id: this.props.userID,
+            complex_id: this.props.userID,
+            creation_date: this.props.noteSubmitTime,
+            issue_type: this.props.wizType,
+            issue_description: this.props.wizDescription,
+            urgency_level: this.props.wizLevel,
+            permission_enter: this.props.wizPermission,
+            permission_notifications: this.props.wizTextOptIn,
+        }
+    }
     //wizSubject to state
+
     render() {
 
         return(
@@ -25,7 +41,7 @@ class Wizard4 extends Component {
                         <br/>
                         <div>Description of Issue: <span className="desc">{this.props.wizDescription}</span></div>
                         <br/>
-                        <div>Image/Video Upload: <span className="desc">{`${this.props.wizAttachment ? this.props.wizAttachment.replace("C:\\fakepath\\", "") : 'No File Uploaded'}`}</span></div>
+                        <div>Image/Video Upload: <img src={this.props.wizAttachment} height="200" alt="Image preview..."/></div>
                         <br/>
                         <div>Permission to Enter? <span className="desc">{this.props.wizPermission}</span></div>
                         <br/>
@@ -45,7 +61,7 @@ class Wizard4 extends Component {
 
 //redux stuff here
 let mapStateToProps = state => {
-    const {userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizTextOptIn, wizSubmitTime} = state;
     return{
         userID,
         userName,
@@ -57,7 +73,8 @@ let mapStateToProps = state => {
         wizAttachment,
         wizPermission,
         wizTextOptIn,
-        wizSubmitTime
+        wizSubmitTime,
+        noteAttachment
     }
 };
 
