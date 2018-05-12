@@ -12,8 +12,8 @@ const initialState = {
   wizSubject: "",
   wizDescription: "",
   wizAttachment: "",
-  wizPermission: false,
-  wizTextOptIn: false,
+  wizPermission: null,
+  wizTextOptIn: null,
   wizSubmitTime: "",
   //existing notes
   notes: [],
@@ -21,7 +21,10 @@ const initialState = {
   noteTitle: "",
   noteDescription: "",
   noteAttachment: "",
-  noteSubmitTime: ""
+  noteSubmitTime: "",
+  // current ticket view
+  currentTicket: {}
+
 };
 //////////////////////////////////////
 //constants

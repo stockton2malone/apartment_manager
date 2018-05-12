@@ -9,8 +9,9 @@ const express = require('express'),
     port = process.env.PORT || 3001,
     session = require('express-session'),
     strategy = require('./strategy');
-nc = require('./controllers/notesController'),
-    tc = require('./controllers/ticketsController');
+    nc = require('./controllers/notesController'),
+    tc = require('./controllers/ticketsController'),
+    uc = require('./controllers/usersController');
 
 require('dotenv').config();
 
@@ -19,7 +20,7 @@ const corsOptions = {
 };
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //Connect to the DB
@@ -140,6 +141,9 @@ app.get('/api/ticket/:id/notes', nc.getNotes);
 app.post('/api/ticket/:id/notes', nc.createNote);
 app.patch('/api/ticket/:id/notes/:note_id', nc.updateNote);
 app.delete('/api/ticket/:id/notes/:note_id', nc.deleteNote)
+
+// -- User Info -- 
+app.get('/api/users/:id', uc.getUser)
 
 //For hosting and running the app
 app.use(express.static(`${__dirname}/../client/build`));
