@@ -39,7 +39,17 @@
     /* font-family: 'Work Sans', sans-serif; */
   }
 
-.inputs > input, textarea, div {
+.inputs > input {
+    margin: 10px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.inputs > textarea {
+    margin: 10px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.inputs > div {
     margin: 10px;
     font-family: 'Work Sans', sans-serif;
 }

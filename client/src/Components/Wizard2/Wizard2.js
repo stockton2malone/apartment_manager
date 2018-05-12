@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {setWizSubject, setWizDesc, setWizAttachment} from '../../ducks/reducer';
+import {setWizSubject, setWizDesc, setWizAttachment, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard2.css';
 
@@ -22,7 +22,7 @@ class Wizard2 extends Component {
    
     render() {
         //pull state off of props
-        const {setWizSubject, setWizDesc, setWizAttachment} = this.props;
+        const {setWizSubject, setWizDesc, setWizAttachment, setNoteAttachment} = this.props;
         //what i want returned
         return(
             <div className="parent-div">
@@ -37,7 +37,7 @@ class Wizard2 extends Component {
                         <div classname="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
-                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {setWizAttachment(e.target.value); this.previewFile();}}/> 
+                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {setWizAttachment(e.target.value); this.previewFile(); setNoteAttachment(e.target.files[0]);}}/> 
                             <br/>
                             <img src="" height="200" alt="Image preview..."/>
                         </div> 
@@ -64,12 +64,13 @@ class Wizard2 extends Component {
 
 //redux stuff here
 let mapStateToProps = state => {
-    const {wizSubject, wizDescription, wizAttachment} = state;
+    const {noteAttachment, wizSubject, wizDescription, wizAttachment} = state;
     return{
         wizSubject,
         wizDescription,
-        wizAttachment
+        wizAttachment,
+        noteAttachment
     }
 };
 
-export default connect(mapStateToProps, {setWizSubject, setWizDesc, setWizAttachment})(Wizard2)
+export default connect(mapStateToProps, {setNoteAttachment, setWizSubject, setWizDesc, setWizAttachment})(Wizard2)
