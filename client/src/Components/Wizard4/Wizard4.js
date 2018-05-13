@@ -14,6 +14,7 @@ class Wizard4 extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.noteAttachment)
         axios.get('/api/auth/me')
         .then(res => {
             console.log(res.data)
@@ -30,14 +31,22 @@ class Wizard4 extends Component {
         const body = {
             complex_id: 1,
             issue_type: this.props.wizType,
-            issue_description: this.props.wizDescription,
+            issue_description: this.props.wizSubject,
             urgency_level: this.props.wizLevel,
             permission_enter: this.props.wizPermission,
             permission_notifications: this.props.wizTextOptIn
         }
         axios.post('/api/ticket', body)
         .then(res => {
-            console.log(res.data)
+            const body = {
+                description: this.props.wizDescription,
+                file: this.props.noteAttachment,
+                id: this.props.userID
+            }
+            axios.post('/api/ticket/7/notes', body)
+            .then(res => {
+                console.log("Posted: ", res.data)
+            })
         })
         .catch(err => console.log(err))
     }
