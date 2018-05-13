@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { setWizPermission, setTextOptIn } from '../../ducks/reducer';
 import { connect } from 'react-redux';
 
+import './DisclaimerModal';
+import DisclaimerModal from './DisclaimerModal';
+
 class Wizard3 extends Component {
     render() {
       const { setWizPermission, setTextOptIn } = this.props;
@@ -19,7 +22,10 @@ class Wizard3 extends Component {
             <div id="permission">
                 <label class="green"><input type="radio" name="permission" value={true} checked={this.props.wizPermission === true} onChange={event => setWizPermission(true)} required/><span>Yes</span></label>
                 <label class="red"><input type="radio" name="permission" value={false} checked={this.props.wizPermission === false} onChange={event => setWizPermission(false)}/><span>No</span></label>
-            </div>  
+
+            </div> 
+
+            <DisclaimerModal/> 
 
             <h4>I would like to receive updates on my issue via text message.</h4>      
             
