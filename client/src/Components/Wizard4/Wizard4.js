@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
 //function for setting creation time on state
-import {setWizSubmitTime} from '../../ducks/reducer';
+import {setWizSubmitTime, setUserID} from '../../ducks/reducer';
 
 import './Wizard4.css';
 
@@ -12,17 +12,34 @@ class Wizard4 extends Component {
     componentWillMount() {
         console.log(this.props.noteAttachment)
     }
-    handleSave() {
+
+    componentDidMount() {
+        axios.get('/api/auth/me')
+        .then(res => {
+            console.log(res.data)
+            axios.get('api/user')
+            .then(res => {
+                console.log('user info: ', res.data)
+                this.props.setUserID(res.data.user_id)
+            })
+        })
+        .catch(err => console.log(err))
+    };
+
+    handleSubmit() {
         const body = {
-            created_by_id: this.props.userID,
-            complex_id: this.props.userID,
-            creation_date: this.props.noteSubmitTime,
+            complex_id: 1,
             issue_type: this.props.wizType,
             issue_description: this.props.wizDescription,
             urgency_level: this.props.wizLevel,
             permission_enter: this.props.wizPermission,
-            permission_notifications: this.props.wizTextOptIn,
+            permission_notifications: this.props.wizTextOptIn
         }
+        axios.post('/api/ticket', body)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => console.log(err))
     }
     //wizSubject to state
 
@@ -50,7 +67,7 @@ class Wizard4 extends Component {
                         <div>Text Notifications? <span className="desc">{this.props.wizTextOptIn}</span></div>
                         <div className="navigation">
                             <Link to="/wizard3"><div id="orange" className="previous-step">Previous     Step</div></Link>
-                            <Link to="/"><div id="blue" className="next-step">Submit Ticket</div></Link>
+                            <Link to="/"><div id="blue" className="next-step" onClick={() => this.handleSubmit()}>Submit Ticket</div></Link>
                         </div>
                     </div>
                 </div>
@@ -78,4 +95,4 @@ let mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {setWizSubmitTime})(Wizard4)
+export default connect(mapStateToProps, {setWizSubmitTime, setUserID})(Wizard4)
