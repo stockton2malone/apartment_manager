@@ -9,13 +9,14 @@ import Wizard1 from "./Components/Wizard1/Wizard1";
 import Wizard2 from "./Components/Wizard2/Wizard2";
 import Wizard3 from "./Components/Wizard3/Wizard3";
 import Wizard4 from "./Components/Wizard4/Wizard4";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 export default (
   <Switch>
     <Route exact path="/" component={HomeView} />
     <Route exact path="/login" component={LoginView} />
     <Route path="/onboard" component={OnboardView} />
-    <Route path="/ticket/:id" component={TicketView} />
+    <PrivateRoute path="/ticket/:id" component={TicketView} />
     <Route path="/wizard1" component={Wizard1} />
     <Route path="/wizard2" component={Wizard2} />
     <Route path="/wizard3" component={Wizard3} />
