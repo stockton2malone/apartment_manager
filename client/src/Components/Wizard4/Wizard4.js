@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
 //function for setting creation time on state
-import {setWizSubmitTime, setUserID} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard4.css';
 
@@ -57,6 +57,15 @@ class Wizard4 extends Component {
             })    
         })
         .catch(err => console.log(err))
+
+        this.props.setWizType('');
+        this.props.setWizLevel('');
+        this.props.setWizSubject('');
+        this.props.setWizDesc('');
+        this.props.setWizAttachment('');
+        this.props.setWizPermission(null);
+        this.props.setTextOptIn(null);
+        this.props.setNoteAttachment(null);
     }
     //wizSubject to state
 
@@ -77,11 +86,11 @@ class Wizard4 extends Component {
                         <br/>
                         <div>Image/Video Upload: <img src={this.props.wizAttachment} height="200" alt="Image preview..."/></div>
                         <br/>
-                        <div>Permission to Enter? <span className="desc">{this.props.wizPermission}</span></div>
+                        <div>Permission to Enter? <span className="desc">{`${this.props.wizPermission ? 'Yes' : 'No'}`}</span></div>
                         <br/>
                         <div>Tenant Disclaimers:</div>
                         <br/>
-                        <div>Text Notifications? <span className="desc">{this.props.wizTextOptIn}</span></div>
+                        <div>Text Notifications? <span className="desc">{`${this.props.wizTextOptIn ? 'Yes' : 'No'}`}</span></div>
                         <div className="navigation">
                             <Link to="/wizard3"><div id="orange" className="previous-step">Previous     Step</div></Link>
                             <Link to="/"><div id="blue" className="next-step" onClick={() => this.handleSubmit()}>Submit Ticket</div></Link>
@@ -112,4 +121,4 @@ let mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {setWizSubmitTime, setUserID})(Wizard4)
+export default connect(mapStateToProps, {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment})(Wizard4)
