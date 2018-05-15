@@ -53,20 +53,7 @@ class HomeView extends Component {
           <img src={logo1} alt="" srcset="" />
         </div>
         <div className="infoContainer">
-          <div className="ticketContainer">
-            {/* {tickets}
-            dummy row v */}
-            <TicketRow />
-            <TicketRow />
-            <TicketRow />
-            <TicketRow status="urgent" />
-            <TicketRow status="assigned" />
-            <TicketRow status="cancelled" />
-            <TicketRow status="new" />
-            <TicketRow status="urgent" />
-            <TicketRow status="assigned" />
-            <TicketRow status="cancelled" />
-          </div>
+          <div className="ticketContainer">{tickets}</div>
         </div>
         <div className="buttonDiv">
           <Link to="/wizard1">
