@@ -52,7 +52,7 @@ class Wizard2 extends Component {
                             <br/>
                             <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {this.previewFile(); this.handleLoadLocalFile(e); setNoteAttachment(e.target.files[0]);}}/> 
                             <br/>
-                            <img src="" height="200" alt="Image preview..."/>
+                            <img src=""  alt="Image preview..."/>
                         </div> 
                         <div className="navigation">
                             <Link to="/wizard1"><div id="orange" className="previous-step">Previous Step</div></Link>

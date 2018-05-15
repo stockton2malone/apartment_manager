@@ -84,7 +84,7 @@ class Wizard4 extends Component {
                         <br/>
                         <div>Description of Issue: <span className="desc">{this.props.wizDescription}</span></div>
                         <br/>
-                        <div>Image/Video Upload: <img src={this.props.wizAttachment} height="200" alt="Image preview..."/></div>
+                        <div className = 'preview'>Image/Video Upload: <img src={this.props.wizAttachment} height="350" alt="Image preview..."/></div>
                         <br/>
                         <div>Permission to Enter? <span className="desc">{`${this.props.wizPermission ? 'Yes' : 'No'}`}</span></div>
                         <br/>
