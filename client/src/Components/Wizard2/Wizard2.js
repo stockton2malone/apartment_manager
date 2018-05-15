@@ -8,21 +8,33 @@ import './Wizard2.css';
 class Wizard2 extends Component {
     previewFile() {
         let preview = document.querySelector('img');
-        let file = document.querySelector('input[type=file').files[0];
+        let file = document.querySelector('input[type=file]').files[0];
+    
         let reader = new FileReader();
 
         reader.addEventListener("load", () => {
             preview.src = reader.result;
+            console.log('noteAttachment: ',this.props.noteAttachment)
         }, false);
 
         if(file) {
             reader.readAsDataURL(file);
         };
-    };     
+    }; 
+    
+    handleLoadLocalFile = (event) => {
+        event.preventDefault();
+        const {files} = event.target;
+        console.log(files[0])
+        const localImageUrl = URL.createObjectURL(files[0]);
+
+        this.props.setWizAttachment(localImageUrl)
+    }
    
     render() {
         //pull state off of props
         const {setWizSubject, setWizDesc, setWizAttachment, setNoteAttachment} = this.props;
+        const testObj = {name: 'brett', test: "does it work?"}
         //what i want returned
         return(
             <div className="parent-div">
@@ -34,10 +46,10 @@ class Wizard2 extends Component {
                     <div className="inputs">
                         <input id="note-title" value = {this.props.wizSubject} type="text" placeholder="Ticket Subject" size="20" onChange={(e) => setWizSubject(e.target.value)}/>
                         <textarea name="note-description" id="note-description" value = {this.props.wizDescription} cols="20" rows="12" placeholder="Describe your issue here" onChange={(e) => setWizDesc(e.target.value)}></textarea>
-                        <div classname="file-upload">
+                        <div className="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
-                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {setWizAttachment(e.target.value); this.previewFile(); setNoteAttachment(e.target.files[0]);}}/> 
+                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {this.previewFile(); this.handleLoadLocalFile(e); setNoteAttachment(e.target.files[0]);}}/> 
                             <br/>
                             <img src="" height="200" alt="Image preview..."/>
                         </div> 

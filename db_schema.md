@@ -86,3 +86,6 @@ create table Tickets (
 <div>Just testing: {this.props.wizType ? <h2>True</h2> : <h2>False</h2>}</div>
 
 {`${this.props.wizAttachment ? this.props.wizAttachment.replace("C:\\fakepath\\", "") : 'No File Uploaded'}`}
+
+"blob:http://localhost:3000/89034241-8134-49b8-8735-919f5ebfc1dc"
+

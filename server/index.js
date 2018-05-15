@@ -99,12 +99,23 @@ app.get('/api/auth/login', passport.authenticate('auth0'), (req,res,done) => {
         console.log('this is req.user', req.user);
         //console.log('this is passport.user', req.session.passport.user)
     //check the url once routing is setup
-    res.redirect('http://localhost:3001/#/homeview')//this works
+    res.redirect('http://localhost:3000/#/')//this works
 });
 
 app.get('/api/auth/me', (req, res) => {
     res.status(200).send(req.isAuthenticated())
 });
+
+app.get('/api/user', (req, res) => {
+    const dbInstance = app.get('db');
+    const { session } = req;
+    dbInstance.readUser([session.passport.user.id])
+        .then(user => {
+            console.log(user[0]);
+            res.status(200).send(user[0]);
+        })
+        .catch(err => console.log(err));
+})
 
 app.get('/api/auth/logout', (req, res) => {
     //console.log('this is passport.user', req.session.passport.user)

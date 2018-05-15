@@ -11,7 +11,7 @@ module.exports = {
         let dbInstance = req.app.get('db');
         const created_by_id = req.session.passport.user.id;
         //might need to be req.session.passport.user.user_id above
-        const creation_date = Date.now();
+        const creation_date = new Date();
         const ticket_status = 'New';
         const assigned_status = false;
         const assigned_date = null;
