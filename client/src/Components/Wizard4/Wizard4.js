@@ -38,15 +38,23 @@ class Wizard4 extends Component {
         }
         axios.post('/api/ticket', body)
         .then(res => {
-            const body = {
-                description: this.props.wizDescription,
-                file: this.props.noteAttachment,
-                id: this.props.userID
-            }
-            axios.post('/api/ticket/7/notes', body)
+            axios.get(`/api/ticket/tenant/${this.props.userID}`)
             .then(res => {
-                console.log("Posted: ", res.data)
-            })
+                //console.log('this is my last ticket: ',res.data)
+                const tickets = res.data
+                const lastTicket = tickets.pop().ticket_id
+                //console.log('this is my last ticket id: ', lastTicket)
+                //const ticketID = ???
+                const body = {
+                    description: this.props.wizDescription,
+                    file: this.props.noteAttachment,
+                    id: this.props.userID
+                }
+                axios.post(`/api/ticket/${lastTicket}/notes`, body)
+                .then(res => {
+                    console.log("Posted: ", res.data)
+                })
+            })    
         })
         .catch(err => console.log(err))
     }

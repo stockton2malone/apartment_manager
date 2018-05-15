@@ -14,7 +14,8 @@ class Wizard2 extends Component {
 
         reader.addEventListener("load", () => {
             preview.src = reader.result;
-            console.log('noteAttachment: ',this.props.noteAttachment)
+            this.props.setNoteAttachment(reader.result);
+            //console.log('noteAttachment: ',this.props.noteAttachment)
         }, false);
 
         if(file) {
