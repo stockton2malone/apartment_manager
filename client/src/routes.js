@@ -13,8 +13,8 @@ import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 export default (
   <Switch>
-    <Route exact path="/" component={HomeView} />
-    <Route exact path="/login" component={LoginView} />
+    <Route exact path="/tickets" component={HomeView} />
+    <Route exact path="/" component={LoginView} />
     <Route path="/onboard" component={OnboardView} />
     <PrivateRoute path="/ticket/:id" component={TicketView} />
     <Route path="/wizard1" component={Wizard1} />

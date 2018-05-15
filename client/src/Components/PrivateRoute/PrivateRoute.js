@@ -13,12 +13,12 @@ class PrivateRoute extends Component {
       } else if (userRole && userRole === "Worker") {
         if (tickets.find(x => x.worker_id === userID)) {
           return <Route path={path} component={HomeView} />;
-        } else return <Redirect to="/" />;
+        } else return <Redirect to="/tickets" />;
       } else if (userRole && userRole === "Tenant") {
         if (tickets.find(x => x.created_by === userID)) {
           return <Route path={path} component={HomeView} />;
-        } else return <Redirect to="/" />;
-      } else return <Redirect to="/login" />;
+        } else return <Redirect to="/tickets" />;
+      } else return <Redirect to="/" />;
     };
     return protectedComponent(this.props);
   }
