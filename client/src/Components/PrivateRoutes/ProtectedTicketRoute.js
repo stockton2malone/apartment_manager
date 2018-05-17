@@ -26,10 +26,8 @@ class ProtectedTicketRoute extends Component {
       <Route
         render={props =>
           userRole === "Owner" ||
-          (tickets.length > 0 &&
-            tickets.some(x => x.ticket_id === props.match.params.id)) ||
-          (tickets.length > 0 &&
-            tickets.some(x => x.ticket_id === props.match.params.id)) ? (
+          tickets.some(x => x.ticket_id === props.match.params.id) ||
+          tickets.some(x => x.ticket_id === props.match.params.id) ? (
             <Component {...props} />
           ) : (
             <Redirect to="/login" />
