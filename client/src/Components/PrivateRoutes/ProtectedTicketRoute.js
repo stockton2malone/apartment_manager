@@ -15,12 +15,21 @@ class ProtectedTicketRoute extends Component {
       component: Component,
       ...rest
     } = this.props;
+    //
+    //
+    /*We should probably be checking the server as a source of truth 
+    and since data can be tampered with to pass these checks
+     but for our purposes this works */
+    //
+    //
     return (
       <Route
         render={props =>
           userRole === "Owner" ||
-          (tickets.length > 0 && tickets[0].worker_id === userID) ||
-          (tickets.length > 0 && tickets[0].created_by === userID) ? (
+          (tickets.length > 0 &&
+            tickets.some(x => x.ticket_id === props.match.params.id)) ||
+          (tickets.length > 0 &&
+            tickets.some(x => x.ticket_id === props.match.params.id)) ? (
             <Component {...props} />
           ) : (
             <Redirect to="/login" />
