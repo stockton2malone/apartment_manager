@@ -36,8 +36,8 @@
     color: #474747;
 }
 
-#navigation {
-    width: 80vw;
+#sub-navigation {
+    width: 50vw;
     padding: 10px 0px;
     display: flex;
     flex-direction: row;
