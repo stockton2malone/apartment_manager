@@ -6,17 +6,24 @@ import HomeView from "../HomeView/HomeView";
 
 class ProtectedTicketRoute extends Component {
   render() {
-    let { userRole, userID, component, tickets, path } = this.props;
+    let {
+      userRole,
+      userID,
+      component,
+      tickets,
+      path,
+      component: Component,
+      ...rest
+    } = this.props;
     return (
       <Route
-        render={({ component: Component, ...rest }) =>
+        render={props =>
           userRole === "Owner" ||
-          0 === 0 ||
           (tickets.length > 0 && tickets[0].worker_id === userID) ||
           (tickets.length > 0 && tickets[0].created_by === userID) ? (
-            <Component {...component} />
+            <Component {...props} />
           ) : (
-            <Redirect to="/" />
+            <Redirect to="/login" />
           )}
       />
     );

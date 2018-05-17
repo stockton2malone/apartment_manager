@@ -9,17 +9,12 @@ import Wizard1 from "./Components/Wizard1/Wizard1";
 import Wizard2 from "./Components/Wizard2/Wizard2";
 import Wizard3 from "./Components/Wizard3/Wizard3";
 import Wizard4 from "./Components/Wizard4/Wizard4";
-import ProtectedTicketRoute from "./Components/PrivateRoute/ProtectedTicketRoute";
+import ProtectedTicketRoute from "./Components/PrivateRoutes/ProtectedTicketRoute";
+import AuthenticatedRoutes from "./Components/PrivateRoutes/AuthenticatedRoutes";
 
 export default (
   <Switch>
-    <Route exact path="/tickets" component={HomeView} />
-    <Route exact path="/" component={LoginView} />
-    <Route path="/onboard" component={OnboardView} />
-    <ProtectedTicketRoute path="/ticket/:id" component={TicketView} />
-    <Route path="/wizard1" component={Wizard1} />
-    <Route path="/wizard2" component={Wizard2} />
-    <Route path="/wizard3" component={Wizard3} />
-    <Route path="/wizard4" component={Wizard4} />
+    <Route exact path="/login" component={LoginView} />
+    <AuthenticatedRoutes />
   </Switch>
 );
