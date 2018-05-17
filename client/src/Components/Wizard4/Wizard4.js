@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import SubmitModal from './SubmitModal';
 //function for setting creation time on state
 import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard4.css';
+
 
 class Wizard4 extends Component {
     //POST request here - what do i need off of state
@@ -74,26 +76,29 @@ class Wizard4 extends Component {
         return(
             <div className="ticketSummaryContainer">
                 <div className="vert-align">
-                    <h3>Ticket Summary</h3>
+                    <h2>Ticket Summary</h2>
                     <div className="summaryInfoContainer">
-                        <div>Type of Issue: <span className="desc">{this.props.wizType}</span></div>
+                        <div className = "sum-items">Type of Issue: <span className="desc">{this.props.wizType}</span></div>
                         <br/>
-                        <div>Urgency Level: <span className="desc">{this.props.wizLevel}</span></div>
+                        <div className = "sum-items">Urgency Level: <span className="desc">{this.props.wizLevel}</span></div>
                         <br/>
-                        <div>Ticket Subject: <span className="desc">{this.props.wizSubject}</span></div>
+                        <div className = "sum-items">Ticket Subject: <span className="desc">{this.props.wizSubject}</span></div>
                         <br/>
-                        <div>Description of Issue: <span className="desc">{this.props.wizDescription}</span></div>
+                        <div className = "sum-items">Description of Issue: <span className="desc">{this.props.wizDescription}</span></div>
                         <br/>
-                        <div>Image/Video Upload: <img src={this.props.wizAttachment} height="200" alt="Image preview..."/></div>
+                        <div className = 'sum-items'>Image/Video Upload: </div>
                         <br/>
-                        <div>Permission to Enter? <span className="desc">{`${this.props.wizPermission ? 'Yes' : 'No'}`}</span></div>
+                        <div className="sum-items"><img src={this.props.wizAttachment} height="350" alt="Image preview..."/></div>
                         <br/>
-                        <div>Tenant Disclaimers:</div>
+                        <div className = "sum-items">Permission to Enter? <span className="desc">{`${this.props.wizPermission ? 'Yes' : 'No'}`}</span></div>
                         <br/>
-                        <div>Text Notifications? <span className="desc">{`${this.props.wizTextOptIn ? 'Yes' : 'No'}`}</span></div>
-                        <div className="navigation">
+                        <div className = "sum-items">Tenant Disclaimers:</div>
+                        <br/>
+                        <div className = "sum-items">Text Notifications? <span className="desc">{`${this.props.wizTextOptIn ? 'Yes' : 'No'}`}</span></div>
+                        <div id="navigation">
                             <Link to="/wizard3"><div id="orange" className="previous-step">Previous     Step</div></Link>
-                            <Link to="/"><div id="blue" className="next-step" onClick={() => this.handleSubmit()}>Submit Ticket</div></Link>
+                            {/* <Link to="/"><div id="blue" className="next-step" onClick={() => this.handleSubmit()}>Submit Ticket</div></Link> */}
+                            <SubmitModal />
                         </div>
                     </div>
                 </div>
