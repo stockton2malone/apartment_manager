@@ -13,7 +13,7 @@ body {
     font-size: 1.2em;
     background: #a9a9a9;
     color: #474747;
-    height: 71vh;
+    min-height: 71vh;
     width: 90vw;
     margin: 0 auto 10px;
     border-radius: 5px;
@@ -83,7 +83,7 @@ body {
     background-color:#EFEFEF;
     border-radius:4px;
     border:1px solid #D0D0D0;
-    overflow:auto; 
+    overflow:inherit; 
 }
 
 #issueType label span, #urgencyLevel label span {

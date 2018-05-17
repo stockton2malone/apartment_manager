@@ -13,7 +13,7 @@ body {
     font-size: 1.2em;
     background: #a9a9a9;
     color: #474747;
-    height: 62vh;
+    min-height: 67vh;
     width: 90vw;
     margin: 0 auto 10px;
     border-radius: 5px;
@@ -46,7 +46,7 @@ body {
     height: 70px;
     border-radius: 50%;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.23);
-    margin: 25px;
+    margin: 0px 25px 25px;
     border: 3px solid white;
     display: flex;
     justify-content: center;
@@ -81,7 +81,7 @@ body {
 
 #permission, #textOptIn {
     margin:4px;
-    height: 24vh;
+    /* height: 24vh; */
     float:left;
 }
 
@@ -92,7 +92,8 @@ body {
     background-color:#EFEFEF;
     border-radius:4px;
     border:1px solid #D0D0D0;
-    overflow:auto; 
+    overflow:inherit; 
+    padding: 5px 0;
 }
 
 #permission label span, #textOptIn label span {
@@ -101,8 +102,6 @@ body {
     padding:0 5px;
     display:flex;
     justify-content: center;
-    align-items: center;
-    height: 7vh;
 }
 
 #permission label input, #textOptIn label input {
@@ -118,11 +117,13 @@ body {
 #permission .red, #textOptIn .red {
     background-color:#F99AB5;
     color:#474747;
+    margin-bottom: 5px;
 }
 
 #permission .green, #textOptIn .green {
     background-color:#b4ecb4;
     color:#474747;
+    padding-bottom: 5px !important;
 }
 
 .Wizard3Container h4 {
