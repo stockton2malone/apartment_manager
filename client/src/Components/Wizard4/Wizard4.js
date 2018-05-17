@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import SubmitModal from './SubmitModal';
 //function for setting creation time on state
 import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard4.css';
+
 
 class Wizard4 extends Component {
     //POST request here - what do i need off of state
@@ -95,7 +97,8 @@ class Wizard4 extends Component {
                         <div className = "sum-items">Text Notifications? <span className="desc">{`${this.props.wizTextOptIn ? 'Yes' : 'No'}`}</span></div>
                         <div id="navigation">
                             <Link to="/wizard3"><div id="orange" className="previous-step">Previous     Step</div></Link>
-                            <Link to="/"><div id="blue" className="next-step" onClick={() => this.handleSubmit()}>Submit Ticket</div></Link>
+                            {/* <Link to="/"><div id="blue" className="next-step" onClick={() => this.handleSubmit()}>Submit Ticket</div></Link> */}
+                            <SubmitModal />
                         </div>
                     </div>
                 </div>
