@@ -4,12 +4,13 @@
 
 .modalButton {
     font-size: 1.1em;
-    height: 70px;
     width: 50vw;
     border-radius: 5px;
     box-shadow: none;
     border: none;
-    margin-top: 20px;
+    margin-top: 5px;
+    padding: 5px 0;
+    height: 50px;
 }
 
 .popup .popup-content {
@@ -22,3 +23,4 @@
 .popup-content p {
     padding: 10px 5px;
 }
+
