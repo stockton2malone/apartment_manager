@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 class ProtectedTicketRoute extends Component {
   render() {
-    let { tickets, path, component: Component, ...rest } = this.props;
+    let { tickets, component: Component, ...rest } = this.props;
     //
     //
     /*We should probably be checking the server as a source of truth 
@@ -14,6 +14,7 @@ class ProtectedTicketRoute extends Component {
     //
     return (
       <Route
+        {...rest}
         render={props =>
           tickets.some(x => x.ticket_id === props.match.params.id) ? (
             <Component {...props} />
