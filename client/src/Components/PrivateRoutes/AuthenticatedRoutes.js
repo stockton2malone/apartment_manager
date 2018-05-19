@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Switch, withRouter, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+
 import axios from 'axios';
 import {setUserID, setUserRole} from '../../ducks/reducer';
+
 
 import HomeView from "../HomeView/HomeView";
 import TicketView from "../TicketView/TicketView";
@@ -13,6 +15,7 @@ import Wizard4 from "../Wizard4/Wizard4";
 import ProtectedTicketRoute from "./ProtectedTicketRoute";
 
 class AuthenticatedRoutes extends Component {
+
   constructor() {
     super();
     this.state = {
@@ -38,16 +41,18 @@ class AuthenticatedRoutes extends Component {
     }
     return this.props.userID ? (
       <Switch>
-        <Route exact path="/dashboard" component={HomeView} />
+        <Route exact path="/dashboard" component={HomeView} 
         <ProtectedTicketRoute path="/ticket/:id" render={TicketView} />
         <Route path="/wizard1" component={Wizard1} />
         <Route path="/wizard2" component={Wizard2} />
         <Route path="/wizard3" component={Wizard3} />
         <Route path="/wizard4" component={Wizard4} />
       </Switch>
+
       )  : (
       <Redirect to="/" />
       )
+    
   }
 }
 const mapStateToProps = state => {
@@ -57,4 +62,6 @@ const mapStateToProps = state => {
   };
 };
 
+
 export default withRouter(connect(mapStateToProps, {setUserID, setUserRole})(AuthenticatedRoutes));
+
