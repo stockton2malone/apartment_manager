@@ -41,7 +41,7 @@ class AuthenticatedRoutes extends Component {
     }
     return this.props.userID ? (
       <Switch>
-        <Route exact path="/dashboard" component={HomeView} 
+        <Route exact path="/dashboard" component={HomeView} />
         <ProtectedTicketRoute path="/ticket/:id" render={TicketView} />
         <Route path="/wizard1" component={Wizard1} />
         <Route path="/wizard2" component={Wizard2} />
