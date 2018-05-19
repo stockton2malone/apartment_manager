@@ -99,7 +99,7 @@ app.get('/api/auth/login', passport.authenticate('auth0'), (req,res,done) => {
         console.log('this is req.user', req.user);
         //console.log('this is passport.user', req.session.passport.user)
     //check the url once routing is setup
-    res.redirect('http://localhost:3000/#/tickets')//this works
+    res.redirect('http://localhost:3000/#/dashboard')//this works
 });
 
 app.get('/api/auth/me', (req, res) => {
