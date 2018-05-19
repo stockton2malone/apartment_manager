@@ -54,10 +54,12 @@ class TicketRow extends Component {
             <td className="complexName">
               {this.props.complexName
                 ? this.props.complexName
-                : "Butler Brother's"}
+                : "Butler Brother's more more more more"}
             </td>
             <td className="unitNumber">
-              {this.props.unitNumber ? this.props.unitNumber : "222"}
+              {this.props.unitNumber
+                ? this.props.unitNumber
+                : "222 more more more more"}
             </td>
             <td className="ticketTitle">
               {this.props.ticketTitle
@@ -67,7 +69,7 @@ class TicketRow extends Component {
             <td id="ticketTime" style={styles(this.props.status)}>
               {this.props.ticketTime
                 ? this.props.ticketTime.slice(5, 10)
-                : "MON: 3pm"}
+                : "MON: 3pm more more more more "}
             </td>
           </tr>
         )}

@@ -54,16 +54,7 @@ class HomeView extends Component {
         <div className="infoContainer">
           <div className="ticketContainer">
             <table className="ticketTable">
-              <tbody className="ticketTableBody">
-                <TicketRow />
-                <TicketRow />
-                <TicketRow />
-                <TicketRow />
-                <TicketRow />
-                <TicketRow />
-                <TicketRow />
-                <TicketRow />
-              </tbody>
+              <tbody className="ticketTableBody">{tickets}</tbody>
             </table>
           </div>
         </div>
