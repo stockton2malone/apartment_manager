@@ -13,7 +13,8 @@ a {
   box-sizing: border-box;
   animation: 0.5s ease-out 0s 1 appear, 1s ease-out 0s 1 bounce !important;
 }
-td {
+
+.ticketRowContainer > td {
   color: #474747;
   border: 1px solid #eee;
   padding: 12px 10px;
@@ -21,6 +22,7 @@ td {
   justify-content: center;
   align-items: center;
 }
+
 #ticketTime {
   background-color: #caebf2;
   color: #474747;
