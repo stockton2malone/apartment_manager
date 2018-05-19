@@ -13,13 +13,10 @@ a {
   box-sizing: border-box;
   animation: 0.5s ease-out 0s 1 appear, 1s ease-out 0s 1 bounce !important;
 }
-.ticketRowContainer:nth-child(odd) {
-  background-color: #ffffff;
-}
-.ticketRowContainer > div {
-  width: 25%;
-  padding: 8px;
-  box-sizing: border-box;
+td {
+  color: #474747;
+  border: 1px solid #eee;
+  padding: 12px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
