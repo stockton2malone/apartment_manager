@@ -17,17 +17,17 @@ class HomeView extends Component {
   console.log('userRole: ', this.props.userRole)
     if (this.props.userRole === "Owner") {
       axios.get(`/api/tickets/owner/${this.props.userID}`).then(res => {
-        console.log(res.data)
+
         this.props.setTickets(res.data);
       });
     } else if (this.props.userRole === "Worker") {
       axios.get(`/api/tickets/maintenance/${this.props.userID}`).then(res => {
-        console.log(res.data)
+
         this.props.setTickets(res.data);
       });
     } else if (this.props.userRole === "Tenant") {
       axios.get(`/api/tickets/tenant/${this.props.userID}`).then(res => {
-        console.log(res.data)
+
         this.props.setTickets(res.data);
       });
     }
@@ -37,15 +37,14 @@ class HomeView extends Component {
     let tickets =
       this.props.tickets.length > 0 ? (
         this.props.tickets.map((ticket, i) => (
-          <div key={i}>
-            <TicketRow
-              ticketID={ticket.ticket_id}
-              complexName={ticket.complex_id}
-              unitNumber={ticket.unitNumber}
-              ticketTitle={ticket.issue_description}
-              ticketTime={ticket.creation_date}
-            />
-          </div>
+          <TicketRow
+            key={i}
+            ticketID={ticket.ticket_id}
+            complexName={ticket.complex_id}
+            unitNumber={ticket.unitNumber}
+            ticketTitle={ticket.issue_description}
+            ticketTime={ticket.creation_date}
+          />
         ))
       ) : (
         <div>
@@ -59,7 +58,11 @@ class HomeView extends Component {
           <img className="homeViewImg" src={logo1} alt="" srcset="" />
         </div>
         <div className="infoContainer">
-          <div className="ticketContainer">{tickets}</div>
+          <div className="ticketContainer">
+            <table className="ticketTable">
+              <tbody className="ticketTableBody">{tickets}</tbody>
+            </table>
+          </div>
         </div>
         <div className="buttonDiv">
           <Link to="/wizard1">
