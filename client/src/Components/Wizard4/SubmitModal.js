@@ -62,7 +62,7 @@ class SubmitModal extends Component {
 
             <div id="sub-navigation">
                 {/* <Link to="/wizard4"><div id="green" className="next-step">Close</div></Link> */}
-                <Link to="/"><div id="green" className="next-step" onClick={() => this.handleSubmit()}>Yes</div></Link>
+                <Link to="/tickets"><div id="green" className="next-step" onClick={() => this.handleSubmit()}>Yes</div></Link>
             </div>
             
         </Popup>

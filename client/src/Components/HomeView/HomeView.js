@@ -11,17 +11,23 @@ import "./HomeView.css";
 import { setTickets } from "../../ducks/reducer";
 
 class HomeView extends Component {
+  
   componentDidMount() {
+    console.log("userID: ", this.props.userID)
+  console.log('userRole: ', this.props.userRole)
     if (this.props.userRole === "Owner") {
       axios.get(`/api/tickets/owner/${this.props.userID}`).then(res => {
+
         this.props.setTickets(res.data);
       });
     } else if (this.props.userRole === "Worker") {
       axios.get(`/api/tickets/maintenance/${this.props.userID}`).then(res => {
+
         this.props.setTickets(res.data);
       });
     } else if (this.props.userRole === "Tenant") {
       axios.get(`/api/tickets/tenant/${this.props.userID}`).then(res => {
+
         this.props.setTickets(res.data);
       });
     }

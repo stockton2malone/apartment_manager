@@ -3,7 +3,7 @@ import './LoginView.css';
 import logo1 from '../../assets/Rent (2).png';
 import logo2 from '../../assets/Rent (3).png';
 
-export default class LoginView extends Component {
+export default class Landing extends Component {
   render() {
     return (
       <div className="login">
