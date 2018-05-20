@@ -25,13 +25,19 @@ class AuthenticatedRoutes extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/user')
+    axios.get('/api/auth/me')
+    .then(res => {
+      if(!res.data){
+        this.setState({load: false})
+      }
+      axios.get('/api/user')
       .then(res => {
         this.props.setUserID(res.data.user_id)
         this.props.setUserRole(res.data.user_role)
         this.setState({load: false})
       })
-      .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
   }
 
 
@@ -41,8 +47,8 @@ class AuthenticatedRoutes extends Component {
     }
     return this.props.userID ? (
       <Switch>
-        <Route exact path="/dashboard" component={HomeView} />
-        <ProtectedTicketRoute path="/ticket/:id" render={TicketView} />
+        <Route exact path="/" component={HomeView} />
+        <ProtectedTicketRoute path="/ticket/:id?" component={TicketView} />
         <Route path="/wizard1" component={Wizard1} />
         <Route path="/wizard2" component={Wizard2} />
         <Route path="/wizard3" component={Wizard3} />
@@ -50,7 +56,7 @@ class AuthenticatedRoutes extends Component {
       </Switch>
 
       )  : (
-      <Redirect to="/" />
+      <Redirect to="/login" />
       )
     
   }

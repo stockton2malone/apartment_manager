@@ -13,8 +13,8 @@ import { setTickets } from "../../ducks/reducer";
 class HomeView extends Component {
   
   componentDidMount() {
-    console.log("userID: ", this.props.userID)
-  console.log('userRole: ', this.props.userRole)
+    //console.log("userID: ", this.props.userID)
+    //console.log('userRole: ', this.props.userRole)
     if (this.props.userRole === "Owner") {
       axios.get(`/api/tickets/owner/${this.props.userID}`).then(res => {
 
