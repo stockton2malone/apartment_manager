@@ -19,7 +19,7 @@ class SubmitModal extends Component {
         }
         axios.post('/api/ticket', body)
         .then(res => {
-            axios.get(`/api/ticket/tenant/${this.props.userID}`)
+            axios.get(`/api/tickets/${this.props.userRole}/${this.props.userID}`)
             .then(res => {
                 //console.log('this is my last ticket: ',res.data)
                 const tickets = res.data

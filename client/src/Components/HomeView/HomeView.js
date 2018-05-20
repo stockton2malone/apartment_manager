@@ -22,8 +22,7 @@ class HomeView extends Component {
       })
       .catch(err => console.log(err))
     } else if (this.props.userRole === "Worker") {
-      axios.get(`/api/tickets/maintenance/${this.props.userID}`).then(res => {
-
+      axios.get(`/api/tickets/worker/${this.props.userID}`).then(res => {
         this.props.setTickets(res.data);
       })
       .catch(err => console.log(err));
