@@ -145,7 +145,7 @@ app.delete('/api/ticket/:id', tc.deleteTicket);
 // ---- Multiple Tickets ----
 app.get('/api/tickets/owner/:id', tc.getOwnerTickets);
 app.get('/api/tickets/maintenance/:id', tc.getMaintenanceTickets);
-app.get('/api/ticket/tenant/:id', tc.getTenantTickets);
+app.get('/api/tickets/tenant/:id', tc.getTenantTickets);
 
 // -- Ticket Notes ----
 app.get('/api/ticket/:id/notes', nc.getNotes);
