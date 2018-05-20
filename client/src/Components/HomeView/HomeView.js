@@ -19,17 +19,20 @@ class HomeView extends Component {
       axios.get(`/api/tickets/owner/${this.props.userID}`).then(res => {
 
         this.props.setTickets(res.data);
-      });
+      })
+      .catch(err => console.log(err))
     } else if (this.props.userRole === "Worker") {
       axios.get(`/api/tickets/maintenance/${this.props.userID}`).then(res => {
 
         this.props.setTickets(res.data);
-      });
+      })
+      .catch(err => console.log(err));
     } else if (this.props.userRole === "Tenant") {
       axios.get(`/api/tickets/tenant/${this.props.userID}`).then(res => {
 
         this.props.setTickets(res.data);
-      });
+      })
+      .catch(err => console.log(err));
     }
   }
 
