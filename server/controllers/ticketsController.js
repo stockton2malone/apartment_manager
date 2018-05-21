@@ -98,7 +98,6 @@ module.exports = {
     },
     getMaintenanceTickets: (req, res, next) => {
         let dbInstance = req.app.get('db');
-
         dbInstance.readMaintenanceTickets( [ req.session.passport.user.id ] )
             //might need to be req.session.passport.user.user_id above
             .then( maintenanceTickets => {

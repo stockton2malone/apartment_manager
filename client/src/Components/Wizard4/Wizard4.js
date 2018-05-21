@@ -11,9 +11,9 @@ import './Wizard4.css';
 
 class Wizard4 extends Component {
     //POST request here - what do i need off of state
-    componentWillMount() {
+    /* componentWillMount() {
         console.log(this.props.noteAttachment)
-    }
+    } */
 
     componentDidMount() {
         console.log(this.props.noteAttachment)
@@ -29,7 +29,7 @@ class Wizard4 extends Component {
         .catch(err => console.log(err))
     };
 
-    handleSubmit() {
+    /* handleSubmit() {
         const body = {
             complex_id: 1,
             issue_type: this.props.wizType,
@@ -40,12 +40,12 @@ class Wizard4 extends Component {
         }
         axios.post('/api/ticket', body)
         .then(res => {
-            axios.get(`/api/ticket/tenant/${this.props.userID}`)
+            axios.get(`/api/tickets/${this.props.userRole}/${this.props.userID}`)
             .then(res => {
-                //console.log('this is my last ticket: ',res.data)
+                console.log('this is my last ticket: ',res.data)
                 const tickets = res.data
                 const lastTicket = tickets.pop().ticket_id
-                //console.log('this is my last ticket id: ', lastTicket)
+                console.log('this is my last ticket id: ', lastTicket)
                 //const ticketID = ???
                 const body = {
                     description: this.props.wizDescription,
@@ -68,7 +68,7 @@ class Wizard4 extends Component {
         this.props.setWizPermission(null);
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
-    }
+    } */
     //wizSubject to state
 
     render() {
