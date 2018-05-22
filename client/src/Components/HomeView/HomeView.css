@@ -77,3 +77,17 @@ a {
     width: 100%;
   }
 }
+.logoutButton {
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #474747;
+  color: white;
+  border: 3px solid #a9a9a9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 6px;
+  top: 10px;
+}
