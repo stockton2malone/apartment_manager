@@ -36,6 +36,18 @@ h2 {
   align-items: center;
   overflow: scroll;
 }
+.ticketTable {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  border-collapse: collapse;
+}
+.ticketTableBody {
+  margin: 0px auto 60px;
+}
 
 .buttonDiv {
   position: absolute;

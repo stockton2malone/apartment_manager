@@ -19,10 +19,12 @@ a {
   width: 25%;
   padding: 8px;
   box-sizing: border-box;
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 #ticketTime {
   background-color: #caebf2;
   color: #474747;

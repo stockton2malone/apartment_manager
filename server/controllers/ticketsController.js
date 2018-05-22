@@ -91,14 +91,13 @@ module.exports = {
     getOwnerTickets: (req, res, next) => {
         let dbInstance = req.app.get('db');
 
-        dbInstance.readOwnerTickets( [ req.session.passport.user.complex_id ] )
+        dbInstance.readOwnerTickets( [ req.session.passport.user.id] )
             .then( ownerTickets => {
                 res.status(200).send(ownerTickets);
             });
     },
     getMaintenanceTickets: (req, res, next) => {
         let dbInstance = req.app.get('db');
-
         dbInstance.readMaintenanceTickets( [ req.session.passport.user.id ] )
             //might need to be req.session.passport.user.user_id above
             .then( maintenanceTickets => {

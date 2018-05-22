@@ -21,6 +21,11 @@
     /* font-family: 'Work Sans', sans-serif; */
   }
 
+.note-pic {
+    width: 80vw;
+    height: 300px;
+    padding: 10px 5px;
+}
 .inputs {
     display: flex;
     flex-direction: column;
@@ -35,26 +40,38 @@
 
 .inputs > input {
     margin: 10px;
+    width: 30vw;
     font-family: 'Work Sans', sans-serif;
 }
 
 .inputs > textarea {
     margin: 10px;
+    width: 40vw;
     font-family: 'Work Sans', sans-serif;
 }
 
 .inputs > div {
-    margin: 10px;
     font-family: 'Work Sans', sans-serif;
 }
 
-.file-upload, #note-attachment {
+.file-upload {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: #474747;
+    width: 80vw;
+    padding: 10px 5px;
     /* font-family: 'Work Sans', sans-serif; */
+}
+
+#note-attachment {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #474747;
+    padding: 10px 5px;
 }
 
 .next-step, .previous-step {
@@ -93,6 +110,8 @@
     flex-direction: row;
     justify-content: center;
     align-content: space-around;
+    margin: 25px;
+    padding: 10px;
 }
 
 #note-title {
@@ -115,4 +134,20 @@ h2 {
 
 label {
     color: #474747;
+}
+
+.file-upload > label {
+    overflow-wrap: break-word;
+    font-weight: bold;
+}
+
+.note-pic > img {
+    /*height: 90%;*/
+    max-height: 100%;
+    max-width: 100%;
+    justify-content: center;
+}
+
+.file-upload > div {
+    margin: 10px;
 }

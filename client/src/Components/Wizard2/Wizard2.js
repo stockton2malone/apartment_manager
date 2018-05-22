@@ -50,10 +50,12 @@ class Wizard2 extends Component {
                         <div className="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
                             <br/>
-                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {this.previewFile(); this.handleLoadLocalFile(e); setNoteAttachment(e.target.files[0]);}}/> 
+                            <input id="note-attachment" name="note-attachment" type="file" multiple accept="image/*,video/*" onChange={(e) => {this.previewFile(); this.handleLoadLocalFile(e); setNoteAttachment(e.target.files[0]);}}/>
                             <br/>
-                            <img src="" height="200" alt="Image preview..."/>
+                            <div className="note-pic"><img src={this.props.wizAttachment}  alt="Image preview..."/></div>
+                            <br/>
                         </div> 
+                        <br/>
                         <div className="navigation">
                             <Link to="/wizard1"><div id="orange" className="previous-step">Previous Step</div></Link>
                             <Link to="/wizard3"><div id="blue" className="next-step">Next Step</div></Link>

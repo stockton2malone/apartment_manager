@@ -53,6 +53,7 @@ class TicketRow extends Component {
               {`${this.props.ticketTime
                 ? this.props.ticketTime.slice(5, 10)
                 : "-"}`}
+
             </td>
           </tr>
         ) : (
@@ -72,6 +73,7 @@ class TicketRow extends Component {
               {`${this.props.ticketTime
                 ? this.props.ticketTime.slice(5, 10)
                 : "-"}`}
+
             </td>
           </tr>
         )}
