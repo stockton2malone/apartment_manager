@@ -1,18 +1,35 @@
 import React, {Component} from 'react';
 import './Wizard1.css';
 import { Link } from 'react-router-dom';
-import { setWizType, setWizLevel } from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 import { connect } from 'react-redux';
 
 class Wizard1 extends Component {
+    handleCancel() {
+        this.props.setWizType('');
+        this.props.setWizLevel('');
+        this.props.setWizSubject('');
+        this.props.setWizDesc('');
+        this.props.setWizAttachment('');
+        this.props.setWizPermission(null);
+        this.props.setTextOptIn(null);
+        this.props.setNoteAttachment(null);
+    }
+
     render() {
-      const { setWizType, setWizLevel } = this.props;
+      const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment } = this.props;
       return (
        <div className="Wizard1">
         <div className="title">
             <h2>Report An Issue</h2>
         </div>
         <div className="Wizard1Container">
+
+        <div className="cancel" onClick={() => this.handleCancel()}>
+            <Link id="cancelButtonLink" to={'/'}>
+                <div className="cancelButton"><h2>X</h2></div>
+            </Link>
+        </div>
             
             <h3>Issue Type</h3>
 
@@ -45,12 +62,22 @@ class Wizard1 extends Component {
     }
   }
 
-function mapStateToProps( state ) {
-    const { wizType, wizLevel } = state;
-    return {
+  let mapStateToProps = state => {
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizTextOptIn, wizSubmitTime} = state;
+    return{
+        userID,
+        userName,
+        userRole,
+        wizLevel,
         wizType,
-        wizLevel
-    };
-}
+        wizSubject,
+        wizDescription,
+        wizAttachment,
+        wizPermission,
+        wizTextOptIn,
+        wizSubmitTime,
+        noteAttachment
+    }
+};
 
-export default connect(mapStateToProps, { setWizType, setWizLevel })(Wizard1);
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment })(Wizard1);
