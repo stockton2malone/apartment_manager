@@ -48,7 +48,11 @@ class TicketRow extends Component {
               {this.props.ticketTitle ? this.props.ticketTitle : "-"}
             </td>
             <td id="ticketTime" style={styles(this.props.status)}>
-              {this.props.ticketTime ? this.props.ticketTime.slice(5, 10) : "-"}
+              {`${this.props.status}`}
+              <br />
+              {`${this.props.ticketTime
+                ? this.props.ticketTime.slice(5, 10)
+                : "-"}`}
             </td>
           </tr>
         ) : (
@@ -63,7 +67,11 @@ class TicketRow extends Component {
               {this.props.ticketTitle ? this.props.ticketTitle : " -"}
             </td>
             <td id="ticketTime" style={styles(this.props.status)}>
-              {this.props.ticketTime ? this.props.ticketTime.slice(5, 10) : "-"}
+              {`${this.props.status}`}
+              <br />
+              {`${this.props.ticketTime
+                ? this.props.ticketTime.slice(5, 10)
+                : "-"}`}
             </td>
           </tr>
         )}
