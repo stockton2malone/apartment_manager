@@ -11,28 +11,34 @@ import "./HomeView.css";
 import { setTickets } from "../../ducks/reducer";
 
 class HomeView extends Component {
-  
   componentDidMount() {
     //console.log("userID: ", this.props.userID)
     //console.log('userRole: ', this.props.userRole)
     if (this.props.userRole === "Owner") {
-      axios.get(`/api/tickets/owner/${this.props.userID}`).then(res => {
-
-        this.props.setTickets(res.data);
-      })
-      .catch(err => console.log(err))
+      axios
+        .get(`/api/tickets/owner/${this.props.userID}`)
+        .then(res => {
+          this.props.setTickets(res.data);
+        })
+        .catch(err => console.log(err));
     } else if (this.props.userRole === "Worker") {
-      axios.get(`/api/tickets/worker/${this.props.userID}`).then(res => {
-        this.props.setTickets(res.data);
-      })
-      .catch(err => console.log(err));
+      axios
+        .get(`/api/tickets/worker/${this.props.userID}`)
+        .then(res => {
+          this.props.setTickets(res.data);
+        })
+        .catch(err => console.log(err));
     } else if (this.props.userRole === "Tenant") {
-      axios.get(`/api/tickets/tenant/${this.props.userID}`).then(res => {
-
-        this.props.setTickets(res.data);
-      })
-      .catch(err => console.log(err));
+      axios
+        .get(`/api/tickets/tenant/${this.props.userID}`)
+        .then(res => {
+          this.props.setTickets(res.data);
+        })
+        .catch(err => console.log(err));
     }
+  }
+  logout() {
+    axios.get("/api/auth/logout").then(res => console.log(res));
   }
 
   render() {
@@ -56,6 +62,11 @@ class HomeView extends Component {
 
     return (
       <div className="HomeViewContainer">
+        <Link to="/login">
+          <div className="logoutButton" onClick={() => this.logout()}>
+            Logout
+          </div>
+        </Link>
         <div className="HomeViewTitle">
           <img className="homeViewImg" src={logo1} alt="" srcset="" />
         </div>
