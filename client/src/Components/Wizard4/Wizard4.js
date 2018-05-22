@@ -71,13 +71,32 @@ class Wizard4 extends Component {
     } */
     //wizSubject to state
 
+    handleCancel() {
+        this.props.setWizType('');
+        this.props.setWizLevel('');
+        this.props.setWizSubject('');
+        this.props.setWizDesc('');
+        this.props.setWizAttachment('');
+        this.props.setWizPermission(null);
+        this.props.setTextOptIn(null);
+        this.props.setNoteAttachment(null);
+    }
+
     render() {
+        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment } = this.props;
+
 
         return(
             <div className="ticketSummaryContainer">
                 <div className="vert-align">
                     <h2>Ticket Summary</h2>
                     <div className="summaryInfoContainer">
+                        <div className="cancel" onClick={() => this.handleCancel()}>
+                            <Link id="cancelButtonLink" to={'/'}>
+                                <div className="cancelButton"><h2>X</h2></div>
+                            </Link>
+                        </div>
+                        
                         <div className = "sum-items">Type of Issue: <span className="desc">{this.props.wizType}</span></div>
                         <br/>
                         <div className = "sum-items">Urgency Level: <span className="desc">{this.props.wizLevel}</span></div>
@@ -126,4 +145,4 @@ let mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment})(Wizard4)
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment })(Wizard4)

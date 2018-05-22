@@ -1,11 +1,22 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {setWizSubject, setWizDesc, setWizAttachment, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard2.css';
 
 class Wizard2 extends Component {
+    handleCancel() {
+        this.props.setWizType('');
+        this.props.setWizLevel('');
+        this.props.setWizSubject('');
+        this.props.setWizDesc('');
+        this.props.setWizAttachment('');
+        this.props.setWizPermission(null);
+        this.props.setTextOptIn(null);
+        this.props.setNoteAttachment(null);
+    }
+
     previewFile() {
         let preview = document.querySelector('img');
         let file = document.querySelector('input[type=file]').files[0];
@@ -34,7 +45,7 @@ class Wizard2 extends Component {
    
     render() {
         //pull state off of props
-        const {setWizSubject, setWizDesc, setWizAttachment, setNoteAttachment} = this.props;
+        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment } = this.props;
         const testObj = {name: 'brett', test: "does it work?"}
         //what i want returned
         return(
@@ -44,7 +55,15 @@ class Wizard2 extends Component {
                     </div>
                     {/* <div className="status">Step Indicator Here
                     </div> */}
+
                     <div className="inputs">
+
+                        <div className="cancel" onClick={() => this.handleCancel()}>
+                            <Link id="cancelButtonLink" to={'/'}>
+                                <div className="cancelButton"><h2>X</h2></div>
+                            </Link>
+                        </div>
+
                         <input id="note-title" value = {this.props.wizSubject} type="text" placeholder="Ticket Subject" size="20" onChange={(e) => setWizSubject(e.target.value)}/>
                         <textarea name="note-description" id="note-description" value = {this.props.wizDescription} cols="20" rows="12" placeholder="Describe your issue here" onChange={(e) => setWizDesc(e.target.value)}></textarea>
                         <div className="file-upload">
@@ -79,13 +98,21 @@ class Wizard2 extends Component {
 
 //redux stuff here
 let mapStateToProps = state => {
-    const {noteAttachment, wizSubject, wizDescription, wizAttachment} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizTextOptIn, wizSubmitTime} = state;
     return{
+        userID,
+        userName,
+        userRole,
+        wizLevel,
+        wizType,
         wizSubject,
         wizDescription,
         wizAttachment,
+        wizPermission,
+        wizTextOptIn,
+        wizSubmitTime,
         noteAttachment
     }
 };
 
-export default connect(mapStateToProps, {setNoteAttachment, setWizSubject, setWizDesc, setWizAttachment})(Wizard2)
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment })(Wizard2)

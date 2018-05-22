@@ -79,7 +79,7 @@
     height: 70px;
     border-radius: 50%;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.23);
-    margin: 25px;
+    margin: 0 25px 25px !important;
     border: 3px solid white;
     display: flex;
     justify-content: center;
