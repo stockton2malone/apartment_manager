@@ -12,8 +12,6 @@ import { setTickets } from "../../ducks/reducer";
 
 class HomeView extends Component {
   componentDidMount() {
-    //console.log("userID: ", this.props.userID)
-    //console.log('userRole: ', this.props.userRole)
     if (this.props.userRole === "Owner") {
       axios
         .get(`/api/tickets/owner/${this.props.userID}`)
@@ -57,7 +55,6 @@ class HomeView extends Component {
           <h2>NO ACTIVE TICKETS</h2>
         </div>
       );
-    console.log(this.props.tickets);
     return (
       <div className="HomeViewContainer">
         <div className="HomeViewTitle">
