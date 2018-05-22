@@ -35,45 +35,35 @@ class TicketRow extends Component {
     return (
       <Link to={`/ticket/${this.props.ticketID}`}>
         {this.props.userRole === "Tenant" ? (
-          <tr className="ticketRowContainer">
-            <td className="ticketAssignee">
-              {this.props.worker_id ? this.props.worker_id : "Not Yet Assigned"}
+          <tr className="ticketData">
+            <td className="ticketData">
+              {this.props.worker_id
+                ? `Worker#: ${this.props.worker_id}`
+                : "Not Yet Assigned"}
             </td>
-            <td className="ticketStatus">
+            <td className="ticketData">
               {this.props.status ? this.props.status : "Completed"}
             </td>
-            <td className="ticketTitle">
-              {this.props.ticketTitle
-                ? this.props.ticketTitle
-                : " askjdhf jklahsdf ljkahsd asdkjf halksdfh ljkashf  asd fjhaskjldf h"}
+            <td className="ticketData">
+              {this.props.ticketTitle ? this.props.ticketTitle : "-"}
             </td>
             <td id="ticketTime" style={styles(this.props.status)}>
-              {this.props.ticketTime
-                ? this.props.ticketTime.slice(5, 10)
-                : "MON: 3pm"}
+              {this.props.ticketTime ? this.props.ticketTime.slice(5, 10) : "-"}
             </td>
           </tr>
         ) : (
           <tr className="ticketRowContainer">
-            <td className="complexName">
-              {this.props.complexName
-                ? this.props.complexName
-                : "Butler Brother's more more more more"}
+            <td className="ticketData">
+              {this.props.complexName ? this.props.complexName : "-"}
             </td>
-            <td className="unitNumber">
-              {this.props.unitNumber
-                ? this.props.unitNumber
-                : "222 more more more more"}
+            <td className="ticketData">
+              {this.props.unitNumber ? this.props.unitNumber : "-"}
             </td>
-            <td className="ticketTitle">
-              {this.props.ticketTitle
-                ? this.props.ticketTitle
-                : " sdfg jsk sdlfg j;klsdj ojsf;glk jsdl gj Washer"}
+            <td className="ticketData">
+              {this.props.ticketTitle ? this.props.ticketTitle : " -"}
             </td>
             <td id="ticketTime" style={styles(this.props.status)}>
-              {this.props.ticketTime
-                ? this.props.ticketTime.slice(5, 10)
-                : "MON: 3pm more more more more "}
+              {this.props.ticketTime ? this.props.ticketTime.slice(5, 10) : "-"}
             </td>
           </tr>
         )}
