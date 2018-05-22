@@ -52,6 +52,8 @@ class HomeView extends Component {
             unitNumber={ticket.unitNumber}
             ticketTitle={ticket.issue_description}
             ticketTime={ticket.creation_date}
+            status={ticket.ticket_status}
+
           />
         ))
       ) : (
@@ -59,7 +61,6 @@ class HomeView extends Component {
           <h2>NO ACTIVE TICKETS</h2>
         </div>
       );
-
     return (
       <div className="HomeViewContainer">
         <Link to="/login">
