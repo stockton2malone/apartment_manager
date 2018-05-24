@@ -6,6 +6,8 @@ const initialState = {
   userRole: "",
   //existing ticket
   tickets: [],
+  worker_id: "",
+  ticket_status: "New",
   //new ticket/wizard
   wizLevel: "",
   wizType: "",
@@ -34,6 +36,8 @@ const SET_USER_NAME = "SET_USER_NAME";
 const SET_USER_ROLE = "SET_USER_ROLE";
 //existing ticket related
 const SET_TICKETS = "SET_TICKETS";
+const SET_WORKER_ID = "SET_WORKER_ID";
+const SET_TICKET_STATUS = "SET_TICKET_STATUS";
 //new ticket/wizard
 const SET_WIZ_LEVEL = "SET_WIZ_LEVEL";
 const SET_WIZ_TYPE = "SET_WIZ_TYPE";
@@ -77,6 +81,18 @@ export function setTickets(tickets) {
   return {
     type: SET_TICKETS,
     payload: tickets
+  };
+}
+export function setWorkerId(id) {
+  return {
+    type: SET_WORKER_ID,
+    payload: id
+  };
+}
+export function setTicketStatus(status) {
+  return {
+    type: SET_TICKET_STATUS,
+    payload: status
   };
 }
 //new ticket/wizard
@@ -182,6 +198,14 @@ export default function reducer(state = initialState, action) {
     case SET_TICKETS:
       return Object.assign({}, state, {
         tickets: payload
+      });
+    case SET_WORKER_ID:
+      return Object.assign({}, state, {
+        worker_id: payload
+      });
+    case SET_TICKET_STATUS:
+      return Object.assign({}, state, {
+        ticket_status: payload
       });
     //wizard/ new tix///////
     case SET_WIZ_LEVEL:

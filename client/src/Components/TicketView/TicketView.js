@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import "./TicketView.css";
 
-import { setNotes, setTickets } from '../../ducks/reducer';
+import { setNotes, setTickets, setWorkerId, setTicketStatus } from '../../ducks/reducer';
 
 class TicketView extends Component {
 
@@ -27,6 +27,7 @@ class TicketView extends Component {
     .then( resp => {
       if (resp.data.length){
         this.props.setTickets(resp.data)
+        this.props.setWorkerId(resp.data[0].worker_id)
         // console.log(resp.data)
         axios.get(`http://localhost:3001/api/users/${resp.data[0].created_by_id}`)
         .then(r => {
@@ -178,7 +179,7 @@ class TicketView extends Component {
     let file = document.getElementById("newNoteAttachment").files.length ? document.getElementById("newNoteAttachment").files[0] : null;
 
     // ONLY FOR DEV! THERES NO AUTH ON THE APP RIGHT NOW SO MANUALLY SUPPLYING A USER ID! //
-    let id = 'auth0|5aede71d04eb0b243f1decb6';
+    let id = this.props.userID;
     ////////////////////////
 
     if (file) {
@@ -225,9 +226,11 @@ class TicketView extends Component {
   }
 
   render() {
+    const {setTicketStatus} = this.props;
     // console.log(this.props.tickets)
     let ticket = this.props.tickets[0];
-    // console.log(this.user);
+    console.log("this is ticket.worker_id: ",ticket.worker_id)
+     console.log("this.is user.user_id: ",this.user.user_id);
     if (ticket && this.user){
     return (
       <div className="ticketViewContainer">
@@ -328,14 +331,14 @@ class TicketView extends Component {
           <div>
             <span className="lrg">Ticket Status</span>
 
-            {this.user.user_id != ticket.worker_id ? (
+            {this.props.userID != ticket.worker_id ? (
               <div className="ticketStatus inlay">
                 {ticket.ticket_status
                   ? ticket.ticket_status
                   : "Placeholder"}
               </div>
             ) : (
-                <select name="ticketStatus" id="statusSelect">
+                <select name="ticketStatus" id="statusSelect" onChange={(e) => setTicketStatus(e.target.value)}>
                   <option value="New">New</option>
                   <option value="Assigned">Assigned</option>
                   <option value="In Process">In Process</option>
@@ -359,11 +362,12 @@ class TicketView extends Component {
 }
 
 let mapStateToProps = state => {
-  const { notes, tickets } = state;
+  const { notes, tickets, userID } = state;
   return {
     notes,
-    tickets
+    tickets,
+    userID
   }
 };
 
-export default connect(mapStateToProps, { setNotes, setTickets })(TicketView);
+export default connect(mapStateToProps, { setNotes, setTickets, setWorkerId, setTicketStatus })(TicketView);
