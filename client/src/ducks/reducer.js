@@ -15,6 +15,7 @@ const initialState = {
   wizPermission: null,
   wizTextOptIn: null,
   wizSubmitTime: "",
+  wizUnitNumber: "",
   //existing notes
   notes: [],
   //new note
@@ -43,6 +44,7 @@ const SET_WIZ_ATTACHMENT = "SET_WIZ_ATTACHMENT";
 const SET_WIZ_PERMISSION = "SET_WIZ_PERMISSION";
 const SET_WIZ_TEXT_OPT_IN = "SET_WIZ_TEXT_OPT_IN";
 const SET_WIZ_SUBMIT_TIME = "SET_WIZ_SUBMIT_TIME";
+const SET_WIZ_UNIT_NUMBER = "SET_WIZ_UNIT_NUMBER";
 //existing notes
 const SET_NOTES = "SET_NOTES";
 //new notes
@@ -126,6 +128,12 @@ export function setWizSubmitTime(time) {
   return {
     type: SET_WIZ_SUBMIT_TIME,
     payload: time
+  };
+}
+export function setWizUnitNumber(num) {
+  return {
+    type: SET_WIZ_UNIT_NUMBER,
+    payload: num
   };
 }
 //note related
@@ -215,6 +223,10 @@ export default function reducer(state = initialState, action) {
     case SET_WIZ_SUBMIT_TIME:
       return Object.assign({}, state, {
         wizSubmitTime: payload
+      });
+    case SET_WIZ_UNIT_NUMBER:
+      return Object.assign({}, state, {
+        wizUnitNumber: payload
       });
     //existing notes/////////
     case SET_NOTES:

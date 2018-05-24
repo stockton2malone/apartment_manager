@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Wizard3.css';
 import { Link } from 'react-router-dom';
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 import { connect } from 'react-redux';
 
 import './DisclaimerModal';
@@ -15,12 +15,13 @@ class Wizard3 extends Component {
         this.props.setWizDesc('');
         this.props.setWizAttachment('');
         this.props.setWizPermission(null);
+        this.props.setWizUnitNumber('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
     }
 
     render() {
-        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment } = this.props;
+        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment } = this.props;
         return (
        <div className="Wizard3">
         <div className="title">
@@ -63,7 +64,7 @@ class Wizard3 extends Component {
   }
 
   let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTextOptIn, wizSubmitTime} = state;
     return{
         userID,
         userName,
@@ -74,10 +75,11 @@ class Wizard3 extends Component {
         wizDescription,
         wizAttachment,
         wizPermission,
+        wizUnitNumber,
         wizTextOptIn,
         wizSubmitTime,
         noteAttachment
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment })(Wizard3);
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment })(Wizard3);
