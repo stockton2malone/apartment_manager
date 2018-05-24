@@ -11,6 +11,7 @@ INSERT INTO Tickets (
     assigned_date,
     worker_id,
     ticket_status,
-    completion_date
+    completion_date,
+    unit_number
 )
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);

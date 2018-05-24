@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import SubmitModal from './SubmitModal';
 //function for setting creation time on state
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard4.css';
 
@@ -78,12 +78,13 @@ class Wizard4 extends Component {
         this.props.setWizDesc('');
         this.props.setWizAttachment('');
         this.props.setWizPermission(null);
+        this.props.setWizUnitNumber('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
     }
 
     render() {
-        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment } = this.props;
+        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment } = this.props;
 
 
         return(
@@ -102,6 +103,8 @@ class Wizard4 extends Component {
                         <div className = "sum-items">Urgency Level: <span className="desc">{this.props.wizLevel}</span></div>
                         <br/>
                         <div className = "sum-items">Ticket Subject: <span className="desc">{this.props.wizSubject}</span></div>
+                        <br/>
+                        <div className = "sum-items">Unit Number: <span className="desc">{this.props.wizUnitNumber}</span></div>
                         <br/>
                         <div className = "sum-items">Description of Issue: <span className="desc">{this.props.wizDescription}</span></div>
                         <br/>
@@ -128,7 +131,7 @@ class Wizard4 extends Component {
 
 //redux stuff here
 let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTextOptIn, wizSubmitTime} = state;
     return{
         userID,
         userName,
@@ -139,10 +142,11 @@ let mapStateToProps = state => {
         wizDescription,
         wizAttachment,
         wizPermission,
+        wizUnitNumber,
         wizTextOptIn,
         wizSubmitTime,
         noteAttachment
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment })(Wizard4)
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment })(Wizard4)
