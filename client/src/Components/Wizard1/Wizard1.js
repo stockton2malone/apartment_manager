@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Wizard1.css';
 import { Link } from 'react-router-dom';
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber,setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 import { connect } from 'react-redux';
 
 class Wizard1 extends Component {
@@ -13,12 +13,13 @@ class Wizard1 extends Component {
         this.props.setWizAttachment('');
         this.props.setWizPermission(null);
         this.props.setWizUnitNumber('');
+        this.props.setWizTenantDisclaimer('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
     }
 
     render() {
-      const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment } = this.props;
+      const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment } = this.props;
       return (
        <div className="Wizard1">
         <div className="title">
@@ -64,7 +65,7 @@ class Wizard1 extends Component {
   }
 
   let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime} = state;
     return{
         userID,
         userName,
@@ -76,10 +77,11 @@ class Wizard1 extends Component {
         wizAttachment,
         wizPermission,
         wizUnitNumber,
+        wizTenantDisclaimer,
         wizTextOptIn,
         wizSubmitTime,
         noteAttachment
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment })(Wizard1);
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment })(Wizard1);

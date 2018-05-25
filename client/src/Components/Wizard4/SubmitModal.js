@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import Popup from "reactjs-popup";
 import {Link} from 'react-router-dom';
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './SubmitModal.css';
 
@@ -17,7 +17,8 @@ class SubmitModal extends Component {
             urgency_level: this.props.wizLevel,
             permission_enter: this.props.wizPermission,
             permission_notifications: this.props.wizTextOptIn,
-            unit_number: this.props.wizUnitNumber
+            unit_number: this.props.wizUnitNumber,
+            tenant_disclaimer: this.props.wizTenantDisclaimer
         }
         axios.post('/api/ticket', body)
         .then(res => {
@@ -48,6 +49,7 @@ class SubmitModal extends Component {
         this.props.setWizAttachment('');
         this.props.setWizPermission(null);
         this.props.setWizUnitNumber('');
+        this.props.setWizTenantDisclaimer('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
     }
@@ -75,7 +77,7 @@ class SubmitModal extends Component {
 }
 
 let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime} = state;
     return{
         userID,
         userName,
@@ -87,10 +89,11 @@ let mapStateToProps = state => {
         wizAttachment,
         wizPermission,
         wizUnitNumber,
+        wizTenantDisclaimer,
         wizTextOptIn,
         wizSubmitTime,
         noteAttachment
     }
 };
 
-export default connect(mapStateToProps, {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setTextOptIn, setNoteAttachment})(SubmitModal)
+export default connect(mapStateToProps, {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment})(SubmitModal)
