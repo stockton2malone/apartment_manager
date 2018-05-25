@@ -77,6 +77,7 @@ create table Tickets (
     ticket_status e_ticket_status,
     completion_date TIMESTAMP,
     unit_number TEXT,
+    tenant_disclaimer TEXT,
     FOREIGN KEY (created_by_id) REFERENCES Users(user_id),
     FOREIGN KEY (complex_id) REFERENCES Complex(complex_id),
     FOREIGN KEY (worker_id) REFERENCES Users(user_id)

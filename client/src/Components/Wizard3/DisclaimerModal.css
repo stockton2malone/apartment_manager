@@ -18,9 +18,19 @@
     background-color: #efefef !important; 
     width: 70vw !important;
     color: #474747;
+    margin: 0 auto;
 }
 
 .popup-content p {
-    padding: 10px 5px;
+    padding: 10px 5px; 
 }
 
+.popup-overlay {
+    width: 100vw;
+}
+
+textarea {
+    margin: 10px;
+    width: 60vw;
+    font-family: 'Work Sans', sans-serif;
+}
