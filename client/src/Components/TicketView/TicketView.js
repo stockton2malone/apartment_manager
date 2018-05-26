@@ -234,28 +234,16 @@ class TicketView extends Component {
   // -- twilio for status change --
   alertUsers() {
     let ticket = this.props.tickets[0];
-    //pretty sure this can be cleaner and more accurate... but tired. will revisit
-    let recipients = () => {
-      //if user is owner and worker is assigned, set recipients to both worker and the creator if it isnt the owner.
-      if (this.user.user_role === "Owner" && this.props.tickets[0].worker_id) {
-        return [
-          this.props.tickets[0].worker_id,
-          this.user.user_id !== this.props.tickets[0].created_by_id &&
-            this.props.tickets[0].created_by_id
-        ];
-        //if user is the creator of ticket & worker assigned sends to worker
-      } else if (
-        this.user.user_id === this.props.tickets[0].created_by_id &&
-        this.props.tickets[0].worker_id
-      ) {
-        return [this.props.tickets[0].worker_id];
-        //leaves the worker sending
-      } else return [this.user.user_id];
-    };
+    //recipients would be the worker and the creator of the ticket
+    //complex owner could have too many tix to oversee by text so is excluded
+    let recipients = [
+      ticket.created_by_id,
+      ticket.worker_id !== ticket.created_by_id && ticket.worker_id
+    ];
     //twilio requires each message to have a separate call
-    recipients().forEach(x => {
+    recipients.forEach(x => {
       let recipient = x;
-      axios.post("/api/message/status", { recipient, ticket });
+      x !== null && axios.post("/api/message/status", { recipient, ticket });
     });
   }
   render() {

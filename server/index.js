@@ -186,9 +186,9 @@ app.post("/api/message/status", (req, res) => {
   let dbInstance = req.app.get("db");
   //getting a recipient id to make a db call to get user_phone and the ticket id for message
   dbInstance.readUser([req.body.recipient]).then(user => {
-    user.text_permissions &&
-      //creates message
+    if (user[0].text_permissions && req.body.ticket.permission_notifications) {
       twilio.messages
+        //creates message if text permissions global and ticket are true
         .create({
           to: `+1${user[0].user_phone}`,
           from: PHONE_NUMBER,
@@ -198,6 +198,7 @@ app.post("/api/message/status", (req, res) => {
         })
         .then(message => console.log("twilio message PING"))
         .catch(err => console.log(err));
+    }
   });
 });
 
