@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import "./TicketView.css";
 
-import { setNotes, setTickets, setWorkerId, setTicketStatus } from '../../ducks/reducer';
+import { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus } from '../../ducks/reducer';
 
 class TicketView extends Component {
 
@@ -235,7 +235,7 @@ class TicketView extends Component {
       permission_enter: this.props.tickets[0].permission_enter,
       permission_notifications: this.props.tickets[0].permission_notifications,
       assigned_status: this.props.tickets[0].assigned_status,
-      assigned_date: this.props.tickets[0].assigned_date,
+      assigned_date: this.props.ticket_assigned_date,
       worker_id: this.props.worker_id,
       ticket_status: this.props.ticket_status,
       completion_date: this.props.tickets[0].completion_date,
@@ -254,16 +254,22 @@ class TicketView extends Component {
     axios.get(`http://localhost:3001/api/workers`)
     .then(res => {
       console.log(res.data)
+      this.props.setWorkers(res.data)
     })
     .catch(err => console.log(err))
   }
 
   render() {
-    const {setTicketStatus} = this.props;
+    const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate} = this.props;
     // console.log(this.props.tickets)
     let ticket = this.props.tickets[0];
-    console.log("this is ticket.worker_id: ",ticket.worker_id)
-     console.log("this.is user.user_id: ",this.user.user_id);
+    //console.log("this is ticket.worker_id: ",ticket.worker_id)
+    //console.log("this.is user.user_id: ",this.user.user_id);
+    const workers = this.props.workers.map((worker,i) => {
+      return(
+        <option key={i} value={worker.user_name}>{worker.user_complex}: {worker.user_name}</option>
+      )
+    })
     if (ticket && this.user){
     return (
       <div className="ticketViewContainer">
@@ -271,7 +277,7 @@ class TicketView extends Component {
           {this.props.ticketNumber ? this.props.ticketNumber : `Ticket #${window.location.hash.split("/").pop()}`}
         </h1>
         <h2>{`Assigned To: ${ticket.assigned_status
-          ? ticket.worker_id
+          ? this.props.assigned_worker
           : " Not Assigned"}`}</h2>
         <div className="ticketInfoContainer">
 
@@ -288,6 +294,14 @@ class TicketView extends Component {
             {`${ticket.assigned_date ? 
               new Date(ticket.assigned_date).toLocaleString()
               : "Not Assigned"}`}
+          </div></div>
+          <div className="workerAssigned inlay">
+          <div>
+            <span className='lrg'>Worker Assigned:</span>
+            <select name="" id="" onChange={(e) => {setAssignedWorker(e.target.value), setTicketAssignedDate(new Date())}}>
+              <option value="Not Assigned">Not Assigned</option>
+              {workers}
+            </select>
           </div></div>
           <div className="dateCompleted inlay">
           <div>
@@ -396,14 +410,17 @@ class TicketView extends Component {
 }
 
 let mapStateToProps = state => {
-  const { notes, tickets, userID, worker_id, ticket_status } = state;
+  const { notes, tickets, userID, worker_id, ticket_status, workers, assigned_worker, ticket_assigned_date } = state;
   return {
     notes,
     tickets,
     userID,
     worker_id,
-    ticket_status
+    ticket_status,
+    workers,
+    assigned_worker, 
+    ticket_assigned_date
   }
 };
 
-export default connect(mapStateToProps, { setNotes, setTickets, setWorkerId, setTicketStatus })(TicketView);
+export default connect(mapStateToProps, { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus })(TicketView);

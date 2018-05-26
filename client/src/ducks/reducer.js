@@ -5,10 +5,15 @@ const initialState = {
   userName: "",
   userRole: "",
   userComplex: "",
+  //workers
+  workers: [],
+  assigned_worker: "",
   //existing ticket
   tickets: [],
   worker_id: "",
   ticket_status: "",
+  ticket_assigned_date: null,
+  ticket_assigned_status: null,
   //new ticket/wizard
   wizLevel: "",
   wizType: "",
@@ -38,10 +43,15 @@ const SET_USER_ID = "SET_USER_ID";
 const SET_USER_NAME = "SET_USER_NAME";
 const SET_USER_ROLE = "SET_USER_ROLE";
 const SET_USER_COMPLEX = "SET_USER_COMPLEX";
+//worker related
+const SET_WORKERS = "SET_WORKERS";
+const SET_ASSIGNED_WORKER = "SET_ASSIGNED_WORKER";
 //existing ticket related
 const SET_TICKETS = "SET_TICKETS";
 const SET_WORKER_ID = "SET_WORKER_ID";
 const SET_TICKET_STATUS = "SET_TICKET_STATUS";
+const SET_TICKET_ASSIGNED_DATE = "SET_TICKET_ASSIGNED_DATE";
+const SET_TICKET_ASSIGNED_STATUS = "SET_TICKET_ASSIGNED_STATUS";
 //new ticket/wizard
 const SET_WIZ_LEVEL = "SET_WIZ_LEVEL";
 const SET_WIZ_TYPE = "SET_WIZ_TYPE";
@@ -88,6 +98,19 @@ export function setUserComplex(complex) {
     payload: complex
   };
 }
+//worker related
+export function setWorkers(workers) {
+  return {
+    type: SET_WORKERS,
+    payload: workers
+  };
+}
+export function setAssignedWorker(worker) {
+  return {
+    type: SET_ASSIGNED_WORKER,
+    payload: worker
+  };
+}
 //existing ticket related
 export function setTickets(tickets) {
   return {
@@ -102,6 +125,18 @@ export function setWorkerId(id) {
   };
 }
 export function setTicketStatus(status) {
+  return {
+    type: SET_TICKET_STATUS,
+    payload: status
+  };
+}
+export function setTicketAssignedDate(date) {
+  return {
+    type: SET_TICKET_ASSIGNED_DATE,
+    payload: date
+  };
+}
+export function setTicketAssignedStatus(status) {
   return {
     type: SET_TICKET_STATUS,
     payload: status
@@ -223,6 +258,15 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         userComplex: payload
       });
+    //worker
+    case SET_WORKERS:
+      return Object.assign({}, state, {
+        workers: payload
+      });
+    case SET_ASSIGNED_WORKER:
+      return Object.assign({}, state, {
+        assigned_worker: payload
+      });
     //existing tix/////////
     case SET_TICKETS:
       return Object.assign({}, state, {
@@ -235,6 +279,14 @@ export default function reducer(state = initialState, action) {
     case SET_TICKET_STATUS:
       return Object.assign({}, state, {
         ticket_status: payload
+      });
+    case SET_TICKET_ASSIGNED_DATE:
+      return Object.assign({}, state, {
+        ticket_assigned_date: payload
+      });
+    case SET_TICKET_ASSIGNED_STATUS:
+      return Object.assign({}, state, {
+        ticket_assigned_status: payload
       });
     //wizard/ new tix///////
     case SET_WIZ_LEVEL:
