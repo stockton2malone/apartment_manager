@@ -1,11 +1,25 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import axios from 'axios';
+import UnitNumber from './UnitNumber';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard2.css';
 
 class Wizard2 extends Component {
+    componentDidMount() {
+        axios.get('/api/user')
+            .then(res => {
+            if(this.props.userRole === "Tenant") {
+                this.props.setWizUnitNumber(res.data.user_unit);
+            } else {
+                this.props.setWizUnitNumber('');
+            }
+        })
+        .catch(err => console.log(err));
+    }
+
     handleCancel() {
         this.props.setWizType('');
         this.props.setWizLevel('');
@@ -13,6 +27,8 @@ class Wizard2 extends Component {
         this.props.setWizDesc('');
         this.props.setWizAttachment('');
         this.props.setWizPermission(null);
+        this.props.setWizUnitNumber('');
+        this.props.setWizTenantDisclaimer('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
     }
@@ -45,7 +61,7 @@ class Wizard2 extends Component {
    
     render() {
         //pull state off of props
-        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment } = this.props;
+        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment } = this.props;
         const testObj = {name: 'brett', test: "does it work?"}
         //what i want returned
         return(
@@ -65,6 +81,11 @@ class Wizard2 extends Component {
                         </div>
 
                         <input id="note-title" value = {this.props.wizSubject} type="text" placeholder="Ticket Subject" size="20" onChange={(e) => setWizSubject(e.target.value)}/>
+
+                        <div>
+                        {this.props.userRole !== "Tenant" && <UnitNumber/> }
+                        </div>
+
                         <textarea name="note-description" id="note-description" value = {this.props.wizDescription} cols="20" rows="12" placeholder="Describe your issue here" onChange={(e) => setWizDesc(e.target.value)}></textarea>
                         <div className="file-upload">
                             <label htmlFor="file">Choose image/video file(s) to upload</label>
@@ -98,7 +119,7 @@ class Wizard2 extends Component {
 
 //redux stuff here
 let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime} = state;
     return{
         userID,
         userName,
@@ -111,8 +132,12 @@ let mapStateToProps = state => {
         wizPermission,
         wizTextOptIn,
         wizSubmitTime,
+        wizUnitNumber,
+        wizTenantDisclaimer,
         noteAttachment
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment })(Wizard2)
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment })(Wizard2)
+
+

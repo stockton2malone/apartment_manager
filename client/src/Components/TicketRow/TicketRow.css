@@ -16,10 +16,9 @@ a {
 
 .ticketRowContainer > .ticketData,
 #ticketTime {
-  width: 25%;
-  padding: 8px;
+  min-width: 25%;
+  padding: 20px;
   box-sizing: border-box;
-
   display: flex;
   justify-content: center;
   align-items: center;

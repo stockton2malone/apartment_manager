@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import SubmitModal from './SubmitModal';
 //function for setting creation time on state
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard4.css';
 
@@ -78,12 +78,14 @@ class Wizard4 extends Component {
         this.props.setWizDesc('');
         this.props.setWizAttachment('');
         this.props.setWizPermission(null);
+        this.props.setWizUnitNumber('');
+        this.props.setWizTenantDisclaimer('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
     }
 
     render() {
-        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment } = this.props;
+        const { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment } = this.props;
 
 
         return(
@@ -103,6 +105,8 @@ class Wizard4 extends Component {
                         <br/>
                         <div className = "sum-items">Ticket Subject: <span className="desc">{this.props.wizSubject}</span></div>
                         <br/>
+                        <div className = "sum-items">Unit Number: <span className="desc">{this.props.wizUnitNumber}</span></div>
+                        <br/>
                         <div className = "sum-items">Description of Issue: <span className="desc">{this.props.wizDescription}</span></div>
                         <br/>
                         <div className = 'sum-items'>Image/Video Upload: </div>
@@ -111,7 +115,7 @@ class Wizard4 extends Component {
                         <br/>
                         <div className = "sum-items">Permission to Enter? <span className="desc">{`${this.props.wizPermission ? 'Yes' : 'No'}`}</span></div>
                         <br/>
-                        <div className = "sum-items">Tenant Disclaimers:</div>
+                        <div className = "sum-items">Tenant Disclaimers: <span className="desc">{this.props.wizTenantDisclaimer}</span></div>
                         <br/>
                         <div className = "sum-items">Text Notifications? <span className="desc">{`${this.props.wizTextOptIn ? 'Yes' : 'No'}`}</span></div>
                         <div id="navigation">
@@ -128,7 +132,7 @@ class Wizard4 extends Component {
 
 //redux stuff here
 let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime} = state;
     return{
         userID,
         userName,
@@ -139,10 +143,12 @@ let mapStateToProps = state => {
         wizDescription,
         wizAttachment,
         wizPermission,
+        wizUnitNumber,
+        wizTenantDisclaimer,
         wizTextOptIn,
         wizSubmitTime,
         noteAttachment
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setTextOptIn, setNoteAttachment })(Wizard4)
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment })(Wizard4)

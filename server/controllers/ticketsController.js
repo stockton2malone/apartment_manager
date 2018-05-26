@@ -23,7 +23,9 @@ module.exports = {
                 issue_description, 
                 urgency_level, 
                 permission_enter, 
-                permission_notifications
+                permission_notifications,
+                unit_number,
+                tenant_disclaimer
             } = req.body;
 
         dbInstance.createTicket([ 
@@ -39,7 +41,9 @@ module.exports = {
             assigned_date,
             worker_id,
             ticket_status,
-            completion_date 
+            completion_date,
+            unit_number,
+            tenant_disclaimer
         ])
             .then(ticket => {
                 res.status(200).send(ticket);
@@ -59,7 +63,9 @@ module.exports = {
             assigned_date,
             worker_id,
             ticket_status,
-            completion_date
+            completion_date,
+            unit_number,
+            tenant_disclaimer
         } = req.body;
 
         dbInstance.updateTicket([
@@ -74,7 +80,9 @@ module.exports = {
             assigned_date,
             worker_id,
             ticket_status,
-            completion_date
+            completion_date,
+            unit_number,
+            tenant_disclaimer
         ])
             .then(ticket => {
                 res.status(200).send(ticket);

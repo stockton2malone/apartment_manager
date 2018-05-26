@@ -151,3 +151,9 @@ label {
 .file-upload > div {
     margin: 10px;
 }
+
+#unitNumber {
+    width: 40vw;
+    border-radius: 5px;
+    background-color: #efefef;
+}
