@@ -11,5 +11,15 @@ module.exports = {
             else res.status(404).send(null)
         })
         .catch(e => res.status(500).send(e))
+    },
+
+    getWorkers: (req, res, next) => {
+        let dbInstance = req.app.get('db');
+        dbInstance.readWorkers()
+        .then(workers => {
+            if (workers.length) res.status(200).send(workers);
+            else res.status(404).send(null)
+        })
+        .catch(e => res.status(500).send(e))
     }
 }

@@ -18,7 +18,7 @@ class TicketView extends Component {
 
   componentDidMount() {
     this.getTicketData()
-    
+    this.getWorkers()
   }
 
   getTicketData(){
@@ -250,8 +250,12 @@ class TicketView extends Component {
       .catch(err => console.log(err))
   }
 
-  alertTest(){
-    console.log(this.props.ticket_status)
+  getWorkers(){
+    axios.get(`http://localhost:3001/api/workers`)
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(err => console.log(err))
   }
 
   render() {

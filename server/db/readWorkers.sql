@@ -1,0 +1,1 @@
+SELECT * FROM USERS WHERE user_role = 'Worker' ORDER BY user_complex;

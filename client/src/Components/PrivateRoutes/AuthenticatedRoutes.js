@@ -34,7 +34,7 @@ class AuthenticatedRoutes extends Component {
       .then(res => {
         this.props.setUserID(res.data.user_id)
         this.props.setUserRole(res.data.user_role)
-        //this.props.setUserComplex(res.data.user_complex)
+        this.props.setUserComplex(res.data.user_complex)
         this.setState({load: false})
       })
     })
