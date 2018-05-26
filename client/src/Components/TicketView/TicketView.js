@@ -338,7 +338,7 @@ class TicketView extends Component {
                   : "Placeholder"}
               </div>
             ) : (
-                <select name="ticketStatus" id="statusSelect" onChange={(e) => setTicketStatus(e.target)}>
+                <select name="ticketStatus" id="statusSelect" onChange={(e) => setTicketStatus(e.target.value)}>
                   <option value="New">New</option>
                   <option value="Assigned">Assigned</option>
                   <option value="In Process">In Process</option>
