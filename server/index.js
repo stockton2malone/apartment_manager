@@ -186,17 +186,18 @@ app.post("/api/message/status", (req, res) => {
   let dbInstance = req.app.get("db");
   //getting a recipient id to make a db call to get user_phone and the ticket id for message
   dbInstance.readUser([req.body.recipient]).then(user => {
-    //creates message
-    twilio.messages
-      .create({
-        to: `+1${user[0].user_phone}`,
-        from: PHONE_NUMBER,
-        body: `This is an Upkeep notification.The status of ticket ${req.body
-          .ticket.ticket_id} has been changed to ${req.body.ticket
-          .ticket_status}`
-      })
-      .then(message => console.log(message.sid))
-      .catch(err => console.log(err));
+    user.text_permissions &&
+      //creates message
+      twilio.messages
+        .create({
+          to: `+1${user[0].user_phone}`,
+          from: PHONE_NUMBER,
+          body: `This is an Upkeep notification.The status of ticket ${req.body
+            .ticket.ticket_id} has been changed to ${req.body.ticket
+            .ticket_status}`
+        })
+        .then(message => console.log("twilio message PING"))
+        .catch(err => console.log(err));
   });
 });
 
