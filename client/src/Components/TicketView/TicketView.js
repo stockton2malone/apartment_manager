@@ -235,7 +235,6 @@ class TicketView extends Component {
       permission_enter: this.props.tickets[0].permission_enter,
       permission_notifications: this.props.tickets[0].permission_notifications,
       assigned_status: this.props.tickets[0].assigned_status,
-      assigned_date: this.props.ticket_assigned_date,
       worker_id: this.props.worker_id,
       ticket_status: this.props.ticket_status,
       completion_date: this.props.tickets[0].completion_date,
@@ -298,7 +297,7 @@ class TicketView extends Component {
           <div className="workerAssigned inlay">
           <div>
             <span className='lrg'>Worker Assigned:</span>
-            <select name="" id="" onChange={(e) => {setAssignedWorker(e.target.value), setTicketAssignedDate(new Date())}}>
+            <select name="" id="" onChange={(e) => {setAssignedWorker(e.target.value)}}>
               <option value="Not Assigned">Not Assigned</option>
               {workers}
             </select>

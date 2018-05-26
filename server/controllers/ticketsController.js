@@ -53,6 +53,7 @@ module.exports = {
         let dbInstance = req.app.get('db');
         console.log(req.params.id)
         console.log(req.body)
+        const assigned_date = new Date();
         const { 
             complex_id, 
             issue_type, 
@@ -61,7 +62,6 @@ module.exports = {
             permission_enter, 
             permission_notifications,
             assigned_status,
-            assigned_date,
             worker_id,
             ticket_status,
             completion_date,
