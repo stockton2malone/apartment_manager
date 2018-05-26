@@ -51,7 +51,8 @@ module.exports = {
     },
     updateTicket: (req, res, next) => {
         let dbInstance = req.app.get('db');
-
+        console.log(req.params.id)
+        console.log(req.body)
         const { 
             complex_id, 
             issue_type, 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
-
+import {Link} from 'react-router-dom';
 import "./TicketView.css";
 
 import { setNotes, setTickets, setWorkerId, setTicketStatus } from '../../ducks/reducer';
@@ -28,7 +28,8 @@ class TicketView extends Component {
       if (resp.data.length){
         this.props.setTickets(resp.data)
         this.props.setWorkerId(resp.data[0].worker_id)
-        // console.log(resp.data)
+        this.props.setTicketStatus(resp.data[0].ticket_status)
+        //console.log(resp.data)
         axios.get(`http://localhost:3001/api/users/${resp.data[0].created_by_id}`)
         .then(r => {
           // console.log(r)
@@ -225,6 +226,34 @@ class TicketView extends Component {
     }
   }
 
+  updateTicketStatus(e){
+    const body = {
+      complex_id: this.props.tickets[0].complex_id,
+      issue_type: this.props.tickets[0].issue_type,
+      issue_description: this.props.tickets[0].issue_description,
+      urgency_level: this.props.tickets[0].urgency_level,
+      permission_enter: this.props.tickets[0].permission_enter,
+      permission_notifications: this.props.tickets[0].permission_notifications,
+      assigned_status: this.props.tickets[0].assigned_status,
+      assigned_date: this.props.tickets[0].assigned_date,
+      worker_id: this.props.worker_id,
+      ticket_status: this.props.ticket_status,
+      completion_date: this.props.tickets[0].completion_date,
+      unit_number: this.props.tickets[0].unit_number,
+      tenant_disclaimer: this.props.tickets[0].tenant_disclaimer
+    }
+    console.log(body)
+    axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log(err))
+  }
+
+  alertTest(){
+    console.log(this.props.ticket_status)
+  }
+
   render() {
     const {setTicketStatus} = this.props;
     // console.log(this.props.tickets)
@@ -337,14 +366,15 @@ class TicketView extends Component {
                   ? ticket.ticket_status
                   : "Placeholder"}
               </div>
-            ) : (
-                <select name="ticketStatus" id="statusSelect" onChange={(e) => setTicketStatus(e.target.value)}>
+            ) : (<div>
+                <select value={this.props.ticket_status}name="ticketStatus" id="statusSelect" onChange={(e) => setTicketStatus(e.target.value)}>
                   <option value="New">New</option>
                   <option value="Assigned">Assigned</option>
                   <option value="In Process">In Process</option>
                   <option value="Canceled">Canceled</option>
                   <option value="Completed">Completed</option>
                 </select>
+                <Link to='/'><button className="btn-right" onClick={() => this.updateTicketStatus()}>Update</button></Link></div>
               )}
           </div></div>
         </div>
@@ -362,11 +392,13 @@ class TicketView extends Component {
 }
 
 let mapStateToProps = state => {
-  const { notes, tickets, userID } = state;
+  const { notes, tickets, userID, worker_id, ticket_status } = state;
   return {
     notes,
     tickets,
-    userID
+    userID,
+    worker_id,
+    ticket_status
   }
 };
 

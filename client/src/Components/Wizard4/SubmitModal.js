@@ -11,7 +11,7 @@ class SubmitModal extends Component {
     handleSubmit() {
 
         const body = {
-            complex_id: 1,
+            complex_id: this.props.user,
             issue_type: this.props.wizType,
             issue_description: this.props.wizSubject,
             urgency_level: this.props.wizLevel,
@@ -77,11 +77,12 @@ class SubmitModal extends Component {
 }
 
 let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, userComplex, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime} = state;
     return{
         userID,
         userName,
         userRole,
+        userComplex,
         wizLevel,
         wizType,
         wizSubject,

@@ -4,10 +4,11 @@ const initialState = {
   userID: "",
   userName: "",
   userRole: "",
+  userComplex: "",
   //existing ticket
   tickets: [],
   worker_id: "",
-  ticket_status: "New",
+  ticket_status: "",
   //new ticket/wizard
   wizLevel: "",
   wizType: "",
@@ -36,6 +37,7 @@ const initialState = {
 const SET_USER_ID = "SET_USER_ID";
 const SET_USER_NAME = "SET_USER_NAME";
 const SET_USER_ROLE = "SET_USER_ROLE";
+const SET_USER_COMPLEX = "SET_USER_COMPLEX";
 //existing ticket related
 const SET_TICKETS = "SET_TICKETS";
 const SET_WORKER_ID = "SET_WORKER_ID";
@@ -78,6 +80,12 @@ export function setUserRole(role) {
   return {
     type: SET_USER_ROLE,
     payload: role
+  };
+}
+export function setUserComplex(complex) {
+  return {
+    type: SET_USER_COMPLEX,
+    payload: complex
   };
 }
 //existing ticket related
@@ -210,6 +218,10 @@ export default function reducer(state = initialState, action) {
     case SET_USER_ROLE:
       return Object.assign({}, state, {
         userRole: payload
+      });
+    case SET_USER_COMPLEX:
+      return Object.assign({}, state, {
+        userComplex: payload
       });
     //existing tix/////////
     case SET_TICKETS:
