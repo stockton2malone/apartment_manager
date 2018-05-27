@@ -297,7 +297,7 @@ class TicketView extends Component {
           <div className="workerAssigned inlay">
           <div>
             <span className='lrg'>Worker Assigned:</span>
-            <select name="" id="" onChange={(e) => {setAssignedWorker(e.target.value)}}>
+            <select name="" id="" onChange={(e) => {setAssignedWorker(e.target.value)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
               <option value="Not Assigned">Not Assigned</option>
               {workers}
             </select>
