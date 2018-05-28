@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import SubmitModal from './SubmitModal';
 //function for setting creation time on state
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setUserComplex, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard4.css';
 
@@ -24,6 +24,7 @@ class Wizard4 extends Component {
             .then(res => {
                 console.log('user info: ', res.data)
                 this.props.setUserID(res.data.user_id)
+                this.props.setUserComplex(res.data.user_complex)
             })
         })
         .catch(err => console.log(err))
@@ -132,7 +133,7 @@ class Wizard4 extends Component {
 
 //redux stuff here
 let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime, setUserComplex} = state;
     return{
         userID,
         userName,

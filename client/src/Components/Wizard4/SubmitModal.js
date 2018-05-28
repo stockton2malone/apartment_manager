@@ -9,16 +9,26 @@ import './SubmitModal.css';
 
 class SubmitModal extends Component {
     handleSubmit() {
-
+        let id;
+        if(this.props.user_complex === 'Complex 1'){
+            id = 1
+        } else if(this.props.user_complex === 'Complex 2'){
+            id = 2
+        } else {
+            id = 3
+        }
+        console.log('the id is: ', id)
+        console.log(typeof id)
         const body = {
-            complex_id: this.props.user,
+            complex_id: null,
             issue_type: this.props.wizType,
             issue_description: this.props.wizSubject,
             urgency_level: this.props.wizLevel,
             permission_enter: this.props.wizPermission,
             permission_notifications: this.props.wizTextOptIn,
             unit_number: this.props.wizUnitNumber,
-            tenant_disclaimer: this.props.wizTenantDisclaimer
+            tenant_disclaimer: this.props.wizTenantDisclaimer,
+            user_complex: this.props.userComplex
         }
         axios.post('/api/ticket', body)
         .then(res => {

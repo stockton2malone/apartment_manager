@@ -17,6 +17,7 @@ module.exports = {
         const assigned_date = null;
         const worker_id = null;
         const completion_date = null;
+        const worker_name = null;
         const { 
                 complex_id, 
                 issue_type, 
@@ -25,9 +26,11 @@ module.exports = {
                 permission_enter, 
                 permission_notifications,
                 unit_number,
-                tenant_disclaimer
+                tenant_disclaimer, 
+                user_complex
             } = req.body;
-
+        console.log(typeof complex_id)
+        console.log(typeof unit_number)
         dbInstance.createTicket([ 
             created_by_id,
             complex_id,
@@ -43,7 +46,9 @@ module.exports = {
             ticket_status,
             completion_date,
             unit_number,
-            tenant_disclaimer
+            tenant_disclaimer, 
+            worker_name,
+            user_complex
         ])
             .then(ticket => {
                 res.status(200).send(ticket);
@@ -102,7 +107,7 @@ module.exports = {
     getOwnerTickets: (req, res, next) => {
         let dbInstance = req.app.get('db');
 
-        dbInstance.readOwnerTickets( [ req.session.passport.user.id] )
+        dbInstance.readOwnerTickets( [ req.session.passport.user.complex] )
             .then( ownerTickets => {
                 res.status(200).send(ownerTickets);
             });
