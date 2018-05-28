@@ -27,10 +27,10 @@ module.exports = {
                 permission_notifications,
                 unit_number,
                 tenant_disclaimer, 
-                user_complex
+                user_complex,
+                owner_id
             } = req.body;
-        console.log(typeof complex_id)
-        console.log(typeof unit_number)
+       
         dbInstance.createTicket([ 
             created_by_id,
             complex_id,
@@ -48,7 +48,8 @@ module.exports = {
             unit_number,
             tenant_disclaimer, 
             worker_name,
-            user_complex
+            user_complex,
+            owner_id
         ])
             .then(ticket => {
                 res.status(200).send(ticket);

@@ -28,7 +28,8 @@ class SubmitModal extends Component {
             permission_notifications: this.props.wizTextOptIn,
             unit_number: this.props.wizUnitNumber,
             tenant_disclaimer: this.props.wizTenantDisclaimer,
-            user_complex: this.props.userComplex
+            user_complex: this.props.userComplex,
+            owner_id: this.props.wizComplexOwner
         }
         axios.post('/api/ticket', body)
         .then(res => {
@@ -87,7 +88,7 @@ class SubmitModal extends Component {
 }
 
 let mapStateToProps = state => {
-    const {noteAttachment, userID, userName, userRole, userComplex, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime} = state;
+    const {noteAttachment, userID, userName, userRole, userComplex, wizLevel, wizType, wizSubject, wizDescription, wizAttachment, wizPermission, wizUnitNumber, wizTenantDisclaimer, wizTextOptIn, wizSubmitTime, wizComplexOwner} = state;
     return{
         userID,
         userName,
@@ -103,7 +104,8 @@ let mapStateToProps = state => {
         wizTenantDisclaimer,
         wizTextOptIn,
         wizSubmitTime,
-        noteAttachment
+        noteAttachment,
+        wizComplexOwner
     }
 };
 
