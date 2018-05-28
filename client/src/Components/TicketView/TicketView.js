@@ -258,6 +258,11 @@ class TicketView extends Component {
     .catch(err => console.log(err))
   }
 
+  setWorkerId(e){
+    let workerID=e.currentTarget.dataset.id;
+    console.log(workerID)
+  }
+
   render() {
     const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate} = this.props;
     // console.log(this.props.tickets)
@@ -266,7 +271,7 @@ class TicketView extends Component {
     //console.log("this.is user.user_id: ",this.user.user_id);
     const workers = this.props.workers.map((worker,i) => {
       return(
-        <option key={i} value={worker.user_name}>{worker.user_complex}: {worker.user_name}</option>
+        <option key={i} value={worker.user_name} id={worker.user_id}>{worker.user_complex}: {worker.user_name}</option>
       )
     })
     if (ticket && this.user){
@@ -297,7 +302,7 @@ class TicketView extends Component {
           <div className="workerAssigned inlay">
           <div>
             <span className='lrg'>Worker Assigned:</span>
-            <select name="" id="" onChange={(e) => {setAssignedWorker(e.target.value)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
+            <select name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
               <option value="Not Assigned">Not Assigned</option>
               {workers}
             </select>
