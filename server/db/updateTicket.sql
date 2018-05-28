@@ -11,5 +11,6 @@ SET complex_id = $2,
     ticket_status = $11,
     completion_date = $12,
     unit_number = $13,
-    tenant_disclaimer = $14
+    tenant_disclaimer = $14,
+    worker_name = $15
 WHERE ticket_id = $1;

@@ -66,7 +66,8 @@ module.exports = {
             ticket_status,
             completion_date,
             unit_number,
-            tenant_disclaimer
+            tenant_disclaimer,
+            worker_name
         } = req.body;
 
         dbInstance.updateTicket([
@@ -83,7 +84,8 @@ module.exports = {
             ticket_status,
             completion_date,
             unit_number,
-            tenant_disclaimer
+            tenant_disclaimer,
+            worker_name
         ])
             .then(ticket => {
                 res.status(200).send(ticket);

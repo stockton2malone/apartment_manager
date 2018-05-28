@@ -11,6 +11,7 @@ const initialState = {
   //existing ticket
   tickets: [],
   worker_id: "",
+  worker_name: "",
   ticket_status: "",
   ticket_assigned_date: null,
   ticket_assigned_status: null,
@@ -49,6 +50,7 @@ const SET_ASSIGNED_WORKER = "SET_ASSIGNED_WORKER";
 //existing ticket related
 const SET_TICKETS = "SET_TICKETS";
 const SET_WORKER_ID = "SET_WORKER_ID";
+const SET_WORKER_NAME = "SET_WORKER_NAME";
 const SET_TICKET_STATUS = "SET_TICKET_STATUS";
 const SET_TICKET_ASSIGNED_DATE = "SET_TICKET_ASSIGNED_DATE";
 const SET_TICKET_ASSIGNED_STATUS = "SET_TICKET_ASSIGNED_STATUS";
@@ -122,6 +124,12 @@ export function setWorkerId(id) {
   return {
     type: SET_WORKER_ID,
     payload: id
+  };
+}
+export function setWorkerName(name) {
+  return {
+    type: SET_WORKER_NAME,
+    payload: name
   };
 }
 export function setTicketStatus(status) {
@@ -275,6 +283,10 @@ export default function reducer(state = initialState, action) {
     case SET_WORKER_ID:
       return Object.assign({}, state, {
         worker_id: payload
+      });
+    case SET_WORKER_NAME:
+      return Object.assign({}, state, {
+        worker_name: payload
       });
     case SET_TICKET_STATUS:
       return Object.assign({}, state, {

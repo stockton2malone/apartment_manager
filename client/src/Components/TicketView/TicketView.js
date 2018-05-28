@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import "./TicketView.css";
 
-import { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus } from '../../ducks/reducer';
+import { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus, setWorkerName } from '../../ducks/reducer';
 
 class TicketView extends Component {
 
@@ -28,8 +28,9 @@ class TicketView extends Component {
       if (resp.data.length){
         this.props.setTickets(resp.data)
         this.props.setWorkerId(resp.data[0].worker_id)
+        this.props.setAssignedWorker(resp.data[0].worker_name)
         this.props.setTicketStatus(resp.data[0].ticket_status)
-        //console.log(resp.data)
+        console.log(resp.data)
         axios.get(`http://localhost:3001/api/users/${resp.data[0].created_by_id}`)
         .then(r => {
           // console.log(r)
@@ -239,7 +240,8 @@ class TicketView extends Component {
       ticket_status: this.props.ticket_status,
       completion_date: this.props.tickets[0].completion_date,
       unit_number: this.props.tickets[0].unit_number,
-      tenant_disclaimer: this.props.tickets[0].tenant_disclaimer
+      tenant_disclaimer: this.props.tickets[0].tenant_disclaimer,
+      worker_name: this.props.assigned_worker
     }
     console.log(body)
     axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
@@ -267,6 +269,7 @@ class TicketView extends Component {
     const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate} = this.props;
     // console.log(this.props.tickets)
     let ticket = this.props.tickets[0];
+    console.log('current ticket info: ', ticket)
     //console.log("this is ticket.worker_id: ",ticket.worker_id)
     //console.log("this.is user.user_id: ",this.user.user_id);
     const workers = this.props.workers.map((worker,i) => {
@@ -302,7 +305,7 @@ class TicketView extends Component {
           <div className="workerAssigned inlay">
           <div>
             <span className='lrg'>Worker Assigned:</span>
-            <select name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
+            <select value={this.props.assigned_worker} name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
               <option value="Not Assigned">Not Assigned</option>
               {workers}
             </select>
@@ -414,12 +417,13 @@ class TicketView extends Component {
 }
 
 let mapStateToProps = state => {
-  const { notes, tickets, userID, worker_id, ticket_status, workers, assigned_worker, ticket_assigned_date } = state;
+  const { notes, tickets, userID, worker_id, worker_name, ticket_status, workers, assigned_worker, ticket_assigned_date } = state;
   return {
     notes,
     tickets,
     userID,
     worker_id,
+    worker_name,
     ticket_status,
     workers,
     assigned_worker, 
@@ -427,4 +431,4 @@ let mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps, { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus })(TicketView);
+export default connect(mapStateToProps, { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus, setWorkerName})(TicketView);
