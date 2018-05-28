@@ -319,7 +319,12 @@ class TicketView extends Component {
               : "Not Completed"}`}
               </div>
           </div>
-
+          <div className="complexInfo inlay">
+          <div>
+            <span className="lrg">Ticket Location:</span>
+            <span>Complex {ticket.complex_id}, </span>
+            <span>Unit {ticket.unit_number}</span>
+          </div></div>
           <div className="ticketDescription inlay">
             <div>
             <span className='lrg'>Description:</span>
