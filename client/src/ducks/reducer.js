@@ -26,6 +26,7 @@ const initialState = {
   wizSubmitTime: "",
   wizUnitNumber: "",
   wizTenantDisclaimer: "",
+  wizComplexOwner: "",
   //existing notes
   notes: [],
   //new note
@@ -65,6 +66,7 @@ const SET_WIZ_TEXT_OPT_IN = "SET_WIZ_TEXT_OPT_IN";
 const SET_WIZ_SUBMIT_TIME = "SET_WIZ_SUBMIT_TIME";
 const SET_WIZ_UNIT_NUMBER = "SET_WIZ_UNIT_NUMBER";
 const SET_WIZ_TENANT_DISCLAIMER = "SET_WIZ_TENANT_DISCLAIMER";
+const SET_WIZ_COMPLEX_OWNER = "SET_WIZ_COMPLEX_OWNER";
 //existing notes
 const SET_NOTES = "SET_NOTES";
 //new notes
@@ -211,6 +213,12 @@ export function setWizTenantDisclaimer(disclaimer) {
     payload: disclaimer
   }
 }
+export function setWizComplexOwner(owner) {
+  return {
+    type: SET_WIZ_COMPLEX_OWNER,
+    payload: owner
+  }
+}
 
 //note related
 export function setNotes(notes) {
@@ -340,6 +348,10 @@ export default function reducer(state = initialState, action) {
     case SET_WIZ_TENANT_DISCLAIMER:
       return Object.assign({}, state, {
         wizTenantDisclaimer: payload
+      });
+    case SET_WIZ_COMPLEX_OWNER:
+      return Object.assign({}, state, {
+        wizComplexOwner: payload
       });
     //existing notes/////////
     case SET_NOTES:

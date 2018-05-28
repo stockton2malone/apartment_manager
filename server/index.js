@@ -156,6 +156,7 @@ app.delete('/api/ticket/:id/notes/:note_id', nc.deleteNote)
 // -- User Info -- 
 app.get('/api/users/:id', uc.getUser)
 app.get('/api/workers', uc.getWorkers)
+app.get('/api/owner', uc.getOwner)
 
 //For hosting and running the app
 app.use(express.static(`${__dirname}/../client/build`));

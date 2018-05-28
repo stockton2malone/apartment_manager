@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import SubmitModal from './SubmitModal';
 //function for setting creation time on state
-import {setUserID, setUserComplex, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizComplexOwner, setUserComplex, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard4.css';
 
@@ -25,6 +25,7 @@ class Wizard4 extends Component {
                 console.log('user info: ', res.data)
                 this.props.setUserID(res.data.user_id)
                 this.props.setUserComplex(res.data.user_complex)
+                
             })
         })
         .catch(err => console.log(err))
@@ -81,6 +82,7 @@ class Wizard4 extends Component {
         this.props.setWizPermission(null);
         this.props.setWizUnitNumber('');
         this.props.setWizTenantDisclaimer('');
+        this.props.setWizComplexOwner('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
     }
@@ -152,4 +154,4 @@ let mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment })(Wizard4)
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment, setWizComplexOwner})(Wizard4)

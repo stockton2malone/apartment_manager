@@ -260,11 +260,6 @@ class TicketView extends Component {
     .catch(err => console.log(err))
   }
 
-  setWorkerId(e){
-    let workerID=e.currentTarget.dataset.id;
-    console.log(workerID)
-  }
-
   render() {
     const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate} = this.props;
     // console.log(this.props.tickets)
