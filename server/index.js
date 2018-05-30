@@ -8,6 +8,7 @@ const express = require('express'),
     path = require('path'),
     port = process.env.PORT || 3001,
     session = require('express-session'),
+    Twilio = require("twilio"),
     strategy = require('./strategy');
     nc = require('./controllers/notesController'),
     tc = require('./controllers/ticketsController'),
@@ -184,7 +185,7 @@ app.post("/api/message/status", (req, res) => {
       }
     });
   });
-  
+
 //For hosting and running the app
 app.use(express.static(`${__dirname}/../client/build`));
 app.get('*', (req, res) => {
