@@ -227,6 +227,22 @@ class TicketView extends Component {
     }
   }
 
+   // -- twilio for status change --
+   alertUsers() {
+    let ticket = this.props.tickets[0];
+    //recipients would be the worker and the creator of the ticket
+    //complex owner could have too many tix to oversee by text so is excluded
+    let recipients = [
+      ticket.created_by_id,
+      ticket.worker_id !== ticket.created_by_id && ticket.worker_id
+    ];
+    //twilio requires each message to have a separate call
+    recipients.forEach(x => {
+      let recipient = x;
+      x !== null && axios.post("/api/message/status", { recipient, ticket });
+    });
+  }
+  
   updateTicketStatus(e){
     const body = {
       complex_id: this.props.tickets[0].complex_id,

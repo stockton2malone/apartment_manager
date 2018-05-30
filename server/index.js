@@ -60,7 +60,13 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((obj, done) => {
     done(null, obj);
 });
-
+//--Twilio setup--
+const {
+    TWILIO_AUTH_TOKEN,
+    TWILIO_ACCOUNT_SID,
+    PHONE_NUMBER
+  } = require(`${__dirname}/config.js`);
+  const twilio = new Twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 //Auth Endpoints
 app.get('/api/auth', passport.authenticate('auth0', {
     successRedirect: '/api/auth/login', 
@@ -158,6 +164,27 @@ app.get('/api/users/:id', uc.getUser)
 app.get('/api/workers', uc.getWorkers)
 app.get('/api/owner', uc.getOwner)
 
+//--Twilio Messages--
+app.post("/api/message/status", (req, res) => {
+    let dbInstance = req.app.get("db");
+    //getting a recipient id to make a db call to get user_phone and the ticket id for message
+    dbInstance.readUser([req.body.recipient]).then(user => {
+      if (user[0].text_permissions && req.body.ticket.permission_notifications) {
+        twilio.messages
+          //creates message if text permissions global and ticket are true
+          .create({
+            to: `+1${user[0].user_phone}`,
+            from: PHONE_NUMBER,
+            body: `This is an Upkeep notification.The status of ticket ${req.body
+              .ticket.ticket_id} has been changed to ${req.body.ticket
+              .ticket_status}`
+          })
+          .then(message => console.log("twilio message PING"))
+          .catch(err => console.log(err));
+      }
+    });
+  });
+  
 //For hosting and running the app
 app.use(express.static(`${__dirname}/../client/build`));
 app.get('*', (req, res) => {
