@@ -235,7 +235,7 @@ class TicketView extends Component {
       urgency_level: this.props.tickets[0].urgency_level,
       permission_enter: this.props.tickets[0].permission_enter,
       permission_notifications: this.props.tickets[0].permission_notifications,
-      assigned_status: this.props.tickets[0].assigned_status,
+      assigned_status: (this.props.ticket_status !== 'New' ? true : false),
       worker_id: this.props.worker_id,
       ticket_status: this.props.ticket_status,
       completion_date: this.props.tickets[0].completion_date,
@@ -300,10 +300,21 @@ class TicketView extends Component {
           <div className="workerAssigned inlay">
           <div>
             <span className='lrg'>Worker Assigned:</span>
-            <select value={this.props.assigned_worker} name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
+
+            {this.props.userID != ticket.owner_id ? (
+              <div className="workerAssigned inlay">
+                {ticket.worker_name 
+                  ? ticket.worker_name
+                  : "Not Assigned"}
+              </div>
+            ) : (<div>
+              <select value={this.props.assigned_worker} name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
               <option value="Not Assigned">Not Assigned</option>
               {workers}
-            </select>
+              </select>
+              </div>
+            )
+            }
           </div></div>
           <div className="dateCompleted inlay">
           <div>
@@ -399,9 +410,13 @@ class TicketView extends Component {
                   <option value="Canceled">Canceled</option>
                   <option value="Completed">Completed</option>
                 </select>
-                <Link to='/'><button className="btn-right" onClick={() => this.updateTicketStatus()}>Update</button></Link></div>
+               </div>
               )}
           </div></div>
+          <div className="inlay">
+              <span className="lrg">Click on the button to submit changes ---></span>
+              <Link to='/'><button className="btn-right" onClick={() => this.updateTicketStatus()}>Update Ticket</button></Link>
+          </div>
         </div>
       </div>
     );
