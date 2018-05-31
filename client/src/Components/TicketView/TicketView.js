@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import "./TicketView.css";
 
-import { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus, setWorkerName } from '../../ducks/reducer';
+import { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus, setWorkerName, setTicketCompletedStatus } from '../../ducks/reducer';
 
 class TicketView extends Component {
 
@@ -257,7 +257,8 @@ class TicketView extends Component {
       completion_date: this.props.tickets[0].completion_date,
       unit_number: this.props.tickets[0].unit_number,
       tenant_disclaimer: this.props.tickets[0].tenant_disclaimer,
-      worker_name: this.props.assigned_worker
+      worker_name: this.props.assigned_worker,
+      completed_status: this.props.ticket_completed_status
     }
     console.log(body)
     axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
@@ -277,9 +278,14 @@ class TicketView extends Component {
   }
 
   render() {
-    const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate} = this.props;
+    const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate, setTicketCompletedStatus} = this.props;
     // console.log(this.props.tickets)
     let ticket = this.props.tickets[0];
+    if(this.props.ticket_status != 'Completed'){
+      setTicketCompletedStatus(false)
+    } else {
+      setTicketCompletedStatus(true)
+    }
     console.log('current ticket info: ', ticket)
     //console.log("this is ticket.worker_id: ",ticket.worker_id)
     //console.log("this.is user.user_id: ",this.user.user_id);
@@ -344,7 +350,7 @@ class TicketView extends Component {
           <div className="complexInfo inlay">
           <div>
             <span className="lrg">Ticket Location:</span>
-            <span>Complex {ticket.complex_id}, </span>
+            <span>{ticket.user_complex}, </span>
             <span>Unit {ticket.unit_number}</span>
           </div></div>
           <div className="ticketDescription inlay">
@@ -412,7 +418,7 @@ class TicketView extends Component {
           <div>
             <span className="lrg">Ticket Status</span>
 
-            {this.props.userID != ticket.worker_id ? (
+            {this.props.userID != ticket.worker_id || ticket.ticket_status === 'Completed' ? (
               <div className="ticketStatus inlay">
                 {ticket.ticket_status
                   ? ticket.ticket_status
@@ -448,7 +454,7 @@ class TicketView extends Component {
 }
 
 let mapStateToProps = state => {
-  const { notes, tickets, userID, worker_id, worker_name, ticket_status, workers, assigned_worker, ticket_assigned_date } = state;
+  const { notes, tickets, userID, worker_id, worker_name, ticket_status, workers, assigned_worker, ticket_assigned_date, ticket_completed_status } = state;
   return {
     notes,
     tickets,
@@ -458,8 +464,9 @@ let mapStateToProps = state => {
     ticket_status,
     workers,
     assigned_worker, 
-    ticket_assigned_date
+    ticket_assigned_date,
+    ticket_completed_status
   }
 };
 
-export default connect(mapStateToProps, { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus, setWorkerName})(TicketView);
+export default connect(mapStateToProps, { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus, setWorkerName, setTicketCompletedStatus})(TicketView);

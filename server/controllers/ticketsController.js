@@ -18,6 +18,7 @@ module.exports = {
         const worker_id = null;
         const completion_date = null;
         const worker_name = null;
+        const completed_status = false;
         const { 
                 complex_id, 
                 issue_type, 
@@ -49,7 +50,8 @@ module.exports = {
             tenant_disclaimer, 
             worker_name,
             user_complex,
-            owner_id
+            owner_id,
+            completed_status
         ])
             .then(ticket => {
                 res.status(200).send(ticket);
@@ -60,7 +62,8 @@ module.exports = {
         console.log(req.params.id)
         console.log(req.body)
         const assigned_date = new Date();
-        const { 
+        let completedDate = null;
+        let { 
             complex_id, 
             issue_type, 
             issue_description, 
@@ -73,8 +76,18 @@ module.exports = {
             completion_date,
             unit_number,
             tenant_disclaimer,
-            worker_name
+            worker_name,
+            completed_status
         } = req.body;
+        console.log('this is completedDate: ', completedDate)
+        console.log('this is completion_date: ', completion_date)
+        console.log('this is completed_status: ', completed_status)
+        if(completed_status){
+            completedDate = new Date()
+        }
+        console.log('this is completedDate: ', completedDate)
+        completed_status && completion_date === null ? completion_date = completedDate : completion_date
+        console.log('this is my completion_date: ', completion_date)
 
         dbInstance.updateTicket([
             req.params.id,
@@ -91,7 +104,8 @@ module.exports = {
             completion_date,
             unit_number,
             tenant_disclaimer,
-            worker_name
+            worker_name,
+            completed_status
         ])
             .then(ticket => {
                 res.status(200).send(ticket);
