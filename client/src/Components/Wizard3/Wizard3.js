@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Wizard3.css';
 import { Link } from 'react-router-dom';
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer,setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer,setTextOptIn, setNoteAttachment, setWizComplexOwner} from '../../ducks/reducer';
 import { connect } from 'react-redux';
 
 import './DisclaimerModal';
@@ -19,6 +19,7 @@ class Wizard3 extends Component {
         this.props.setWizTenantDisclaimer('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
+        this.props.setWizComplexOwner('');
     }
 
     render() {
@@ -84,4 +85,4 @@ class Wizard3 extends Component {
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment })(Wizard3);
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment, setWizComplexOwner })(Wizard3);

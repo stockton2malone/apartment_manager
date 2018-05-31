@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
 import './Wizard1.css';
 import { Link } from 'react-router-dom';
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment, setWizComplexOwner} from '../../ducks/reducer';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 class Wizard1 extends Component {
+    componentDidMount(){
+        axios.get('/api/owner')
+        .then(res => {
+        console.log('complex owner: ', res.data)
+        this.props.setWizComplexOwner(res.data[0].user_id)
+        })
+        .catch(err => console.log(err))
+    }
     handleCancel() {
         this.props.setWizType('');
         this.props.setWizLevel('');
@@ -14,6 +23,7 @@ class Wizard1 extends Component {
         this.props.setWizPermission(null);
         this.props.setWizUnitNumber('');
         this.props.setWizTenantDisclaimer('');
+        this.props.setWizComplexOwner('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
     }
@@ -84,4 +94,4 @@ class Wizard1 extends Component {
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment })(Wizard1);
+export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment, setWizComplexOwner })(Wizard1);

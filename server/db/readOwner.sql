@@ -1,0 +1,1 @@
+SELECT * FROM Users WHERE user_complex = $1 and user_role = 'Owner';

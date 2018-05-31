@@ -17,7 +17,7 @@ create table Users (
 );
 
 create table Complex (
-    complex_id SERIAL PRIMARY KEY,
+    complex_id INTEGER PRIMARY KEY,
     complex_name TEXT,
     complex_units INTEGER,
     complex_address TEXT,

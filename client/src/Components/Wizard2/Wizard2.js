@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import UnitNumber from './UnitNumber';
-import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
+import {setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizComplexOwner, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment} from '../../ducks/reducer';
 
 import './Wizard2.css';
 
@@ -31,6 +31,7 @@ class Wizard2 extends Component {
         this.props.setWizTenantDisclaimer('');
         this.props.setTextOptIn(null);
         this.props.setNoteAttachment(null);
+        this.props.setWizComplexOwner('');
     }
 
     previewFile() {
@@ -138,6 +139,6 @@ let mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment })(Wizard2)
+export default connect(mapStateToProps, { setWizComplexOwner, setUserID, setWizType, setWizLevel, setWizSubject, setWizDesc, setWizAttachment, setWizPermission, setWizUnitNumber, setWizTenantDisclaimer, setTextOptIn, setNoteAttachment })(Wizard2)
 
 

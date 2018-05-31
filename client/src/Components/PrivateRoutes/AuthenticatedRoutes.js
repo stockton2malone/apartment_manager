@@ -3,7 +3,7 @@ import { Switch, withRouter, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import axios from 'axios';
-import {setUserID, setUserRole} from '../../ducks/reducer';
+import {setUserID, setUserRole, setUserComplex} from '../../ducks/reducer';
 
 
 import HomeView from "../HomeView/HomeView";
@@ -34,6 +34,7 @@ class AuthenticatedRoutes extends Component {
       .then(res => {
         this.props.setUserID(res.data.user_id)
         this.props.setUserRole(res.data.user_role)
+        this.props.setUserComplex(res.data.user_complex)
         this.setState({load: false})
       })
     })
@@ -69,5 +70,5 @@ const mapStateToProps = state => {
 };
 
 
-export default withRouter(connect(mapStateToProps, {setUserID, setUserRole})(AuthenticatedRoutes));
+export default withRouter(connect(mapStateToProps, {setUserID, setUserRole, setUserComplex})(AuthenticatedRoutes));
 
