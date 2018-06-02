@@ -1,1 +1,1 @@
-SELECT * FROM Tickets WHERE worker_id = $1;
+SELECT * FROM Tickets WHERE worker_id = $1 order by ticket_id;

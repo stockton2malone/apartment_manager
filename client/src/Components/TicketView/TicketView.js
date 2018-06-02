@@ -435,79 +435,22 @@ class TicketView extends Component {
               )}  
           </div>
           <div className="dateCompleted inlay">
-          <div>
-            <span className='lrg'>Completed On:</span>
+            <div>
+              <span className='lrg'>Completed On:</span>
 
-            {`${ticket.completion_date
-              ? new Date(ticket.completion_date).toLocaleString()
-              : "Not Completed"}`}
-              </div>
+              {`${ticket.completion_date
+                ? new Date(ticket.completion_date).toLocaleString()
+                : "Not Completed"}`
+              }
+            </div>
           </div>
           <div className="complexInfo inlay">
-          <div>
-            <span className="lrg">Ticket Location:</span>
-            <span>{ticket.user_complex}, </span>
-            <span>Unit {ticket.unit_number}</span>
-          </div></div>
-          <div className="ticketDescription inlay">
             <div>
-            <span className='lrg'>Description:</span>
-
-            {`${ticket.issue_description ? ticket.issue_description : "No Description"}`}
+              <span className="lrg">Ticket Location:</span>
+              <span>{ticket.user_complex}, </span>
+              <span>Unit {ticket.unit_number}</span>
             </div>
-            <div className="dateAssigned inlay">
-              <div>
-                <span className="lrg">Assigned On:</span>
-                {`${ticket.assigned_date
-                  ? new Date(ticket.assigned_date).toLocaleString()
-                  : "Not Assigned"}`}
-              </div>
-            </div>
-            <div className="workerAssigned inlay">
-              <div>
-                <span className="lrg">Worker Assigned:</span>
-
-                {this.props.userID != ticket.owner_id ? (
-                  <div className="workerAssigned inlay">
-                    {ticket.worker_name ? ticket.worker_name : "Not Assigned"}
-                  </div>
-                ) : (
-                  <div>
-                    <select
-                      value={this.props.assigned_worker}
-                      name=""
-                      id=""
-                      onChange={e => {
-                        setAssignedWorker(e.target.value);
-                        setWorkerId(
-                          e.target.options[e.target.options.selectedIndex].id
-                        );
-                      }}
-                    >
-                      {/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
-                      <option value="Not Assigned">Not Assigned</option>
-                      {workers}
-                    </select>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="dateCompleted inlay">
-              <div>
-                <span className="lrg">Completed On:</span>
-
-                {`${ticket.completion_date
-                  ? new Date(ticket.completion_date).toLocaleString()
-                  : "Not Completed"}`}
-              </div>
-            </div>
-            <div className="complexInfo inlay">
-              <div>
-                <span className="lrg">Ticket Location:</span>
-                <span>Complex {ticket.complex_id}, </span>
-                <span>Unit {ticket.unit_number}</span>
-              </div>
-            </div>
+          </div>
             <div className="ticketDescription inlay">
               <div>
                 <span className="lrg">Description:</span>
@@ -638,21 +581,17 @@ class TicketView extends Component {
                 + Add Note
               </div>
             </div>
-            <div className="inlay">
-              <div>
-                <span className="lrg">Ticket Status</span>
-
-          </div>
+            
           <div className="inlay">
-          <div>
-            <span className="lrg">Ticket Status</span>
+            <div>
+              <span className="lrg">Ticket Status</span>
 
-            {this.props.userID != ticket.worker_id || ticket.ticket_status === 'Completed' ? (
-              <div className="ticketStatus inlay">
-                {ticket.ticket_status
+              {this.props.userID != ticket.worker_id || ticket.ticket_status === 'Completed' ? (
+                <div className="ticketStatus inlay">
+                 {ticket.ticket_status
                   ? this.props.ticket_status
                   : "Placeholder"}
-              </div>
+                </div>
             ) : (<div>
                 <select value={this.props.ticket_status}name="ticketStatus" id="statusSelect" onChange={(e) => setTicketStatus(e.target.value)}>
                   <option value="New">New</option>
@@ -664,7 +603,8 @@ class TicketView extends Component {
                 <Link to={!this.props.ticket_completed_status ? '/' : `/ticket/${this.props.ticketID}`}><button value = {!this.props.ticket_completed_status} className="btn-right" onClick={() => this.updateTicketStatus()}>Update Status</button></Link>
                </div>
               )}
-          </div></div>
+            </div>
+          </div>
           
           <div>
               {this.props.userID != ticket.created_by_id || ticket.ticket_status === 'Completed' ? (
@@ -675,13 +615,16 @@ class TicketView extends Component {
               )}  
           </div>
         </div>
-      );
-    } else {
+      </div>
+      
+      )
+    } 
+    else {
       return (
         <div className="loader">
           <i className="fas fa-spinner fa-spin fa-3x" />
         </div>
-      );
+      )
     }
   }
 }
