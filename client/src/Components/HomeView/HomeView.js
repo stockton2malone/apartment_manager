@@ -48,12 +48,11 @@ class HomeView extends Component {
           <TicketRow
             key={i}
             ticketID={ticket.ticket_id}
-            complexName={ticket.complex_id}
-            unitNumber={ticket.unitNumber}
+            complexName={ticket.user_complex}
+            unitNumber={ticket.unit_number}
             ticketTitle={ticket.issue_description}
             ticketTime={ticket.creation_date}
             status={ticket.ticket_status}
-
           />
         ))
       ) : (
