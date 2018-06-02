@@ -1,0 +1,316 @@
+{
+	"info": {
+		"name": "notesController",
+		"_postman_id": "9bf00a71-d577-f792-bd2f-35f62603f383",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET- Video",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dcaa4f1b-68ff-4127-845f-bb334de444ef",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3001/api/video?id=zk3qv36fe2c&height=1000&width=1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"video"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "zk3qv36fe2c",
+							"equals": true
+						},
+						{
+							"key": "height",
+							"value": "1000",
+							"equals": true
+						},
+						{
+							"key": "width",
+							"value": "1000",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET- Image",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7e7ac023-44fb-4497-916b-f5d3d12890d5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3001/api/image?id=3ahxgw6bmhq&height=1000&width=1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"image"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3ahxgw6bmhq",
+							"equals": true
+						},
+						{
+							"key": "height",
+							"value": "1000",
+							"equals": true
+						},
+						{
+							"key": "width",
+							"value": "1000",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET- Notes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6965eff7-49b1-4878-904a-f7de30137203",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('All 2 note objects in response', function() {",
+							"  pm.expect(response.length).to.eql(2);",
+							"});",
+							"pm.test(\"Returned data is an array\", function () {",
+							"  pm.expect( Array.isArray( response ) ).to.eql( true );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3001/api/ticket/53/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"ticket",
+						"53",
+						"notes"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST- New Note",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "12c132a2-63c0-4fa1-b6cb-d7559dbecfbd",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"const expectedNote= {",
+							"\t\"description\":\"This is a test\",",
+							"\t\"file\":null,",
+							"\t\"id\":100",
+							"};",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"description\":\"test\", \"ticketid\":53, \"createdBy\":\"auth0|5b0e0334e1fee066700dd571\", \"createdTime\":\"2018-05-31T02:02:49.725Z\", \"notes_attachment_id\":null\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/ticket/53/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"ticket",
+						"53",
+						"notes"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH- Update Note",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b84b7bda-cee4-4aa1-a10e-87ce8a3a7715",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Returned data is an array\", function () {",
+							"  pm.expect( Array.isArray( response ) ).to.eql( true );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[ {\n    \"description\": \"test woooow\",\n  \"ticketid\": 53,\n  \"createdBy\": \"auth0|5b0e0334e1fee066700dd571\",\n  \"createdTime\": \"2018-05-31T02:02:49.725Z\",\n  \"notes_attachment_id\": null } ]"
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/ticket/53/notes/88",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"ticket",
+						"53",
+						"notes",
+						"88"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE- Delete Note",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a50f77da-f30d-4109-abd8-80f2b048fd02",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 202\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"pm.test(\"True is sent\", function () {",
+							"    pm.expect(response).eql(true);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3001/api/ticket/53/notes/88",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"ticket",
+						"53",
+						"notes",
+						"88"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
