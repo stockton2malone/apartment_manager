@@ -80,9 +80,9 @@ module.exports = {
             worker_name,
             completed_status
         } = req.body;
-        //console.log('this is completedDate: ', completedDate)
-        //console.log('this is completion_date: ', completion_date)
-        //console.log('this is completed_status: ', completed_status)
+        console.log('this is completedDate: ', completedDate)
+        console.log('this is completion_date: ', completion_date)
+        console.log('this is completed_status: ', completed_status)
         if(completed_status){
             completedDate = new Date()
         }
@@ -95,7 +95,7 @@ module.exports = {
        /*  if(assigned_status && assignedDate === null){
             assigned_date = new Date()
         } */
-        assigned_status && assignedDate === null ? assigned_date : assignedDate
+        assigned_status && assignedDate === null ? assignedDate = assigned_date : assignedDate
         console.log('this is my assigned_date: ', assignedDate)
         dbInstance.updateTicket([
             req.params.id,
@@ -118,6 +118,21 @@ module.exports = {
             .then(ticket => {
                 res.status(200).send(ticket);
             }); 
+    },
+    updateTicketStatus: (req, res, next) => {
+        let dbInstance = req.app.get('db');
+        
+        const {
+            ticket_status
+        } = req.body;
+
+        dbInstance.updateTicketStatus([
+            req.params.id,
+            ticket_status
+        ])
+            .then(ticket => {
+                res.status(200).send(ticket);
+            })
     },
     deleteTicket: (req, res, next) => {
         let dbInstance = req.app.get('db');

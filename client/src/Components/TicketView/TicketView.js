@@ -249,7 +249,7 @@ class TicketView extends Component {
     });
   }
   
-  updateTicketStatus(e){
+  updateTicket(e){
     let ticket = this.props.tickets[0];
     const body = {
       complex_id: this.props.tickets[0].complex_id,
@@ -258,7 +258,7 @@ class TicketView extends Component {
       urgency_level: this.props.tickets[0].urgency_level,
       permission_enter: this.props.tickets[0].permission_enter,
       permission_notifications: this.props.tickets[0].permission_notifications,
-      assignedDate: ticket.assigned_date,
+      assignedDate: this.props.ticket_assigned_date,
       assigned_status: (this.props.ticket_status !== 'New' ? true : false),
       worker_id: this.props.worker_id,
       ticket_status: this.props.ticket_status,
@@ -266,10 +266,22 @@ class TicketView extends Component {
       unit_number: this.props.tickets[0].unit_number,
       tenant_disclaimer: this.props.tickets[0].tenant_disclaimer,
       worker_name: this.props.assigned_worker,
-      completed_status: this.props.ticket_completed_status
+      completed_status: (this.props.ticket_status === 'Completed' ? true : false)
     }
     console.log(body)
     axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log(err))
+  }
+
+  updateTicketStatus(e){
+    const body = {
+      ticket_status: this.props.ticket_status
+    }
+    console.log(body)
+    axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}/status`, body)
       .then(res => {
         console.log(res.data)
       })
@@ -289,6 +301,10 @@ class TicketView extends Component {
     console.log(this.props.ticket_assigned_status)
     
     this.props.setTicketAssignedStatus(false); 
+    this.props.setWorkerName("Not Assigned")
+    this.props.setAssignedWorker("Not Assigned")
+    this.props.setTicketStatus('New')
+    this.props.setTicketAssignedDate(null)
     console.log(this.props.ticket_assigned_status)
     this.setState({load: true});
     let ticket = this.props.tickets[0];
@@ -299,20 +315,20 @@ class TicketView extends Component {
       urgency_level: this.props.tickets[0].urgency_level,
       permission_enter: this.props.tickets[0].permission_enter,
       permission_notifications: this.props.tickets[0].permission_notifications,
-      assignedDate: ticket.assigned_date,
+      assignedDate: this.props.ticket_assigned_date,
       assigned_status: !this.props.ticket_assigned_status,
       worker_id: this.props.worker_id,
       ticket_status: this.props.ticket_status,
       completion_date: this.props.tickets[0].completion_date,
       unit_number: this.props.tickets[0].unit_number,
       tenant_disclaimer: this.props.tickets[0].tenant_disclaimer,
-      worker_name: this.props.assigned_worker,
+      worker_name: this.props.worker_name,
       completed_status: this.props.ticket_completed_status
     }
     console.log('this is body: ',body)
     axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
       .then(res => {
-        console.log(res.data)
+        console.log('This is the res.data on assignNewWorker: ',res.data)
         this.setState({load: false})
       })
       .catch(err => console.log(err))
@@ -373,11 +389,10 @@ class TicketView extends Component {
                 {ticket.worker_name 
                   ? ticket.worker_name
                   : "Not Assigned"}
-                 <button className="btn-new-worker" value = {this.props.ticket_assigned_status} onClick={(e) => this.assignNewWorker()}>Assign New Worker</button>
               </div>
             ) : (<div>
-              <select value={this.props.assigned_worker} name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
-              <option value="Not Assigned">Not Assigned</option>
+              <select value={this.props.assigned_worker} name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id); setTicketStatus("Assigned"); setTicketAssignedDate(null)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
+              <option value="Not Assigned" selected>Not Assigned</option>
               {workers}
               </select>
              
@@ -386,6 +401,14 @@ class TicketView extends Component {
             }
             
           </div></div>
+          <div>
+              {this.props.userID != ticket.owner_id /* && this.props.ticket_assigned_status */ || ticket.ticket_status === 'Completed' ? (
+                <div></div>
+              ):(
+                <div value = {!this.props.ticket_assigned_status} className="inlay"><span className="lrg">Click on the button to assign a new worker</span>
+                <button className="btn-new-worker" value = {this.props.ticket_assigned_status} onClick={(e) => this.assignNewWorker()}>Assign New Worker</button></div>
+              )}  
+          </div>
           <div className="dateCompleted inlay">
           <div>
             <span className='lrg'>Completed On:</span>
@@ -469,7 +492,7 @@ class TicketView extends Component {
             {this.props.userID != ticket.worker_id || ticket.ticket_status === 'Completed' ? (
               <div className="ticketStatus inlay">
                 {ticket.ticket_status
-                  ? ticket.ticket_status
+                  ? this.props.ticket_status
                   : "Placeholder"}
               </div>
             ) : (<div>
@@ -480,12 +503,18 @@ class TicketView extends Component {
                   <option value="Canceled">Canceled</option>
                   <option value="Completed">Completed</option>
                 </select>
+                <Link to={!this.props.ticket_completed_status ? '/' : `/ticket/${this.props.ticketID}`}><button value = {!this.props.ticket_completed_status} className="btn-right" onClick={() => this.updateTicketStatus()}>Update Status</button></Link>
                </div>
               )}
           </div></div>
-          <div value = {this.props.ticket_assigned_status} className="inlay">
-              <span className="lrg">Click on the button to submit changes ---></span>
-              <Link to='/'><button className="btn-right" onClick={() => this.updateTicketStatus()}>Update Ticket</button></Link>
+          
+          <div>
+              {this.props.userID != ticket.created_by_id || ticket.ticket_status === 'Completed' ? (
+                <div value = {this.props.ticket_completed_status ? false : this.props.ticket_assigned_status} className="inlay"><span className="lrg">Click on the button to submit changes</span>
+                <Link to='/'><button className="btn-right" onClick={() => this.updateTicket()}>Update Ticket</button></Link></div>
+              ):(
+                <div></div>
+              )}  
           </div>
         </div>
       </div>
