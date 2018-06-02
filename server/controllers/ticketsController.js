@@ -18,6 +18,7 @@ module.exports = {
         const worker_id = null;
         const completion_date = null;
         const worker_name = null;
+        const completed_status = false;
         const { 
                 complex_id, 
                 issue_type, 
@@ -49,7 +50,8 @@ module.exports = {
             tenant_disclaimer, 
             worker_name,
             user_complex,
-            owner_id
+            owner_id,
+            completed_status
         ])
             .then(ticket => {
                 res.status(200).send(ticket);
@@ -60,7 +62,8 @@ module.exports = {
         console.log(req.params.id)
         console.log(req.body)
         const assigned_date = new Date();
-        const { 
+        
+        let { 
             complex_id, 
             issue_type, 
             issue_description, 
@@ -68,14 +71,24 @@ module.exports = {
             permission_enter, 
             permission_notifications,
             assigned_status,
+            assignedDate,
             worker_id,
             ticket_status,
             completion_date,
             unit_number,
             tenant_disclaimer,
-            worker_name
+            worker_name,
+            completed_status
         } = req.body;
-
+       
+        console.log('this is assigned_status: ', assigned_status)
+        console.log('this is assignedDate: ', assignedDate)
+        console.log('this is assigned_date: ', assigned_date)
+       /*  if(assigned_status && assignedDate === null){
+            assigned_date = new Date()
+        } */
+        assigned_status && assignedDate === null ? assignedDate = assigned_date : assignedDate
+        console.log('this is my assigned_date: ', assignedDate)
         dbInstance.updateTicket([
             req.params.id,
             complex_id,
@@ -85,17 +98,60 @@ module.exports = {
             permission_enter,
             permission_notifications,
             assigned_status,
-            assigned_date,
+            assignedDate,
             worker_id,
             ticket_status,
             completion_date,
             unit_number,
             tenant_disclaimer,
-            worker_name
+            worker_name,
+            completed_status
         ])
             .then(ticket => {
                 res.status(200).send(ticket);
             }); 
+    },
+    updateTicketStatus: (req, res, next) => {
+        let dbInstance = req.app.get('db');
+        
+        const {
+            ticket_status
+        } = req.body;
+
+        dbInstance.updateTicketStatus([
+            req.params.id,
+            ticket_status
+        ])
+            .then(ticket => {
+                res.status(200).send(ticket);
+            })
+    },
+    updateTicketSolved: (req, res, next) => {
+        let dbInstance = req.app.get('db');
+        let completedDate = null;
+        let {
+            ticket_status,
+            completion_date,
+            completed_status
+        } = req.body;
+        console.log('this is completedDate: ', completedDate)
+        console.log('this is completion_date: ', completion_date)
+        console.log('this is completed_status: ', completed_status)
+        if(completed_status){
+            completedDate = new Date()
+        }
+        console.log('this is completedDate: ', completedDate)
+        completed_status && completion_date === null ? completion_date = completedDate : completion_date
+        console.log('this is my completion_date: ', completion_date)
+        dbInstance.updateTicketSolved([
+            req.params.id,
+            ticket_status,
+            completion_date,
+            completed_status
+        ])
+            .then(ticket => {
+                res.status(200).send(ticket);
+            })
     },
     deleteTicket: (req, res, next) => {
         let dbInstance = req.app.get('db');

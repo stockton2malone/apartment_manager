@@ -15,6 +15,7 @@ const initialState = {
   ticket_status: "",
   ticket_assigned_date: null,
   ticket_assigned_status: null,
+  ticket_completed_status: null,
   //new ticket/wizard
   wizLevel: "",
   wizType: "",
@@ -55,6 +56,7 @@ const SET_WORKER_NAME = "SET_WORKER_NAME";
 const SET_TICKET_STATUS = "SET_TICKET_STATUS";
 const SET_TICKET_ASSIGNED_DATE = "SET_TICKET_ASSIGNED_DATE";
 const SET_TICKET_ASSIGNED_STATUS = "SET_TICKET_ASSIGNED_STATUS";
+const SET_TICKET_COMPLETED_STATUS = "SET_TICKET_COMPLETED_STATUS";
 //new ticket/wizard
 const SET_WIZ_LEVEL = "SET_WIZ_LEVEL";
 const SET_WIZ_TYPE = "SET_WIZ_TYPE";
@@ -148,7 +150,13 @@ export function setTicketAssignedDate(date) {
 }
 export function setTicketAssignedStatus(status) {
   return {
-    type: SET_TICKET_STATUS,
+    type: SET_TICKET_ASSIGNED_STATUS,
+    payload: status
+  };
+}
+export function setTicketCompletedStatus(status) {
+  return {
+    type: SET_TICKET_COMPLETED_STATUS,
     payload: status
   };
 }
@@ -307,6 +315,10 @@ export default function reducer(state = initialState, action) {
     case SET_TICKET_ASSIGNED_STATUS:
       return Object.assign({}, state, {
         ticket_assigned_status: payload
+      });
+    case SET_TICKET_COMPLETED_STATUS:
+      return Object.assign({}, state, {
+        ticket_completed_status: payload
       });
     //wizard/ new tix///////
     case SET_WIZ_LEVEL:

@@ -4,23 +4,15 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "./TicketView.css";
 
-import {
-  setNotes,
-  setTickets,
-  setWorkerId,
-  setTicketStatus,
-  setWorkers,
-  setAssignedWorker,
-  setTicketAssignedDate,
-  setTicketAssignedStatus,
-  setWorkerName
-} from "../../ducks/reducer";
+import { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus, setWorkerName, setTicketCompletedStatus } from '../../ducks/reducer';
 
 class TicketView extends Component {
   constructor() {
     super();
     this.addNote = false;
-
+    this.state = {
+      load: true
+    }  
     this.user = {};
   }
 
@@ -31,23 +23,28 @@ class TicketView extends Component {
 
   getTicketData() {
     let id = window.location.hash.split("/").pop();
-    axios.get(`http://localhost:3001/api/ticket/${id}`).then(resp => {
-      if (resp.data.length) {
-        this.props.setTickets(resp.data);
-        this.props.setWorkerId(resp.data[0].worker_id);
-        this.props.setAssignedWorker(resp.data[0].worker_name);
-        this.props.setTicketStatus(resp.data[0].ticket_status);
-        console.log(resp.data);
-        axios
-          .get(`http://localhost:3001/api/users/${resp.data[0].created_by_id}`)
-          .then(r => {
-            // console.log(r)
-            if (r.data) {
-              // console.log("USER",r.data)
-              this.user = r.data;
-              this.getAllNotes();
-            }
-          });
+    axios.get(`http://localhost:3001/api/ticket/${id}`)
+    .then( resp => {
+      if (resp.data.length){
+        this.props.setTickets(resp.data)
+        this.props.setWorkerId(resp.data[0].worker_id)
+        this.props.setAssignedWorker(resp.data[0].worker_name)
+        this.props.setTicketStatus(resp.data[0].ticket_status)
+        this.props.setTicketAssignedStatus(resp.data[0].assigned_status)
+        //this.props.setTicketAssignedDate(resp.data[0].assigned_date)
+        console.log(resp.data[0].assigned_status)
+        console.log(this.props.ticket_assigned_status)
+        console.log('this is the date from the db: ', resp.data[0].assigned_date)
+        axios.get(`http://localhost:3001/api/users/${resp.data[0].created_by_id}`)
+        .then(r => {
+          // console.log(r)
+          if (r.data){
+            // console.log("USER",r.data)
+            this.user = r.data;
+            this.getAllNotes()
+          }
+          this.setState({load: false}); 
+        })
       }
     });
   }
@@ -261,8 +258,9 @@ class TicketView extends Component {
       x !== null && axios.post("/api/message/status", { recipient, ticket });
     });
   }
-
-  updateTicketStatus(e) {
+  
+  updateTicket(e){
+    let ticket = this.props.tickets[0];
     const body = {
       complex_id: this.props.tickets[0].complex_id,
       issue_type: this.props.tickets[0].issue_type,
@@ -270,17 +268,18 @@ class TicketView extends Component {
       urgency_level: this.props.tickets[0].urgency_level,
       permission_enter: this.props.tickets[0].permission_enter,
       permission_notifications: this.props.tickets[0].permission_notifications,
-      assigned_status: this.props.ticket_status !== "New" ? true : false,
+      assignedDate: this.props.ticket_assigned_date,
+      assigned_status: (this.props.ticket_status !== 'New' ? true : false),
       worker_id: this.props.worker_id,
       ticket_status: this.props.ticket_status,
       completion_date: this.props.tickets[0].completion_date,
       unit_number: this.props.tickets[0].unit_number,
       tenant_disclaimer: this.props.tickets[0].tenant_disclaimer,
-      worker_name: this.props.assigned_worker
-    };
-    console.log(body);
-    axios
-      .patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
+      worker_name: this.props.assigned_worker,
+      completed_status: (this.props.ticket_status === 'Completed' ? true : false)
+    }
+    console.log(body)
+    axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
       .then(res => {
         console.log(res.data);
       })
@@ -288,54 +287,173 @@ class TicketView extends Component {
       .then(() => this.alertUsers());
   }
 
-  getWorkers() {
-    axios
-      .get(`http://localhost:3001/api/workers`)
+  updateTicketStatus(e){
+    const body = {
+      ticket_status: this.props.ticket_status
+    }
+    console.log(body)
+    axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}/status`, body)
       .then(res => {
-        console.log(res.data);
-        this.props.setWorkers(res.data);
+        console.log(res.data)
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+  }
+
+  updateTicketSolved(e){
+    const body = {
+      ticket_status: this.props.ticket_status,
+      completion_date: this.props.tickets[0].completion_date,
+      completed_status: this.props.ticket_completed_status
+    }
+    console.log(body)
+    axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}/solved`, body)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log(err))
+  }
+
+  getWorkers(){
+    axios.get(`http://localhost:3001/api/workers`)
+    .then(res => {
+      console.log(res.data)
+      this.props.setWorkers(res.data)
+    })
+    .catch(err => console.log(err))
+  }
+
+  assignNewWorker(){
+    console.log(this.props.ticket_assigned_status)
+    
+    this.props.setTicketAssignedStatus(false); 
+    this.props.setWorkerName("Not Assigned")
+    this.props.setAssignedWorker("Not Assigned")
+    this.props.setTicketStatus('New')
+    this.props.setTicketAssignedDate(null)
+    console.log(this.props.ticket_assigned_status)
+    this.setState({load: true});
+    let ticket = this.props.tickets[0];
+    const body = {
+      complex_id: this.props.tickets[0].complex_id,
+      issue_type: this.props.tickets[0].issue_type,
+      issue_description: this.props.tickets[0].issue_description,
+      urgency_level: this.props.tickets[0].urgency_level,
+      permission_enter: this.props.tickets[0].permission_enter,
+      permission_notifications: this.props.tickets[0].permission_notifications,
+      assignedDate: this.props.ticket_assigned_date,
+      assigned_status: !this.props.ticket_assigned_status,
+      worker_id: this.props.worker_id,
+      ticket_status: this.props.ticket_status,
+      completion_date: this.props.tickets[0].completion_date,
+      unit_number: this.props.tickets[0].unit_number,
+      tenant_disclaimer: this.props.tickets[0].tenant_disclaimer,
+      worker_name: this.props.worker_name,
+      completed_status: this.props.ticket_completed_status
+    }
+    console.log('this is body: ',body)
+    axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
+      .then(res => {
+        console.log('This is the res.data on assignNewWorker: ',res.data)
+        this.setState({load: false})
+      })
+      .catch(err => console.log(err))
   }
 
   render() {
-    const {
-      setTicketStatus,
-      setAssignedWorker,
-      setWorkerId,
-      setTicketAssignedDate
-    } = this.props;
+    if (this.state.load === true) {
+      return <h2>Loading...</h2>
+    }
+    const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate, setTicketCompletedStatus, setTicketAssignedStatus} = this.props;
     // console.log(this.props.tickets)
     let ticket = this.props.tickets[0];
-    console.log("current ticket info: ", ticket);
+    if(this.props.ticket_status != 'Completed'){
+      setTicketCompletedStatus(false)
+    } else {
+      setTicketCompletedStatus(true)
+    }
+    
+    console.log('current ticket info: ', ticket)
     //console.log("this is ticket.worker_id: ",ticket.worker_id)
     //console.log("this.is user.user_id: ",this.user.user_id);
-    const workers = this.props.workers.map((worker, i) => {
-      return (
-        <option key={i} value={worker.user_name} id={worker.user_id}>
-          {worker.user_complex}: {worker.user_name}
-        </option>
-      );
-    });
-    if (ticket && this.user) {
-      return (
-        <div className="ticketViewContainer">
-          <h1>
-            {this.props.ticketNumber
-              ? this.props.ticketNumber
-              : `Ticket #${window.location.hash.split("/").pop()}`}
-          </h1>
-          <h2>{`Assigned To: ${ticket.assigned_status
-            ? this.props.assigned_worker
-            : " Not Assigned"}`}</h2>
-          <div className="ticketInfoContainer">
-            <div className="dateCreated inlay">
-              <div>
-                <span className="lrg">Created On:</span>
-                {`${ticket.creation_date
-                  ? new Date(ticket.creation_date).toLocaleString()
-                  : "Not Assigned"}`}
+    const workers = this.props.workers.map((worker,i) => {
+      return(
+        <option key={i} value={worker.user_name} id={worker.user_id}>{worker.user_complex}: {worker.user_name}</option>
+      )
+    })
+    if (ticket && this.user){
+    return (
+      <div className="ticketViewContainer">
+        <h1>
+          {this.props.ticketNumber ? this.props.ticketNumber : `Ticket #${window.location.hash.split("/").pop()}`}
+        </h1>
+        <h2>{`Assigned To: ${ticket.assigned_status
+          ? this.props.assigned_worker
+          : " Not Assigned"}`}</h2>
+        <div className="ticketInfoContainer">
+
+          <div className="dateCreated inlay">
+          <div>
+            <span className='lrg'>Created On:</span>
+            {`${ticket.creation_date ? 
+              new Date(ticket.creation_date).toLocaleString()
+              : "Not Assigned"}`}
+          </div></div>
+          <div className="dateAssigned inlay">
+          <div>
+            <span className='lrg'>Assigned On:</span>
+            {`${ticket.assigned_date ? 
+              new Date(ticket.assigned_date).toLocaleString()
+              : "Not Assigned"}`}
+          </div></div>
+          <div className="workerAssigned inlay">
+          <div>
+            <span className='lrg'>Worker Assigned:</span>
+
+            {this.props.userID != ticket.owner_id || this.props.ticket_assigned_status ? (
+              <div className="workerAssigned inlay">
+                {ticket.worker_name 
+                  ? ticket.worker_name
+                  : "Not Assigned"}
               </div>
+            ) : (<div>
+              <select value={this.props.assigned_worker} name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id); setTicketStatus("Assigned"); setTicketAssignedDate(null)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
+              <option value="Not Assigned" selected>Not Assigned</option>
+              {workers}
+              </select>
+             
+              </div> 
+            )
+            }
+            
+          </div></div>
+          <div>
+              {this.props.userID != ticket.owner_id /* && this.props.ticket_assigned_status */ || ticket.ticket_status === 'Completed' ? (
+                <div></div>
+              ):(
+                <div value = {!this.props.ticket_assigned_status} className="inlay"><span className="lrg">Click on the button to assign a new worker</span>
+                <button className="btn-new-worker" value = {this.props.ticket_assigned_status} onClick={(e) => this.assignNewWorker()}>Assign New Worker</button></div>
+              )}  
+          </div>
+          <div className="dateCompleted inlay">
+          <div>
+            <span className='lrg'>Completed On:</span>
+
+            {`${ticket.completion_date
+              ? new Date(ticket.completion_date).toLocaleString()
+              : "Not Completed"}`}
+              </div>
+          </div>
+          <div className="complexInfo inlay">
+          <div>
+            <span className="lrg">Ticket Location:</span>
+            <span>{ticket.user_complex}, </span>
+            <span>Unit {ticket.unit_number}</span>
+          </div></div>
+          <div className="ticketDescription inlay">
+            <div>
+            <span className='lrg'>Description:</span>
+
+            {`${ticket.issue_description ? ticket.issue_description : "No Description"}`}
             </div>
             <div className="dateAssigned inlay">
               <div>
@@ -524,43 +642,37 @@ class TicketView extends Component {
               <div>
                 <span className="lrg">Ticket Status</span>
 
-                {this.props.userID != ticket.worker_id ? (
-                  <div className="ticketStatus inlay">
-                    {ticket.ticket_status
-                      ? ticket.ticket_status
-                      : "Placeholder"}
-                  </div>
-                ) : (
-                  <div>
-                    <select
-                      value={this.props.ticket_status}
-                      name="ticketStatus"
-                      id="statusSelect"
-                      onChange={e => setTicketStatus(e.target.value)}
-                    >
-                      <option value="New">New</option>
-                      <option value="Assigned">Assigned</option>
-                      <option value="In Process">In Process</option>
-                      <option value="Canceled">Canceled</option>
-                      <option value="Completed">Completed</option>
-                    </select>
-                  </div>
-                )}
+          </div>
+          <div className="inlay">
+          <div>
+            <span className="lrg">Ticket Status</span>
+
+            {this.props.userID != ticket.worker_id || ticket.ticket_status === 'Completed' ? (
+              <div className="ticketStatus inlay">
+                {ticket.ticket_status
+                  ? this.props.ticket_status
+                  : "Placeholder"}
               </div>
-            </div>
-            <div className="inlay">
-              <span className="lrg">
-                Click on the button to submit changes --->
-              </span>
-              <Link to="/">
-                <button
-                  className="btn-right"
-                  onClick={() => this.updateTicketStatus()}
-                >
-                  Update Ticket
-                </button>
-              </Link>
-            </div>
+            ) : (<div>
+                <select value={this.props.ticket_status}name="ticketStatus" id="statusSelect" onChange={(e) => setTicketStatus(e.target.value)}>
+                  <option value="New">New</option>
+                  <option value="Assigned">Assigned</option>
+                  <option value="In Process">In Process</option>
+                  <option value="Canceled">Canceled</option>
+                  <option value="Completed">Completed</option>
+                </select>
+                <Link to={!this.props.ticket_completed_status ? '/' : `/ticket/${this.props.ticketID}`}><button value = {!this.props.ticket_completed_status} className="btn-right" onClick={() => this.updateTicketStatus()}>Update Status</button></Link>
+               </div>
+              )}
+          </div></div>
+          
+          <div>
+              {this.props.userID != ticket.created_by_id || ticket.ticket_status === 'Completed' ? (
+                <div value = {this.props.userRole === 'Worker' ? this.props.ticket_completed_status && ticket.completion_date === null ? false : this.props.ticket_assigned_status : this.props.ticket_completed_status ? true : this.props.ticket_assigned_status} className="inlay"><span className="lrg">Click on the button to submit changes</span>
+                <Link to='/'><button className="btn-right" onClick={this.props.userRole === 'Owner' ? () => this.updateTicket(): () => this.updateTicketSolved()}>{this.props.userRole === 'Owner' ? 'Update Ticket' : 'Solve Ticket'}</button></Link></div>
+              ):(
+                <div></div>
+              )}  
           </div>
         </div>
       );
@@ -575,17 +687,7 @@ class TicketView extends Component {
 }
 
 let mapStateToProps = state => {
-  const {
-    notes,
-    tickets,
-    userID,
-    worker_id,
-    worker_name,
-    ticket_status,
-    workers,
-    assigned_worker,
-    ticket_assigned_date
-  } = state;
+  const { notes, tickets, userID, worker_id, worker_name, ticket_status, workers, assigned_worker, ticket_assigned_date, ticket_completed_status, ticket_assigned_status, userRole } = state;
   return {
     notes,
     tickets,
@@ -594,19 +696,12 @@ let mapStateToProps = state => {
     worker_name,
     ticket_status,
     workers,
-    assigned_worker,
-    ticket_assigned_date
-  };
+    assigned_worker, 
+    ticket_assigned_date,
+    ticket_completed_status,
+    ticket_assigned_status,
+    userRole
+  }
 };
 
-export default connect(mapStateToProps, {
-  setNotes,
-  setTickets,
-  setWorkerId,
-  setTicketStatus,
-  setWorkers,
-  setAssignedWorker,
-  setTicketAssignedDate,
-  setTicketAssignedStatus,
-  setWorkerName
-})(TicketView);
+export default connect(mapStateToProps, { setNotes, setTickets, setWorkerId, setTicketStatus, setWorkers, setAssignedWorker, setTicketAssignedDate, setTicketAssignedStatus, setWorkerName, setTicketCompletedStatus})(TicketView);
