@@ -246,16 +246,22 @@ class TicketView extends Component {
   // -- twilio for status change --
   alertUsers() {
     let ticket = this.props.tickets[0];
+    let ticketStatus = this.props.ticket_status
+    console.log('ticket status on state: ', ticketStatus)
+    console.log('twilio ticket: ',ticket)
     //recipients would be the worker and the creator of the ticket
     //complex owner could have too many tix to oversee by text so is excluded
     let recipients = [
       ticket.created_by_id,
-      ticket.worker_id !== ticket.created_by_id && ticket.worker_id
+      ticket.worker_id !== ticket.created_by_id && ticket.worker_id,
+      ticketStatus
     ];
+
+
     //twilio requires each message to have a separate call
     recipients.forEach(x => {
       let recipient = x;
-      x !== null && axios.post("/api/message/status", { recipient, ticket });
+      x !== null && axios.post("/api/message/status", { recipient, ticket, ticketStatus });
     });
   }
   
@@ -297,6 +303,7 @@ class TicketView extends Component {
         console.log(res.data)
       })
       .catch(err => console.log(err))
+      .then(() => this.alertUsers());
   }
 
   updateTicketSolved(e){
@@ -311,6 +318,7 @@ class TicketView extends Component {
         console.log(res.data)
       })
       .catch(err => console.log(err))
+      .then(() => this.alertUsers());
   }
 
   getWorkers(){

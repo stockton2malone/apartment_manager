@@ -170,8 +170,10 @@ app.get('/api/owner', uc.getOwner)
 //--Twilio Messages--
 app.post("/api/message/status", (req, res) => {
     let dbInstance = req.app.get("db");
+    console.log('this is req.body: ', req.body)
     //getting a recipient id to make a db call to get user_phone and the ticket id for message
     dbInstance.readUser([req.body.recipient]).then(user => {
+        console.log('this is user', user[0])
       if (user[0].text_permissions && req.body.ticket.permission_notifications) {
         twilio.messages
           //creates message if text permissions global and ticket are true
@@ -179,8 +181,7 @@ app.post("/api/message/status", (req, res) => {
             to: `+1${user[0].user_phone}`,
             from: PHONE_NUMBER,
             body: `This is an Upkeep notification.The status of ticket ${req.body
-              .ticket.ticket_id} has been changed to ${req.body.ticket
-              .ticket_status}`
+              .ticket.ticket_id} has been changed to ${req.body.ticketStatus}`
           })
           .then(message => console.log("twilio message PING"))
           .catch(err => console.log(err));
