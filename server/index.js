@@ -147,7 +147,8 @@ app.get('/api/video', nc.getVideo);
 app.get('/api/ticket/:id', tc.getTicket);
 app.post('/api/ticket', tc.createTicket)
 app.patch('/api/ticket/:id', tc.updateTicket);
-app.patch('/api/ticket/:id/status', tc.updateTicketStatus)
+app.patch('/api/ticket/:id/status', tc.updateTicketStatus);
+app.patch('/api/ticket/:id/solved', tc.updateTicketSolved)
 app.delete('/api/ticket/:id', tc.deleteTicket);
 
 // ---- Multiple Tickets ----

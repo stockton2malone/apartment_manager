@@ -288,6 +288,20 @@ class TicketView extends Component {
       .catch(err => console.log(err))
   }
 
+  updateTicketSolved(e){
+    const body = {
+      ticket_status: this.props.ticket_status,
+      completion_date: this.props.tickets[0].completion_date,
+      completed_status: this.props.ticket_completed_status
+    }
+    console.log(body)
+    axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}/solved`, body)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log(err))
+  }
+
   getWorkers(){
     axios.get(`http://localhost:3001/api/workers`)
     .then(res => {
@@ -510,8 +524,8 @@ class TicketView extends Component {
           
           <div>
               {this.props.userID != ticket.created_by_id || ticket.ticket_status === 'Completed' ? (
-                <div value = {this.props.ticket_completed_status ? false : this.props.ticket_assigned_status} className="inlay"><span className="lrg">Click on the button to submit changes</span>
-                <Link to='/'><button className="btn-right" onClick={() => this.updateTicket()}>Update Ticket</button></Link></div>
+                <div value = {this.props.userRole === 'Worker' ? this.props.ticket_completed_status && ticket.completion_date === null ? false : this.props.ticket_assigned_status : this.props.ticket_completed_status ? true : this.props.ticket_assigned_status} className="inlay"><span className="lrg">Click on the button to submit changes</span>
+                <Link to='/'><button className="btn-right" onClick={this.props.userRole === 'Owner' ? () => this.updateTicket(): () => this.updateTicketSolved()}>{this.props.userRole === 'Owner' ? 'Update Ticket' : 'Solve Ticket'}</button></Link></div>
               ):(
                 <div></div>
               )}  
@@ -531,7 +545,7 @@ class TicketView extends Component {
 }
 
 let mapStateToProps = state => {
-  const { notes, tickets, userID, worker_id, worker_name, ticket_status, workers, assigned_worker, ticket_assigned_date, ticket_completed_status, ticket_assigned_status } = state;
+  const { notes, tickets, userID, worker_id, worker_name, ticket_status, workers, assigned_worker, ticket_assigned_date, ticket_completed_status, ticket_assigned_status, userRole } = state;
   return {
     notes,
     tickets,
@@ -543,7 +557,8 @@ let mapStateToProps = state => {
     assigned_worker, 
     ticket_assigned_date,
     ticket_completed_status,
-    ticket_assigned_status
+    ticket_assigned_status,
+    userRole
   }
 };
 

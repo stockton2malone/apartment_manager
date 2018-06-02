@@ -62,7 +62,7 @@ module.exports = {
         console.log(req.params.id)
         console.log(req.body)
         const assigned_date = new Date();
-        let completedDate = null;
+        
         let { 
             complex_id, 
             issue_type, 
@@ -80,15 +80,7 @@ module.exports = {
             worker_name,
             completed_status
         } = req.body;
-        console.log('this is completedDate: ', completedDate)
-        console.log('this is completion_date: ', completion_date)
-        console.log('this is completed_status: ', completed_status)
-        if(completed_status){
-            completedDate = new Date()
-        }
-        //console.log('this is completedDate: ', completedDate)
-        completed_status && completion_date === null ? completion_date = completedDate : completion_date
-        //console.log('this is my completion_date: ', completion_date)
+       
         console.log('this is assigned_status: ', assigned_status)
         console.log('this is assignedDate: ', assignedDate)
         console.log('this is assigned_date: ', assigned_date)
@@ -129,6 +121,33 @@ module.exports = {
         dbInstance.updateTicketStatus([
             req.params.id,
             ticket_status
+        ])
+            .then(ticket => {
+                res.status(200).send(ticket);
+            })
+    },
+    updateTicketSolved: (req, res, next) => {
+        let dbInstance = req.app.get('db');
+        let completedDate = null;
+        let {
+            ticket_status,
+            completion_date,
+            completed_status
+        } = req.body;
+        console.log('this is completedDate: ', completedDate)
+        console.log('this is completion_date: ', completion_date)
+        console.log('this is completed_status: ', completed_status)
+        if(completed_status){
+            completedDate = new Date()
+        }
+        console.log('this is completedDate: ', completedDate)
+        completed_status && completion_date === null ? completion_date = completedDate : completion_date
+        console.log('this is my completion_date: ', completion_date)
+        dbInstance.updateTicketSolved([
+            req.params.id,
+            ticket_status,
+            completion_date,
+            completed_status
         ])
             .then(ticket => {
                 res.status(200).send(ticket);
