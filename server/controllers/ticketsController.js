@@ -71,6 +71,7 @@ module.exports = {
             permission_enter, 
             permission_notifications,
             assigned_status,
+            assignedDate,
             worker_id,
             ticket_status,
             completion_date,
@@ -79,16 +80,23 @@ module.exports = {
             worker_name,
             completed_status
         } = req.body;
-        console.log('this is completedDate: ', completedDate)
-        console.log('this is completion_date: ', completion_date)
-        console.log('this is completed_status: ', completed_status)
+        //console.log('this is completedDate: ', completedDate)
+        //console.log('this is completion_date: ', completion_date)
+        //console.log('this is completed_status: ', completed_status)
         if(completed_status){
             completedDate = new Date()
         }
-        console.log('this is completedDate: ', completedDate)
+        //console.log('this is completedDate: ', completedDate)
         completed_status && completion_date === null ? completion_date = completedDate : completion_date
-        console.log('this is my completion_date: ', completion_date)
-
+        //console.log('this is my completion_date: ', completion_date)
+        console.log('this is assigned_status: ', assigned_status)
+        console.log('this is assignedDate: ', assignedDate)
+        console.log('this is assigned_date: ', assigned_date)
+       /*  if(assigned_status && assignedDate === null){
+            assigned_date = new Date()
+        } */
+        assigned_status && assignedDate === null ? assigned_date : assignedDate
+        console.log('this is my assigned_date: ', assignedDate)
         dbInstance.updateTicket([
             req.params.id,
             complex_id,
@@ -98,7 +106,7 @@ module.exports = {
             permission_enter,
             permission_notifications,
             assigned_status,
-            assigned_date,
+            assignedDate,
             worker_id,
             ticket_status,
             completion_date,

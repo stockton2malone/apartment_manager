@@ -11,8 +11,9 @@ class TicketView extends Component {
   constructor() {
     super()
     this.addNote = false;
-
-
+    this.state = {
+      load: true
+    }  
     this.user = {};
   }
 
@@ -30,7 +31,11 @@ class TicketView extends Component {
         this.props.setWorkerId(resp.data[0].worker_id)
         this.props.setAssignedWorker(resp.data[0].worker_name)
         this.props.setTicketStatus(resp.data[0].ticket_status)
-        console.log(resp.data)
+        this.props.setTicketAssignedStatus(resp.data[0].assigned_status)
+        //this.props.setTicketAssignedDate(resp.data[0].assigned_date)
+        console.log(resp.data[0].assigned_status)
+        console.log(this.props.ticket_assigned_status)
+        console.log('this is the date from the db: ', resp.data[0].assigned_date)
         axios.get(`http://localhost:3001/api/users/${resp.data[0].created_by_id}`)
         .then(r => {
           // console.log(r)
@@ -38,7 +43,8 @@ class TicketView extends Component {
             // console.log("USER",r.data)
             this.user = r.data;
             this.getAllNotes()
-          } 
+          }
+          this.setState({load: false}); 
         })
       }
     })
@@ -244,6 +250,7 @@ class TicketView extends Component {
   }
   
   updateTicketStatus(e){
+    let ticket = this.props.tickets[0];
     const body = {
       complex_id: this.props.tickets[0].complex_id,
       issue_type: this.props.tickets[0].issue_type,
@@ -251,6 +258,7 @@ class TicketView extends Component {
       urgency_level: this.props.tickets[0].urgency_level,
       permission_enter: this.props.tickets[0].permission_enter,
       permission_notifications: this.props.tickets[0].permission_notifications,
+      assignedDate: ticket.assigned_date,
       assigned_status: (this.props.ticket_status !== 'New' ? true : false),
       worker_id: this.props.worker_id,
       ticket_status: this.props.ticket_status,
@@ -277,8 +285,44 @@ class TicketView extends Component {
     .catch(err => console.log(err))
   }
 
+  assignNewWorker(){
+    console.log(this.props.ticket_assigned_status)
+    
+    this.props.setTicketAssignedStatus(false); 
+    console.log(this.props.ticket_assigned_status)
+    this.setState({load: true});
+    let ticket = this.props.tickets[0];
+    const body = {
+      complex_id: this.props.tickets[0].complex_id,
+      issue_type: this.props.tickets[0].issue_type,
+      issue_description: this.props.tickets[0].issue_description,
+      urgency_level: this.props.tickets[0].urgency_level,
+      permission_enter: this.props.tickets[0].permission_enter,
+      permission_notifications: this.props.tickets[0].permission_notifications,
+      assignedDate: ticket.assigned_date,
+      assigned_status: !this.props.ticket_assigned_status,
+      worker_id: this.props.worker_id,
+      ticket_status: this.props.ticket_status,
+      completion_date: this.props.tickets[0].completion_date,
+      unit_number: this.props.tickets[0].unit_number,
+      tenant_disclaimer: this.props.tickets[0].tenant_disclaimer,
+      worker_name: this.props.assigned_worker,
+      completed_status: this.props.ticket_completed_status
+    }
+    console.log('this is body: ',body)
+    axios.patch(`/api/ticket/${this.props.tickets[0].ticket_id}`, body)
+      .then(res => {
+        console.log(res.data)
+        this.setState({load: false})
+      })
+      .catch(err => console.log(err))
+  }
+
   render() {
-    const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate, setTicketCompletedStatus} = this.props;
+    if (this.state.load === true) {
+      return <h2>Loading...</h2>
+    }
+    const {setTicketStatus, setAssignedWorker, setWorkerId, setTicketAssignedDate, setTicketCompletedStatus, setTicketAssignedStatus} = this.props;
     // console.log(this.props.tickets)
     let ticket = this.props.tickets[0];
     if(this.props.ticket_status != 'Completed'){
@@ -286,6 +330,7 @@ class TicketView extends Component {
     } else {
       setTicketCompletedStatus(true)
     }
+    
     console.log('current ticket info: ', ticket)
     //console.log("this is ticket.worker_id: ",ticket.worker_id)
     //console.log("this.is user.user_id: ",this.user.user_id);
@@ -323,20 +368,23 @@ class TicketView extends Component {
           <div>
             <span className='lrg'>Worker Assigned:</span>
 
-            {this.props.userID != ticket.owner_id ? (
+            {this.props.userID != ticket.owner_id || this.props.ticket_assigned_status ? (
               <div className="workerAssigned inlay">
                 {ticket.worker_name 
                   ? ticket.worker_name
                   : "Not Assigned"}
+                 <button className="btn-new-worker" value = {this.props.ticket_assigned_status} onClick={(e) => this.assignNewWorker()}>Assign New Worker</button>
               </div>
             ) : (<div>
               <select value={this.props.assigned_worker} name="" id="" onChange={(e) => {setAssignedWorker(e.target.value); setWorkerId(e.target.options[e.target.options.selectedIndex].id)}}>{/*  use e.target.dataset.id (data-id={this.props.worker_id}) */}
               <option value="Not Assigned">Not Assigned</option>
               {workers}
               </select>
-              </div>
+             
+              </div> 
             )
             }
+            
           </div></div>
           <div className="dateCompleted inlay">
           <div>
@@ -435,7 +483,7 @@ class TicketView extends Component {
                </div>
               )}
           </div></div>
-          <div className="inlay">
+          <div value = {this.props.ticket_assigned_status} className="inlay">
               <span className="lrg">Click on the button to submit changes ---></span>
               <Link to='/'><button className="btn-right" onClick={() => this.updateTicketStatus()}>Update Ticket</button></Link>
           </div>
@@ -454,7 +502,7 @@ class TicketView extends Component {
 }
 
 let mapStateToProps = state => {
-  const { notes, tickets, userID, worker_id, worker_name, ticket_status, workers, assigned_worker, ticket_assigned_date, ticket_completed_status } = state;
+  const { notes, tickets, userID, worker_id, worker_name, ticket_status, workers, assigned_worker, ticket_assigned_date, ticket_completed_status, ticket_assigned_status } = state;
   return {
     notes,
     tickets,
@@ -465,7 +513,8 @@ let mapStateToProps = state => {
     workers,
     assigned_worker, 
     ticket_assigned_date,
-    ticket_completed_status
+    ticket_completed_status,
+    ticket_assigned_status
   }
 };
 

@@ -169,3 +169,16 @@ textarea{
   /* margin: 25px; */
   width: 150px;
 }
+
+.btn-new-worker{
+  float: right;
+  width: 250px;
+}
+
+button[value=false]{
+  display: none;
+}
+
+div[value=true]{
+  display: none;
+}
